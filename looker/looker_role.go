@@ -79,3 +79,10 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}
 
 	return diag.FromErr(result.ErrorOrNil())
 }
+
+func pString(s string) *string {
+	if s == "" {
+		return nil
+	}
+	return &s
+}
