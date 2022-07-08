@@ -47,7 +47,9 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("LOOKER_TIMEOUT", 120),
 			},
 		},
-		ResourcesMap:   map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"looker_role": resourceRole(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{},
 	}
 

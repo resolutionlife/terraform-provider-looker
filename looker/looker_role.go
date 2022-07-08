@@ -9,39 +9,41 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-var roleResource = schema.Resource{
-	Description: "Manages roles of a Looker instance",
+func resourceRole() *schema.Resource {
+	return &schema.Resource{
+		Description: "Manages roles of a Looker instance",
 
-	// TODO: Descriptions
-	Schema: map[string]*schema.Schema{
-		"name": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The email address of the user",
+		CreateContext: resourceRoleCreate,
+		ReadContext:   resourceRoleRead,
+		UpdateContext: resourceRoleUpdate,
+		DeleteContext: resourceRoleDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
 		},
-		"permission_set_id": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The first name of the user",
-		},
-		"model_set_id": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The last name of the user",
-		},
-	},
 
-	CreateContext: resourceRoleCreate,
-	ReadContext:   resourceRoleRead,
-	// UpdateContext: resourceUserUpdate,
-	// DeleteContext: resourceUserDelete,
-	Importer: &schema.ResourceImporter{
-		StateContext: schema.ImportStatePassthroughContext,
-	},
+		// TODO: Improve descriptions
+		Schema: map[string]*schema.Schema{
+			"name": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The name of the role",
+			},
+			"permission_set_id": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The permission set id for the role. A permission set is a collection of permissions which defines what a user may do",
+			},
+			"model_set_id": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The model set id for the role. A model set is a collection of models that define what models a role can access",
+			},
+		},
+	}
 }
 
 func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	role, roleErr := api.CreateRole(
 		sdk.WriteRole{
@@ -63,7 +65,7 @@ func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, c interface
 }
 
 func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	role, roleErr := api.Role(d.Id(), nil)
 	if roleErr != nil {
@@ -78,6 +80,35 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
+}
+
+func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+	api := c.(*sdk.LookerSDK)
+
+	_, updateErr := api.UpdateRole(d.Id(),
+		sdk.WriteRole{
+			Name:            pString(d.Get("name").(string)),
+			PermissionSetId: pString(d.Get("permission_set_id").(string)),
+			ModelSetId:      pString(d.Get("model_set_id").(string)),
+		}, nil,
+	)
+	if updateErr != nil {
+		diag.FromErr(updateErr)
+	}
+
+	return resourceRoleRead(ctx, d, c)
+}
+
+func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+	api := c.(*sdk.LookerSDK)
+
+	_, delErr := api.DeleteRole(d.Id(), nil)
+	if delErr != nil {
+		// handle case where role is not found
+		return diag.FromErr(delErr)
+	}
+
+	return nil
 }
 
 func pString(s string) *string {
