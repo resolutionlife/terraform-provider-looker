@@ -84,7 +84,6 @@ func resourceUserRead(ctx context.Context, d *schema.ResourceData, c interface{}
 	user, userErr := api.User(userID, "", nil)
 	if userErr != nil {
 		// TODO: handle the case where a user has been deleted
-		d.SetId("")
 		return diag.FromErr(userErr)
 	}
 
@@ -132,7 +131,7 @@ func resourceUserDelete(ctx context.Context, d *schema.ResourceData, c interface
 
 	_, delErr := api.DeleteUser(d.Id(), nil)
 	if delErr != nil {
-		d.SetId("")
+		// TODO: handle the case where a user has been deleted
 		return diag.FromErr(delErr)
 	}
 
