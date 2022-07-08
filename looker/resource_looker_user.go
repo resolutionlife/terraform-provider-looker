@@ -10,34 +10,36 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-var userResource = schema.Resource{
-	Description: "Manages users of a Looker instance",
+func resourceUser() *schema.Resource {
+	return &schema.Resource{
+		Description: "Manages users of a Looker instance",
 
-	Schema: map[string]*schema.Schema{
-		"email": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The email address of the user",
+		CreateContext: resourceUserCreate,
+		ReadContext:   resourceUserRead,
+		UpdateContext: resourceUserUpdate,
+		DeleteContext: resourceUserDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
 		},
-		"first_name": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The first name of the user",
-		},
-		"last_name": {
-			Type:        schema.TypeString,
-			Required:    true,
-			Description: "The last name of the user",
-		},
-	},
 
-	CreateContext: resourceUserCreate,
-	ReadContext:   resourceUserRead,
-	UpdateContext: resourceUserUpdate,
-	DeleteContext: resourceUserDelete,
-	Importer: &schema.ResourceImporter{
-		StateContext: schema.ImportStatePassthroughContext,
-	},
+		Schema: map[string]*schema.Schema{
+			"email": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The email address of the user",
+			},
+			"first_name": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The first name of the user",
+			},
+			"last_name": {
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "The last name of the user",
+			},
+		},
+	}
 }
 
 func resourceUserCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
