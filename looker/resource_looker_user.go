@@ -6,8 +6,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
 func resourceUser() *schema.Resource {
@@ -47,8 +48,8 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, c interface
 
 	user, userErr := api.CreateUser(
 		sdk.WriteUser{
-			FirstName: pString(d.Get("first_name").(string)),
-			LastName:  pString(d.Get("last_name").(string)),
+			FirstName: conv.PString(d.Get("first_name").(string)),
+			LastName:  conv.PString(d.Get("last_name").(string)),
 		}, "", nil,
 	)
 	if userErr != nil {
@@ -62,7 +63,7 @@ func resourceUserCreate(ctx context.Context, d *schema.ResourceData, c interface
 
 	_, credErr := api.CreateUserCredentialsEmail(*user.Id,
 		sdk.WriteCredentialsEmail{
-			Email: pString(d.Get("email").(string)),
+			Email: conv.PString(d.Get("email").(string)),
 		}, "", nil,
 	)
 	if credErr != nil {
@@ -103,8 +104,8 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, c interface
 	if d.HasChanges("first_name", "last_name") {
 		_, updateErr := api.UpdateUser(userID,
 			sdk.WriteUser{
-				FirstName: pString(d.Get("first_name").(string)),
-				LastName:  pString(d.Get("last_name").(string)),
+				FirstName: conv.PString(d.Get("first_name").(string)),
+				LastName:  conv.PString(d.Get("last_name").(string)),
 			}, "", nil,
 		)
 		if updateErr != nil {
@@ -115,7 +116,7 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, c interface
 	if d.HasChange("email") {
 		_, updateCredsErr := api.UpdateUserCredentialsEmail(userID,
 			sdk.WriteCredentialsEmail{
-				Email: pString(d.Get("email").(string)),
+				Email: conv.PString(d.Get("email").(string)),
 			}, "", nil,
 		)
 		if updateCredsErr != nil {
@@ -136,11 +137,4 @@ func resourceUserDelete(ctx context.Context, d *schema.ResourceData, c interface
 	}
 
 	return nil
-}
-
-func pString(s string) *string {
-	if s == "" {
-		return nil
-	}
-	return &s
 }
