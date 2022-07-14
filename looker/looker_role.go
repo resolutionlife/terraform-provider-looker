@@ -20,8 +20,6 @@ func resourceRole() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
-
-		// TODO: Improve descriptions
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:        schema.TypeString,
@@ -55,8 +53,8 @@ func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, c interface
 	if roleErr != nil {
 		return diag.FromErr(roleErr)
 	}
+
 	if role.Id == nil {
-		// TODO: Fix
 		return diag.Errorf("role id is nil")
 	}
 	d.SetId(*role.Id)
@@ -69,7 +67,7 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}
 
 	role, roleErr := api.Role(d.Id(), nil)
 	if roleErr != nil {
-		// TODO: Handle case when role is not found
+		// TODO: handle case when role is not found
 		return diag.FromErr(roleErr)
 	}
 
@@ -104,7 +102,7 @@ func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, c interface
 
 	_, delErr := api.DeleteRole(d.Id(), nil)
 	if delErr != nil {
-		// handle case where role is not found
+		// TODO: handle case where role is not found
 		return diag.FromErr(delErr)
 	}
 
