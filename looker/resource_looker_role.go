@@ -7,6 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
 func resourceRole() *schema.Resource {
@@ -20,6 +22,7 @@ func resourceRole() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
+
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:        schema.TypeString,
@@ -45,9 +48,9 @@ func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, c interface
 
 	role, roleErr := api.CreateRole(
 		sdk.WriteRole{
-			Name:            pString(d.Get("name").(string)),
-			PermissionSetId: pString(d.Get("permission_set_id").(string)),
-			ModelSetId:      pString(d.Get("model_set_id").(string)),
+			Name:            conv.PString(d.Get("name").(string)),
+			PermissionSetId: conv.PString(d.Get("permission_set_id").(string)),
+			ModelSetId:      conv.PString(d.Get("model_set_id").(string)),
 		}, nil,
 	)
 	if roleErr != nil {
@@ -85,9 +88,9 @@ func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, c interface
 
 	_, updateErr := api.UpdateRole(d.Id(),
 		sdk.WriteRole{
-			Name:            pString(d.Get("name").(string)),
-			PermissionSetId: pString(d.Get("permission_set_id").(string)),
-			ModelSetId:      pString(d.Get("model_set_id").(string)),
+			Name:            conv.PString(d.Get("name").(string)),
+			PermissionSetId: conv.PString(d.Get("permission_set_id").(string)),
+			ModelSetId:      conv.PString(d.Get("model_set_id").(string)),
 		}, nil,
 	)
 	if updateErr != nil {
@@ -107,11 +110,4 @@ func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, c interface
 	}
 
 	return nil
-}
-
-func pString(s string) *string {
-	if s == "" {
-		return nil
-	}
-	return &s
 }
