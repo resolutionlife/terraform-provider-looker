@@ -51,7 +51,9 @@ func Provider() *schema.Provider {
 			"looker_role": resourceRole(),
 			"looker_user": resourceUser(),
 		},
-		DataSourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"looker_model_set": datasourceModelSet(),
+		},
 	}
 
 	provider.ConfigureContextFunc = configureProvider
