@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,7 +21,7 @@ func dataSourcePermissionSet() *schema.Resource {
 			"name": {
 				Type:        schema.TypeString,
 				Required:    true,
-				Description: "The name of the permission set. Documentation for default permission sets can be found [here](https://docs.looker.com/admin-options/settings/roles#permission_sets)",
+				Description: "The name of the permission set. This field is not case sensitive. Documentation for default permission sets can be found [here](https://docs.looker.com/admin-options/settings/roles#permission_sets)",
 			},
 			"id": {
 				Type:        schema.TypeInt,
@@ -41,7 +42,7 @@ func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c 
 
 	permSetName := d.Get("name").(string)
 	for _, set := range permSets {
-		if set.Name != nil && *set.Name == permSetName {
+		if set.Name != nil && strings.EqualFold(*set.Name, permSetName) {
 			if set.Id == nil {
 				return diag.Errorf("permission set %s has nil id", permSetName)
 			}
