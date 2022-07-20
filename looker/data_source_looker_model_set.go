@@ -21,7 +21,7 @@ func datasourceModelSet() *schema.Resource {
 			"name": {
 				Type:        schema.TypeString,
 				Required:    true,
-				Description: "The name of the model set. The only default model set created by Looker is 'All'. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
+				Description: "The name of the model set. This field is not case sensitive. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
 			},
 			"id": {
 				Type:        schema.TypeInt,
