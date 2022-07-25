@@ -2,10 +2,11 @@ package looker
 
 import (
 	"context"
-	"strings"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
@@ -19,14 +20,24 @@ func dataSourcePermissionSet() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "The name of the permission set. This field is not case sensitive. Documentation for default permission sets can be found [here](https://docs.looker.com/admin-options/settings/roles#permission_sets)",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Description:  "The name of the permission set. This field is case sensitive. Documentation for default permission sets can be found [here](https://docs.looker.com/admin-options/settings/roles#permission_sets).",
+				ExactlyOneOf: []string{"name", "id"},
 			},
 			"id": {
-				Type:        schema.TypeInt,
+				Type:         schema.TypeString,
+				Optional:     true,
+				Description:  "The id of the permission set.",
+				ExactlyOneOf: []string{"name", "id"},
+			},
+			"permissions": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
 				Computed:    true,
-				Description: "The id of the resource",
+				Description: "A list of permissions within the permission set.",
 			},
 		},
 	}
@@ -35,21 +46,49 @@ func dataSourcePermissionSet() *schema.Resource {
 func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	permSets, permSetsErr := api.AllPermissionSets("id, name", nil)
+	// exactly one of these variables will be nil - this is enforced by the data source schema
+	name := conv.PString(d.Get("name").(string))
+	id := conv.PString(d.Get("id").(string))
+
+	permSets, permSetsErr := api.SearchPermissionSets(
+		sdk.RequestSearchModelSets{
+			Name: name,
+			Id:   id,
+		}, nil,
+	)
 	if permSetsErr != nil {
 		return diag.FromErr(permSetsErr)
 	}
 
-	permSetName := d.Get("name").(string)
-	for _, set := range permSets {
-		if set.Name != nil && strings.EqualFold(*set.Name, permSetName) {
-			if set.Id == nil {
-				return diag.Errorf("permission set %s has nil id", permSetName)
-			}
-			d.SetId(*set.Id)
-			return nil
+	var ps *sdk.PermissionSet
+	for _, p := range permSets {
+		// if id is supplied, search for matching id
+		if p.Id != nil && id != nil && *p.Id == *id {
+			ps = &p
+			break
+		}
+
+		// if name is supplied, search for matching name
+		if p.Name != nil && name != nil && *p.Name == *name {
+			ps = &p
+			break
 		}
 	}
+	if ps == nil {
+		return diag.Errorf("no permission set found")
+	}
+	// response id is always populated
+	d.SetId(*ps.Id)
 
-	return diag.Errorf("no permission set found with the name %s", permSetName)
+	var result *multierror.Error
+	if ps.Name != nil {
+		return diag.Errorf("name not found for permission set with id: %s", *ps.Id)
+	}
+	multierror.Append(result, d.Set("name", *ps.Name))
+
+	if ps.Permissions != nil {
+		multierror.Append(result, d.Set("permissions", *ps.Permissions))
+	}
+
+	return diag.FromErr(result.ErrorOrNil())
 }
