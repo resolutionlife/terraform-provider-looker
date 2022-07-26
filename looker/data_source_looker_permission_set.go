@@ -81,7 +81,7 @@ func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c 
 	d.SetId(*ps.Id)
 
 	var result *multierror.Error
-	if ps.Name != nil {
+	if ps.Name == nil {
 		return diag.Errorf("name not found for permission set with id: %s", *ps.Id)
 	}
 	multierror.Append(result, d.Set("name", *ps.Name))
