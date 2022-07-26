@@ -63,13 +63,13 @@ func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c 
 	var ps *sdk.PermissionSet
 	for _, p := range permSets {
 		// if id is supplied, search for matching id
-		if p.Id != nil && id != nil && *p.Id == *id {
+		if id != nil && p.Id != nil && *p.Id == *id {
 			ps = &p
 			break
 		}
 
 		// if name is supplied, search for matching name
-		if p.Name != nil && name != nil && *p.Name == *name {
+		if name != nil && p.Name != nil && *p.Name == *name {
 			ps = &p
 			break
 		}
