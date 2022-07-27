@@ -1,5 +1,5 @@
 data "looker_model_set" "all" {
-  name = "all"
+  name = "All"
 }
 
 data "looker_model_set" "test" {
