@@ -2,54 +2,92 @@ package looker
 
 import (
 	"context"
-	"strings"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
 func datasourceModelSet() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: datasourceModelSetRead,
+		ReadContext: dataSourceModelSetRead,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "The name of the model set. This field is not case sensitive. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Description:  "The name of the model set. This field is case sensitive. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
+				ExactlyOneOf: []string{"name", "id"},
 			},
 			"id": {
-				Type:        schema.TypeInt,
+				Type:         schema.TypeString,
+				Optional:     true,
+				Description:  "The id of the resource",
+				ExactlyOneOf: []string{"name", "id"},
+			},
+			"models": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
 				Computed:    true,
-				Description: "The id of the resource",
+				Description: "A list of models within the model set.",
 			},
 		},
 	}
 }
 
-func datasourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func dataSourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	modelSets, modelSetErr := api.AllModelSets("id, name", nil)
-	if modelSetErr != nil {
-		return diag.FromErr(modelSetErr)
+	name := conv.PString(d.Get("name").(string))
+	id := conv.PString(d.Get("id").(string))
+
+	modelSets, modelSetsErr := api.SearchModelSets(
+		sdk.RequestSearchModelSets{
+			Name: name,
+			Id:   id,
+		}, nil,
+	)
+	if modelSetsErr != nil {
+		return diag.FromErr(modelSetsErr)
 	}
 
-	setName := d.Get("name").(string)
-	for _, set := range modelSets {
-		if set.Name != nil && strings.EqualFold(*set.Name, setName) {
-			if set.Id == nil {
-				return diag.Errorf("model set %s has nil id", setName)
-			}
-			d.SetId(*set.Id)
-			return nil
+	var ms *sdk.ModelSet
+	for _, m := range modelSets {
+		// if id is supplied, search for matching id
+		if id != nil && m.Id != nil && *m.Id == *id {
+			ms = &m
+			break
+		}
+
+		// if name is supplied, search for matching name
+		if name != nil && m.Name != nil && *m.Name == *name {
+			ms = &m
+			break
 		}
 	}
+	if ms == nil {
+		return diag.Errorf("no model set found")
+	}
+	// response id is always populated
+	d.SetId(*ms.Id)
 
-	return diag.Errorf("no model set found with the name %s", setName)
+	var result *multierror.Error
+	if ms.Name == nil {
+		return diag.Errorf("name not found for model set with id: %s", *ms.Id)
+	}
+	multierror.Append(result, d.Set("name", *ms.Name))
+
+	if ms.Models != nil {
+		multierror.Append(result, d.Set("models", *ms.Models))
+	}
+
+	return diag.FromErr(result.ErrorOrNil())
 }
