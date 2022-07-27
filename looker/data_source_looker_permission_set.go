@@ -80,15 +80,13 @@ func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c 
 	// response id is always populated
 	d.SetId(*ps.Id)
 
-	var result *multierror.Error
 	if ps.Name == nil {
 		return diag.Errorf("name not found for permission set with id: %s", *ps.Id)
 	}
-	multierror.Append(result, d.Set("name", *ps.Name))
-
-	if ps.Permissions != nil {
-		multierror.Append(result, d.Set("permissions", *ps.Permissions))
-	}
+	result := multierror.Append(
+		d.Set("name", ps.Name),
+		d.Set("permissions", ps.Permissions),
+	)
 
 	return diag.FromErr(result.ErrorOrNil())
 }

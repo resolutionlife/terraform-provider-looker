@@ -79,15 +79,13 @@ func dataSourceModelSetRead(ctx context.Context, d *schema.ResourceData, c inter
 	// response id is always populated
 	d.SetId(*ms.Id)
 
-	var result *multierror.Error
 	if ms.Name == nil {
 		return diag.Errorf("name not found for model set with id: %s", *ms.Id)
 	}
-	multierror.Append(result, d.Set("name", *ms.Name))
-
-	if ms.Models != nil {
-		multierror.Append(result, d.Set("models", *ms.Models))
-	}
+	result := multierror.Append(
+		d.Set("name", ms.Name),
+		d.Set("models", ms.Models),
+	)
 
 	return diag.FromErr(result.ErrorOrNil())
 }
