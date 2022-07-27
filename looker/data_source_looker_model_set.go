@@ -11,9 +11,9 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-func dataSourcePermissionSet() *schema.Resource {
+func datasourceModelSet() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourcePermissionSetRead,
+		ReadContext: dataSourceModelSetRead,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
@@ -22,70 +22,69 @@ func dataSourcePermissionSet() *schema.Resource {
 			"name": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				Description:  "The name of the permission set. This field is case sensitive. Documentation for default permission sets can be found [here](https://docs.looker.com/admin-options/settings/roles#permission_sets).",
+				Description:  "The name of the model set. This field is case sensitive. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
 				ExactlyOneOf: []string{"name", "id"},
 			},
 			"id": {
 				Type:         schema.TypeString,
 				Optional:     true,
-				Description:  "The id of the permission set.",
+				Description:  "The id of the resource",
 				ExactlyOneOf: []string{"name", "id"},
 			},
-			"permissions": {
+			"models": {
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 				Computed:    true,
-				Description: "A list of permissions within the permission set.",
+				Description: "A list of models within the model set.",
 			},
 		},
 	}
 }
 
-func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func dataSourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	// exactly one of these variables will be nil - this is enforced by the data source schema
 	name := conv.PString(d.Get("name").(string))
 	id := conv.PString(d.Get("id").(string))
 
-	permSets, permSetsErr := api.SearchPermissionSets(
+	modelSets, modelSetsErr := api.SearchModelSets(
 		sdk.RequestSearchModelSets{
 			Name: name,
 			Id:   id,
 		}, nil,
 	)
-	if permSetsErr != nil {
-		return diag.FromErr(permSetsErr)
+	if modelSetsErr != nil {
+		return diag.FromErr(modelSetsErr)
 	}
 
-	var ps *sdk.PermissionSet
-	for _, p := range permSets {
+	var ms *sdk.ModelSet
+	for _, m := range modelSets {
 		// if id is supplied, search for matching id
-		if id != nil && p.Id != nil && *p.Id == *id {
-			ps = &p
+		if id != nil && m.Id != nil && *m.Id == *id {
+			ms = &m
 			break
 		}
 
 		// if name is supplied, search for matching name
-		if name != nil && p.Name != nil && *p.Name == *name {
-			ps = &p
+		if name != nil && m.Name != nil && *m.Name == *name {
+			ms = &m
 			break
 		}
 	}
-	if ps == nil {
-		return diag.Errorf("no permission set found")
+	if ms == nil {
+		return diag.Errorf("no model set found")
 	}
 	// response id is always populated
-	d.SetId(*ps.Id)
+	d.SetId(*ms.Id)
 
-	if ps.Name == nil {
-		return diag.Errorf("name not found for permission set with id: %s", *ps.Id)
+	if ms.Name == nil {
+		return diag.Errorf("name not found for model set with id: %s", *ms.Id)
 	}
 	result := multierror.Append(
-		d.Set("name", ps.Name),
-		d.Set("permissions", ps.Permissions),
+		d.Set("name", ms.Name),
+		d.Set("models", ms.Models),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
