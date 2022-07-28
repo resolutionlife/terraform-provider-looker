@@ -76,8 +76,8 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}
 
 	result := multierror.Append(
 		d.Set("name", role.Name),
-		d.Set("permission_set_id", role.PermissionSetId),
-		d.Set("model_set_id", role.ModelSetId),
+		d.Set("permission_set_id", role.PermissionSet.Id),
+		d.Set("model_set_id", role.ModelSet.Id),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
