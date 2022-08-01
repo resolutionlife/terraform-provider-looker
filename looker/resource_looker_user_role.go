@@ -8,11 +8,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
 func resourceUserRole() *schema.Resource {
 	return &schema.Resource{
-		Description: "Allocates roles to a user of a Looker instance",
+		Description: "This resource allocates a roles to a given user. Note: Only one `looker_user_role` resource may be created per `user_id`.",
 
 		CreateContext: resourceUserRoleCreate,
 		ReadContext:   resourceUserRoleRead,
@@ -55,9 +56,14 @@ func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interfa
 	api := c.(*sdk.LookerSDK)
 
 	userID := d.Get("user_id").(string)
-	roles, rolesErr := api.UserRoles(sdk.RequestUserRoles{
-		UserId: userID,
-	}, nil)
+	roles, rolesErr := api.UserRoles(
+		sdk.RequestUserRoles{
+			UserId:                userID,
+			Fields:                conv.PString("id"),
+			DirectAssociationOnly: conv.PBool(true),
+		},
+		nil,
+	)
 	if rolesErr != nil {
 		// TODO: Account for the case when the user is not found
 		return diag.FromErr(rolesErr)
@@ -71,7 +77,7 @@ func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interfa
 		roleIDs[i] = *role.Id
 	}
 	result := multierror.Append(
-		// d.Set("user_id", userID),
+		d.Set("user_id", userID),
 		d.Set("role_ids", roleIDs),
 	)
 
