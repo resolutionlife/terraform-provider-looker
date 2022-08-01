@@ -31,46 +31,60 @@ func datasourceRole() *schema.Resource {
 				ExactlyOneOf: []string{"name", "id"},
 				Description:  "The id of the role",
 			},
-			// TODO: Set up schema.Set for permission set
-			// "permission_set": {
-			// 	Type: schema.TypeMap,
-			// 	Elem: &schema.Schema{
-			// 		Type: schema.TypeString,
-			// 	},
-			// 	Computed:    true,
-			// 	Description: "The permission set binded to the looker role. This permission_set object holds additional attributes about the permission set.",
-			// },
-			"model_set": {
-				Type:        schema.TypeSet,
-				Elem:        &schema.Resource{Schema: modelSetSchema()},
+			"permission_set": {
+				Type: schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: "The name of the permission set",
+						},
+						"id": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: "The id of the permission set",
+						},
+						"permissions": {
+							Type: schema.TypeSet,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+							Computed:    true,
+							Description: "An unordered list of models within the permission set",
+						},
+					},
+				},
 				Computed:    true,
-				Description: "The model set binded to the looker role. This model_set object holds additional attributes about the model set",
+				Description: "The permission set binded to the looker role. This `permission_set` attribute holds additional attributes about the permission set.",
 			},
-		},
-	}
-}
-
-func modelSetSchema() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"name": {
-			Type: schema.TypeString,
-			// TODO: Why does this implemention panic when Computed: true?
-			Optional:    true,
-			Description: "The name of the model set. This field is case sensitive. Documentation on model sets can be found [here](https://docs.looker.com/admin-options/settings/roles#model_sets).",
-		},
-		"id": {
-			Type: schema.TypeString,
-			// TODO: Why does this implemention panic when Computed: true?
-			Optional:    true,
-			Description: "The id of the resource",
-		},
-		"models": {
-			Type: schema.TypeList,
-			Elem: &schema.Schema{
-				Type: schema.TypeString,
+			"model_set": {
+				Type: schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: "The name of the model set. This field is case sensitive",
+						},
+						"id": {
+							Type:        schema.TypeString,
+							Optional:    true,
+							Description: "The id of the model set",
+						},
+						"models": {
+							Type: schema.TypeSet,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+							Computed:    true,
+							Description: "An unordered list of models within the model set.",
+						},
+					},
+				},
+				Computed:    true,
+				Description: "The model set binded to the looker role. This `model_set` attribute holds additional attributes about the model set",
 			},
-			Computed:    true,
-			Description: "A list of models within the model set.",
 		},
 	}
 }
@@ -91,10 +105,12 @@ func datasourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface
 	for _, r := range roles {
 		if id != nil && r.Id != nil && *id == *r.Id {
 			role = &r
+			break
 		}
 
 		if name != nil && r.Name != nil && *name == *r.Name {
 			role = &r
+			break
 		}
 	}
 	if role == nil {
@@ -102,28 +118,43 @@ func datasourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface
 	}
 	d.SetId(*role.Id)
 
-	modelSet := schema.NewSet(schema.HashResource(&schema.Resource{Schema: modelSetSchema()}), []interface{}{})
-	modelSet.Add(
-		map[string]interface{}{
-			"name":   toString(role.ModelSet.Name),
-			"id":     toString(role.ModelSet.Id),
-			"models": role.ModelSet.Models,
-		},
-	)
-
 	result := multierror.Append(
 		d.Set("name", role.Name),
-		// d.Set("permission_set", role.PermissionSet),
-		d.Set("model_set", modelSet),
+		d.Set("permission_set", flattenPermissionSet(role.PermissionSet)),
+		d.Set("model_set", flattenModelSet(role.ModelSet)),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
 }
 
-func toString(s *string) string {
-	if s == nil {
-		return ""
+// flattenModelSet takes a model set object and maps the field from the object to a map[string]interface{}. The key is the attribute name defined in the data source
+// schema, and the value is the corresponding value coming from the looker api. This function returns a []interface{} because the
+// terraform aggregate type schema.TypeSet expects a slice of attributes.
+func flattenModelSet(m *sdk.ModelSet) []interface{} {
+	ms := make(map[string]interface{}, 0)
+
+	ms["name"] = m.Name
+	ms["id"] = m.Id
+
+	if m.Models != nil {
+		ms["models"] = *m.Models
 	}
 
-	return *s
+	return []interface{}{ms}
+}
+
+// flattenPermissionSet takes a permission set object and maps the field from the object to a map[string]interface{}. The key is the attribute name defined in the data source
+// schema, and the value is the corresponding value coming from the looker api. This function returns a []interface{} because the
+// terraform aggregate type schema.TypeSet expects a slice of attributes.
+func flattenPermissionSet(p *sdk.PermissionSet) []interface{} {
+	ps := make(map[string]interface{}, 0)
+
+	ps["name"] = p.Name
+	ps["id"] = p.Id
+
+	if p.Permissions != nil {
+		ps["permissions"] = *p.Permissions
+	}
+
+	return []interface{}{ps}
 }

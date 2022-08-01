@@ -1,3 +1,7 @@
 data "looker_role" "developer" {
-  name = "developer"
+  name = "Developer"
+}
+
+output "developer" {
+  value = data.looker_role.developer.model_set[*].models
 }
