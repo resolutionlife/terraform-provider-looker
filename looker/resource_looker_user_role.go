@@ -15,13 +15,9 @@ func resourceUserRole() *schema.Resource {
 	return &schema.Resource{
 		Description: "Allocates roles to a user of a Looker instance",
 
-		// the state should only know about the two resources that have been set
 		CreateContext: resourceUserRoleCreate,
-		// read should change the state if one of our interesting resources is no longer there
-		ReadContext: resourceUserRoleRead,
-		// update should change the state of our existing resources
+		ReadContext:   resourceUserRoleRead,
 		UpdateContext: resourceUserRoleUpdate,
-		// delete should only delete our resources
 		DeleteContext: resourceUserRoleDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -50,7 +46,6 @@ func resourceUserRoleCreate(ctx context.Context, d *schema.ResourceData, c inter
 
 	// get user_id from resource data
 	userID := d.Get("user_id").(string)
-
 	diff, roleIDs, err := getDiff(d, c)
 	if err != nil {
 		return diag.FromErr(err)
@@ -72,34 +67,61 @@ func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interfa
 	api := c.(*sdk.LookerSDK)
 
 	userID := d.Get("user_id").(string)
-	roles, rolesErr := api.UserRoles(sdk.RequestUserRoles{
-		UserId: userID,
-	}, nil)
+	roles, rolesErr := api.UserRoles(sdk.RequestUserRoles{UserId: userID}, nil)
 	if rolesErr != nil {
 		// TODO: Account for the case when the user is not found
 		return diag.Errorf("err: %s, userID: %s", rolesErr.Error(), userID)
 	}
-	roleIDs := make([]string, len(roles))
-	for i, role := range roles {
-		if role.Id == nil {
-			return diag.Errorf("the user with id %s has a role with a missing id", userID)
-		}
-		roleIDs[i] = *role.Id
+	roleIDs, strErr := lookerRolesToSliceString(roles)
+	if strErr != nil {
+		return diag.FromErr(strErr)
 	}
 
-	diff, _, diffErr := getDiff(d, c)
+	diff, roleIDs, diffErr := getDiff(d, c)
 	if diffErr != nil {
 		return diag.FromErr(diffErr)
 	}
 
-	set := delete(roleIDs, diff)
+	toSet := delete(roleIDs, diff)
 
 	result := multierror.Append(
 		d.Set("user_id", userID),
-		d.Set("role_ids", set),
+		d.Set("role_ids", toSet),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
+
+	return nil
+}
+
+func setToSliceString(i interface{}) ([]string, error) {
+	set, ok := i.(*schema.Set)
+	if !ok {
+		return nil, errors.New("interface{} is not of type *schema.Set")
+	}
+
+	slice := make([]string, set.Len())
+	for i, v := range set.List() {
+		str, ok := v.(string)
+		if !ok {
+			return nil, errors.New("set contains a non-string element")
+		}
+		slice[i] = str
+	}
+
+	return slice, nil
+}
+
+func lookerRolesToSliceString(roles []sdk.Role) ([]string, error) {
+	roleIDs := make([]string, len(roles))
+	for i, role := range roles {
+		if role.Id == nil {
+			return nil, errors.Errorf("the user has a role with a missing id")
+		}
+		roleIDs[i] = *role.Id
+	}
+
+	return roleIDs, nil
 }
 
 func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
@@ -110,27 +132,17 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 	// get user_id from resource data
 	userID := d.Get("user_id").(string)
 
-	o, _ := d.GetChange("role_ids")
-
-	old := o.(*schema.Set)
-	oldIDs := make([]string, old.Len())
-	for i, v := range old.List() {
-		oldID, ok := v.(string)
-		if !ok {
-			return diag.Errorf("attribute role_ids contains a non-string value")
-		}
-		oldIDs[i] = oldID
+	o, n := d.GetChange("role_ids")
+	// IDs set in old state
+	oldIDs, oErr := setToSliceString(o)
+	if oErr != nil {
+		return diag.FromErr(oErr)
 	}
-
-	// new := n.(*schema.Set)
-	// newIDs := make([]string, new.Len())
-	// for i, v := range new.List() {
-	// 	newID, ok := v.(string)
-	// 	if !ok {
-	// 		return diag.Errorf("attribute role_ids contains a non-string value")
-	// 	}
-	// 	newIDs[i] = newID
-	// }
+	// IDs set in new state
+	newIDs, nErr := setToSliceString(n)
+	if nErr != nil {
+		return diag.FromErr(nErr)
+	}
 
 	// get role_ids that exist already
 	roles, rolesErr := api.UserRoles(sdk.RequestUserRoles{
@@ -142,29 +154,20 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 
 	}
 
-	diff := []string{}
-	for _, role := range roles {
-		if role.Id == nil {
-			return diag.Errorf("the user with id %s has a role with a missing id", userID)
-		}
-		if !contains(oldIDs, *role.Id) {
-			diff = append(diff, *role.Id)
-		}
+	// diff between what was set and what is in looker
+	diff, diffErr := sliceRolesDiff(oldIDs, roles)
+	if diffErr != nil {
+		return diag.FromErr(diffErr)
 	}
 
 	// diff or old  [18,19] and what's in looke [18,19,3] =3
 	// set append(3, new)
 
-	_, newIDs, err := getDiff(d, c)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-
 	// return diag.Errorf("old %+v, new %v, diff:%v, append: %v", oldIDs, newIDs, diff, append(diff, newIDs...))
 
 	_, setErr := api.SetUserRoles(userID, append(diff, newIDs...), "", nil)
-	if err != nil {
-		return diag.FromErr(errors.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
+	if setErr != nil {
+		return diag.Errorf(setErr.Error())
 	}
 
 	return resourceUserRoleRead(ctx, d, c)
@@ -214,41 +217,50 @@ func getDiff(d *schema.ResourceData, c interface{}) ([]string, []string, error) 
 	userID := d.Get("user_id").(string)
 
 	// get role_ids from resource data
-	roleIDsSet, ok := d.Get("role_ids").(*schema.Set)
-	if !ok {
-		return nil, nil, errors.Errorf("an error occured asserting the role_id type to *Set")
-	}
-	roleIDs := make([]string, roleIDsSet.Len())
-	for i, r := range roleIDsSet.List() {
-		roleID, ok := r.(string)
-		if !ok {
-			return nil, nil, errors.Errorf("attribute role_ids contains a non-string value")
-		}
-		roleIDs[i] = roleID
+	rscRoleIDs, setErr := setToSliceString(d.Get("role_ids"))
+	if setErr != nil {
+		return nil, nil, setErr
 	}
 
 	// get role_ids that exist already
-	roles, rolesErr := api.UserRoles(sdk.RequestUserRoles{
-		UserId: userID,
-	}, nil)
-	if rolesErr != nil {
+	ur, urErr := api.UserRoles(sdk.RequestUserRoles{UserId: userID}, nil)
+	if urErr != nil {
 		// TODO: Account for the case when the user is not found
-		return nil, nil, errors.Errorf("getdiff err: %s, userID: %s", rolesErr.Error(), userID)
-
+		return nil, nil, errors.Errorf("getdiff err: %s, userID: %s", urErr.Error(), userID)
+	}
+	lookerRoles, lErr := lookerRolesToSliceString(ur)
+	if lErr != nil {
+		return nil, nil, lErr
 	}
 
-	// append existing roles if
-	diff := []string{}
+	diff, diffErr := sliceDiff(rscRoleIDs, lookerRoles)
+	if diffErr != nil {
+		return nil, nil, diffErr
+	}
+
+	return diff, rscRoleIDs, nil
+}
+
+func sliceDiff(s, t []string) (diff []string, err error) {
+	for _, sv := range s {
+		if !contains(t, sv) {
+			diff = append(diff, sv)
+		}
+	}
+	return
+}
+
+func sliceRolesDiff(s []string, roles []sdk.Role) (diff []string, err error) {
 	for _, role := range roles {
 		if role.Id == nil {
-			return nil, nil, errors.Errorf("the user with id %s has a role with a missing id", userID)
+			// TODO Make better
+			return nil, errors.Errorf("the user has a role with a missing id")
 		}
-		if !contains(roleIDs, *role.Id) {
+		if !contains(s, *role.Id) {
 			diff = append(diff, *role.Id)
 		}
 	}
-
-	return diff, roleIDs, nil
+	return
 }
 
 func contains(s []string, v string) bool {
