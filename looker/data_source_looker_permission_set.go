@@ -32,7 +32,7 @@ func dataSourcePermissionSet() *schema.Resource {
 				ExactlyOneOf: []string{"name", "id"},
 			},
 			"permissions": {
-				Type: schema.TypeList,
+				Type: schema.TypeSet,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
