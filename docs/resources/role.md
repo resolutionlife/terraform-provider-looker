@@ -12,7 +12,7 @@ Manages roles of a Looker instance
 
 ## Example Usage 
  ```terraform 
- resource "looker_roles" "test" {
+resource "looker_roles" "test" {
   name              = "Test Role"
   model_set_id      = looker_model_set.test.id
   permission_set_id = looker_permission_set.test.id
