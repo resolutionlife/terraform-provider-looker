@@ -96,7 +96,10 @@ func datasourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface
 	name := conv.PString(d.Get("name").(string))
 	id := conv.PString(d.Get("id").(string))
 
-	roles, roleErr := api.SearchRoles(sdk.RequestSearchRoles{}, nil)
+	roles, roleErr := api.SearchRoles(sdk.RequestSearchRoles{
+		Name: name,
+		Id:   id,
+	}, nil)
 	if roleErr != nil {
 		return diag.FromErr(roleErr)
 	}
