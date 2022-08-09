@@ -106,11 +106,11 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 			toSet =  ["user", ""developer""]
 	*/
 	o, n := d.GetChange("role_ids")
-	oldIDs, oErr := conv.SchemaSetToSliceString(o)
+	oldIDs, oErr := schemaSetToSliceString(o)
 	if oErr != nil {
 		return diag.FromErr(oErr)
 	}
-	newIDs, nErr := conv.SchemaSetToSliceString(n)
+	newIDs, nErr := schemaSetToSliceString(n)
 	if nErr != nil {
 		return diag.FromErr(nErr)
 	}
@@ -155,7 +155,7 @@ func resourceUserRoleDelete(ctx context.Context, d *schema.ResourceData, c inter
 // userRolesDiff returns the diff between the looker remote roles and roles in the state.
 func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error) {
 	// get role ids set in the resource data
-	rscRoleIDs, rscErr := conv.SchemaSetToSliceString(d.Get("role_ids"))
+	rscRoleIDs, rscErr := schemaSetToSliceString(d.Get("role_ids"))
 	if rscErr != nil {
 		return nil, rscErr
 	}
@@ -172,7 +172,10 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 
 // getRolesByUser takes a client and a userID and returns a slice the roles allocated to a user with the given userID
 func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
-	ur, urErr := api.UserRoles(sdk.RequestUserRoles{UserId: userID}, nil)
+	ur, urErr := api.UserRoles(sdk.RequestUserRoles{
+		UserId:                userID,
+		DirectAssociationOnly: conv.PBool(true),
+	}, nil)
 	if urErr != nil {
 		// TODO: Account for the case when the user is not found
 		return nil, urErr
@@ -187,4 +190,22 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 	}
 
 	return roleIDs, nil
+}
+
+func schemaSetToSliceString(i interface{}) ([]string, error) {
+	set, ok := i.(*schema.Set)
+	if !ok {
+		return nil, errors.New("interface{} is not of type *schema.Set")
+	}
+
+	slice := make([]string, set.Len())
+	for i, v := range set.List() {
+		str, ok := v.(string)
+		if !ok {
+			return nil, errors.New("set contains a non-string element")
+		}
+		slice[i] = str
+	}
+
+	return slice, nil
 }
