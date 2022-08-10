@@ -43,7 +43,7 @@ func resourceGroup() *schema.Resource {
 }
 
 func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	group, grErr := api.CreateGroup(
 		sdk.WriteGroup{
@@ -64,7 +64,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, c interfac
 }
 
 func resourceGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	group, grErr := api.Group(d.Id(), "id,name,externally_managed", nil)
 	if grErr != nil {
@@ -75,14 +75,14 @@ func resourceGroupRead(ctx context.Context, d *schema.ResourceData, c interface{
 	result := multierror.Append(
 		d.Set("name", group.Name),
 		d.Set("id", group.Id),
-		d.Set("externally_managed", group.ExternallyManaged), // is this needed?
+		d.Set("externally_managed", group.ExternallyManaged),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
 }
 
 func resourceGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	if !d.HasChange("name") {
 		return nil
@@ -102,7 +102,7 @@ func resourceGroupUpdate(ctx context.Context, d *schema.ResourceData, c interfac
 }
 
 func resourceGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	api := c.(sdk.LookerSDK)
+	api := c.(*sdk.LookerSDK)
 
 	_, delErr := api.DeleteGroup(d.Id(), nil)
 	if delErr != nil {
