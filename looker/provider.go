@@ -31,11 +31,6 @@ func Provider() *schema.Provider {
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("LOOKER_CLIENT_SECRET", nil),
 			},
-			"api_version": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_VERSION", "4.0"),
-			},
 			"verify_ssl": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -50,6 +45,7 @@ func Provider() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{
 			"looker_role":      resourceRole(),
 			"looker_user":      resourceUser(),
+			"looker_group":     resourceGroup(),
 			"looker_user_role": resourceUserRole(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
@@ -70,7 +66,7 @@ func configureProvider(ctx context.Context, data *schema.ResourceData) (interfac
 		BaseUrl:      data.Get("base_url").(string),
 		ClientId:     data.Get("client_id").(string),
 		ClientSecret: data.Get("client_secret").(string),
-		ApiVersion:   data.Get("api_version").(string),
+		ApiVersion:   "4.0", // this provider only supports API verison 4.0
 		VerifySsl:    data.Get("verify_ssl").(bool),
 		Timeout:      int32(data.Get("timeout").(int)),
 		AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
