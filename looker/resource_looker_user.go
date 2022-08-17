@@ -122,6 +122,11 @@ func resourceUserUpdate(ctx context.Context, d *schema.ResourceData, c interface
 		if updateCredsErr != nil {
 			return diag.FromErr(updateCredsErr)
 		}
+
+		_, sendEmailErr := api.SendUserCredentialsEmailPasswordReset(d.Id(), "", nil)
+		if sendEmailErr != nil {
+			return diag.FromErr(sendEmailErr)
+		}
 	}
 
 	return resourceUserRead(ctx, d, c)
