@@ -1,6 +1,10 @@
 package conv
 
-import "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+import (
+	"errors"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
 
 func PString(s string) *string {
 	if s == "" {
@@ -9,19 +13,27 @@ func PString(s string) *string {
 	return &s
 }
 
-func PSlices(s *schema.Set) *[]string {
-	if s == nil {
+func PSlices[T any](s []T) *[]T {
+	if len(s) == 0 {
 		return nil
 	}
 
-	slice := make([]string, 0, s.Len())
-	for _, v := range s.List() {
-		slice = append(slice, v.(string))
-	}
-
-	return &slice
+	return &s
 }
 
 func PBool(b bool) *bool {
 	return &b
+}
+
+func SchemaSetToSliceString(set *schema.Set) ([]string, error) {
+	slice := make([]string, set.Len())
+	for i, v := range set.List() {
+		str, ok := v.(string)
+		if !ok {
+			return nil, errors.New("set contains a non-string element")
+		}
+		slice[i] = str
+	}
+
+	return slice, nil
 }

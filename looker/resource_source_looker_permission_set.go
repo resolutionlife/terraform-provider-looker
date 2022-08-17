@@ -55,10 +55,15 @@ func resourcePermissionSetCreate(ctx context.Context, d *schema.ResourceData, c 
 		return diag.Errorf("permissions is not a set")
 	}
 
+	permissionsSlice, err := conv.SchemaSetToSliceString(permissions)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	permissionSet, err := api.CreatePermissionSet(
 		sdk.WritePermissionSet{
 			Name:        conv.PString(d.Get("name").(string)),
-			Permissions: conv.PSlices(permissions),
+			Permissions: conv.PSlices(permissionsSlice),
 		},
 		nil,
 	)
@@ -99,11 +104,16 @@ func resourcePermissionSetUpdate(ctx context.Context, d *schema.ResourceData, c 
 		return diag.Errorf("permissions is not a set")
 	}
 
-	_, err := api.UpdatePermissionSet(
+	permissionsSlice, err := conv.SchemaSetToSliceString(permissions)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	_, err = api.UpdatePermissionSet(
 		d.Id(),
 		sdk.WritePermissionSet{
 			Name:        conv.PString(d.Get("name").(string)),
-			Permissions: conv.PSlices(permissions),
+			Permissions: conv.PSlices(permissionsSlice),
 		},
 		nil,
 	)
