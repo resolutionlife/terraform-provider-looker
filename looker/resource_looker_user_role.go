@@ -109,7 +109,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 	o, n := d.GetChange("role_ids")
 	old, ok := o.(*schema.Set)
 	if !ok {
-		return diag.Errorf("interface{} is not of type *schema.Set")
+		return diag.Errorf("old role_ids is not of type *schema.Set")
 	}
 	oldIDs, oErr := schemaSetToSliceString(old)
 	if oErr != nil {
@@ -118,7 +118,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 
 	new, ok := n.(*schema.Set)
 	if !ok {
-		return diag.Errorf("interface{} is not of type *schema.Set")
+		return diag.Errorf("new role_ids is not of type *schema.Set")
 	}
 	newIDs, nErr := schemaSetToSliceString(new)
 	if nErr != nil {
@@ -167,7 +167,7 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 	// get role ids set in the resource data
 	rIDs, ok := d.Get("role_ids").(*schema.Set)
 	if !ok {
-		return nil, errors.New("interface{} is not of type *schema.Set")
+		return nil, errors.New("rold_ids is not of type *schema.Set")
 	}
 	rscRoleIDs, rscErr := schemaSetToSliceString(rIDs)
 	if rscErr != nil {
