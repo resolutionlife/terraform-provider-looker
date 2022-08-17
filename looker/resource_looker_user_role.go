@@ -105,12 +105,22 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 			diff =   ["user"]
 			toSet =  ["user", ""developer""]
 	*/
+
 	o, n := d.GetChange("role_ids")
-	oldIDs, oErr := schemaSetToSliceString(o)
+	old, ok := o.(*schema.Set)
+	if !ok {
+		return diag.Errorf("interface{} is not of type *schema.Set")
+	}
+	oldIDs, oErr := schemaSetToSliceString(old)
 	if oErr != nil {
 		return diag.FromErr(oErr)
 	}
-	newIDs, nErr := schemaSetToSliceString(n)
+
+	new, ok := n.(*schema.Set)
+	if !ok {
+		return diag.Errorf("interface{} is not of type *schema.Set")
+	}
+	newIDs, nErr := schemaSetToSliceString(new)
 	if nErr != nil {
 		return diag.FromErr(nErr)
 	}
@@ -155,7 +165,11 @@ func resourceUserRoleDelete(ctx context.Context, d *schema.ResourceData, c inter
 // userRolesDiff returns the diff between the looker remote roles and roles in the state.
 func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error) {
 	// get role ids set in the resource data
-	rscRoleIDs, rscErr := schemaSetToSliceString(d.Get("role_ids"))
+	rIDs, ok := d.Get("role_ids").(*schema.Set)
+	if !ok {
+		return nil, errors.New("interface{} is not of type *schema.Set")
+	}
+	rscRoleIDs, rscErr := schemaSetToSliceString(rIDs)
 	if rscErr != nil {
 		return nil, rscErr
 	}
@@ -192,12 +206,7 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 	return roleIDs, nil
 }
 
-func schemaSetToSliceString(i interface{}) ([]string, error) {
-	set, ok := i.(*schema.Set)
-	if !ok {
-		return nil, errors.New("interface{} is not of type *schema.Set")
-	}
-
+func schemaSetToSliceString(set *schema.Set) ([]string, error) {
 	slice := make([]string, set.Len())
 	for i, v := range set.List() {
 		str, ok := v.(string)
