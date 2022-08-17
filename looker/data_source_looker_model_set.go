@@ -32,7 +32,7 @@ func datasourceModelSet() *schema.Resource {
 				ExactlyOneOf: []string{"name", "id"},
 			},
 			"models": {
-				Type: schema.TypeList,
+				Type: schema.TypeSet,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
