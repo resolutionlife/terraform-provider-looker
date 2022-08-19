@@ -12,6 +12,7 @@ import (
 
 func resourcePermissionSet() *schema.Resource {
 	return &schema.Resource{
+		Description:   "Manages a set of Looker permissions",
 		CreateContext: resourcePermissionSetCreate,
 		ReadContext:   resourcePermissionSetRead,
 		UpdateContext: resourcePermissionSetUpdate,
