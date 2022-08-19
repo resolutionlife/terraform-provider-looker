@@ -77,12 +77,14 @@ func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interfa
 
 	diff, diffErr := userRolesDiff(api, d)
 	if diffErr != nil {
+		// TODO: handle when user is not found
 		return diag.FromErr(diffErr)
 	}
 
 	userID := d.Get("user_id").(string)
 	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
+		// TODO: handle when user is not found
 		diag.FromErr(rolesErr)
 	}
 
@@ -195,8 +197,18 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 		return nil, urErr
 	}
 
-	roleIDs := make([]string, len(ur))
-	for i, role := range ur {
+	roleIDs, rErr := rolesToSliceString(ur)
+	if rErr != nil {
+		diag.FromErr(rErr)
+	}
+
+	return roleIDs, nil
+}
+
+func rolesToSliceString(roles []sdk.Role) ([]string, error) {
+	roleIDs := make([]string, len(roles))
+
+	for i, role := range roles {
 		if role.Id == nil {
 			return nil, errors.Errorf("the user has a role with a missing id")
 		}

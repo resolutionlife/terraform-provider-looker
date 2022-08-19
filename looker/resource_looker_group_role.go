@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -50,25 +51,18 @@ func resourceGroupRoleCreate(ctx context.Context, d *schema.ResourceData, c inte
 	if !ok {
 		return diag.Errorf("attribute role_ids is not of type *schema.Set")
 	}
+
 	roleIDs, rErr := conv.SchemaSetToSliceString(rIDs)
 	if rErr != nil {
 		return diag.FromErr(rErr)
 	}
 
-	var result *multierror.Error
-	for _, roleID := range roleIDs {
-		_, setErr := api.SetRoleGroups(roleID, []string{groupID}, nil)
-		if setErr != nil {
-			multierror.Append(
-				result, setErr,
-			)
-		}
-	}
-	if resErr := result.ErrorOrNil(); resErr != nil {
-		diag.FromErr(resErr)
+	setErr := setRolesOnGroup(api, roleIDs, []string{groupID})
+	if setErr != nil {
+		diag.FromErr(setErr)
 	}
 
-	d.SetId(strings.Join(append(roleIDs, groupID), "_"))
+	d.SetId(fmt.Sprintf("%s_%v", groupID, strings.Join(roleIDs, "_")))
 
 	return resourceGroupRoleRead(ctx, d, c)
 }
@@ -76,6 +70,8 @@ func resourceGroupRoleRead(ctx context.Context, d *schema.ResourceData, c interf
 	api := c.(*sdk.LookerSDK)
 
 	groupID := d.Get("group_id").(string)
+
+	// return diag.Errorf(groupID)
 
 	res, rErr := api.SearchGroupsWithRoles(sdk.RequestSearchGroups{
 		Id: conv.PString(groupID),
@@ -85,19 +81,18 @@ func resourceGroupRoleRead(ctx context.Context, d *schema.ResourceData, c interf
 	}
 
 	if len(res) != 1 {
-		return diag.Errorf("group with group id %s not found", groupID)
+		// if no result found, then group ID does not exist
+		d.SetId("")
+		return nil
 	}
 
 	if res[0].Roles == nil {
 		return diag.Errorf("no roles found on group with group id %s", groupID)
 	}
 
-	roleIDs := make([]string, len(*res[0].Roles))
-	for i, role := range *res[0].Roles {
-		if role.Id == nil {
-			return diag.Errorf("no role id found")
-		}
-		roleIDs[i] = *role.Id
+	roleIDs, rErr := rolesToSliceString(*res[0].Roles)
+	if rErr != nil {
+		diag.FromErr(rErr)
 	}
 
 	return diag.FromErr(d.Set("role_ids", roleIDs))
@@ -108,6 +103,8 @@ func resourceGroupRoleUpdate(ctx context.Context, d *schema.ResourceData, c inte
 
 	groupID := d.Get("group_id").(string)
 	o, n := d.GetChange("role_ids")
+
+	// delete old roleIDs
 	old, ok := o.(*schema.Set)
 	if !ok {
 		return diag.Errorf("old role_ids is not of type *schema.Set")
@@ -116,7 +113,12 @@ func resourceGroupRoleUpdate(ctx context.Context, d *schema.ResourceData, c inte
 	if oErr != nil {
 		return diag.FromErr(oErr)
 	}
+	delErr := setRolesOnGroup(api, oldIDs, []string{})
+	if delErr != nil {
+		diag.FromErr(delErr)
+	}
 
+	// add new roleIDs
 	new, ok := n.(*schema.Set)
 	if !ok {
 		return diag.Errorf("new role_ids is not of type *schema.Set")
@@ -125,32 +127,9 @@ func resourceGroupRoleUpdate(ctx context.Context, d *schema.ResourceData, c inte
 	if nErr != nil {
 		return diag.FromErr(nErr)
 	}
-
-	// return diag.Errorf("old: %v, new: %v", oldIDs, newIDs)
-
-	var result *multierror.Error
-
-	// delete old roleIDs
-	for _, roleID := range oldIDs {
-		_, setErr := api.SetRoleGroups(roleID, []string{}, nil)
-		if setErr != nil {
-			multierror.Append(
-				result, setErr,
-			)
-		}
-	}
-
-	// add new roleIDs
-	for _, roleID := range newIDs {
-		_, setErr := api.SetRoleGroups(roleID, []string{groupID}, nil)
-		if setErr != nil {
-			multierror.Append(
-				result, setErr,
-			)
-		}
-	}
-	if resErr := result.ErrorOrNil(); resErr != nil {
-		diag.FromErr(resErr)
+	setErr := setRolesOnGroup(api, newIDs, []string{groupID})
+	if setErr != nil {
+		diag.FromErr(setErr)
 	}
 
 	d.SetId(strings.Join(append(newIDs, groupID), "_"))
@@ -170,14 +149,9 @@ func resourceGroupRoleDelete(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.FromErr(rErr)
 	}
 
-	var result *multierror.Error
-	for _, roleID := range roleIDs {
-		_, setErr := api.SetRoleGroups(roleID, []string{}, nil)
-		if setErr != nil {
-			multierror.Append(
-				result, setErr,
-			)
-		}
+	setErr := setRolesOnGroup(api, roleIDs, []string{})
+	if setErr != nil {
+		diag.FromErr(setErr)
 	}
 
 	return nil
