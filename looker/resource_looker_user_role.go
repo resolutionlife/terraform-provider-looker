@@ -111,7 +111,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 	if !ok {
 		return diag.Errorf("old role_ids is not of type *schema.Set")
 	}
-	oldIDs, oErr := schemaSetToSliceString(old)
+	oldIDs, oErr := conv.SchemaSetToSliceString(old)
 	if oErr != nil {
 		return diag.FromErr(oErr)
 	}
@@ -120,7 +120,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 	if !ok {
 		return diag.Errorf("new role_ids is not of type *schema.Set")
 	}
-	newIDs, nErr := schemaSetToSliceString(new)
+	newIDs, nErr := conv.SchemaSetToSliceString(new)
 	if nErr != nil {
 		return diag.FromErr(nErr)
 	}
@@ -169,7 +169,7 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 	if !ok {
 		return nil, errors.New("rold_ids is not of type *schema.Set")
 	}
-	rscRoleIDs, rscErr := schemaSetToSliceString(rIDs)
+	rscRoleIDs, rscErr := conv.SchemaSetToSliceString(rIDs)
 	if rscErr != nil {
 		return nil, rscErr
 	}
@@ -204,17 +204,4 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 	}
 
 	return roleIDs, nil
-}
-
-func schemaSetToSliceString(set *schema.Set) ([]string, error) {
-	slice := make([]string, set.Len())
-	for i, v := range set.List() {
-		str, ok := v.(string)
-		if !ok {
-			return nil, errors.New("set contains a non-string element")
-		}
-		slice[i] = str
-	}
-
-	return slice, nil
 }
