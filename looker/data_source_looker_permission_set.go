@@ -13,6 +13,8 @@ import (
 
 func dataSourcePermissionSet() *schema.Resource {
 	return &schema.Resource{
+		Description: "This datasource reads a permission set from a Looker instance.",
+
 		ReadContext: dataSourcePermissionSetRead,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
