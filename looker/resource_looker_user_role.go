@@ -105,7 +105,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 			oldIDs =    ["viewer", "developer"],
 			lookerRoles = ["viewer", "developer", "user"],
 			diff =   ["user"]
-			toSet =  ["user", ""developer""]
+			toSet =  ["user", "developer"]
 	*/
 
 	o, n := d.GetChange("role_ids")
@@ -142,6 +142,8 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 		return diag.Errorf(setErr.Error())
 	}
 
+	d.SetId(strings.Join(append(newIDs, userID), "_"))
+
 	return resourceUserRoleRead(ctx, d, c)
 }
 
@@ -169,7 +171,7 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 	// get role ids set in the resource data
 	rIDs, ok := d.Get("role_ids").(*schema.Set)
 	if !ok {
-		return nil, errors.New("rold_ids is not of type *schema.Set")
+		return nil, errors.New("role_ids is not of type *schema.Set")
 	}
 	rscRoleIDs, rscErr := conv.SchemaSetToSliceString(rIDs)
 	if rscErr != nil {
@@ -197,18 +199,8 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 		return nil, urErr
 	}
 
-	roleIDs, rErr := rolesToSliceString(ur)
-	if rErr != nil {
-		diag.FromErr(rErr)
-	}
-
-	return roleIDs, nil
-}
-
-func rolesToSliceString(roles []sdk.Role) ([]string, error) {
-	roleIDs := make([]string, len(roles))
-
-	for i, role := range roles {
+	roleIDs := make([]string, len(ur))
+	for i, role := range ur {
 		if role.Id == nil {
 			return nil, errors.Errorf("the user has a role with a missing id")
 		}
