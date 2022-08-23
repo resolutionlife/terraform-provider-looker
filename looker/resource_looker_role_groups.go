@@ -3,6 +3,7 @@ package looker
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -16,22 +17,21 @@ import (
 
 func resourceRoleGroups() *schema.Resource {
 	return &schema.Resource{
-		Description: "",
+		Description: "This resource binds a set of groups to a looker role. This is an additive and non-authorative resource that grants groups to a role in addition to current groups configured in Looker.",
 
 		CreateContext: resourceRoleGroupsCreate,
 		ReadContext:   resourceRoleGroupsRead,
 		UpdateContext: resourceRoleGroupsUpdate,
 		DeleteContext: resourceRoleGroupsDelete,
 		Importer: &schema.ResourceImporter{
-			// todo
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceRoleGroupImport,
 		},
 
 		Schema: map[string]*schema.Schema{
 			"role_id": {
 				Type:        schema.TypeString,
 				Required:    true,
-				Description: "",
+				Description: "The id of the role",
 			},
 			"group_ids": {
 				Type: schema.TypeSet,
@@ -39,7 +39,7 @@ func resourceRoleGroups() *schema.Resource {
 					Type: schema.TypeString,
 				},
 				Required:    true,
-				Description: "",
+				Description: "An unordered list of group ids to be granted the role",
 			},
 		},
 	}
@@ -179,6 +179,26 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 	}
 
 	return nil
+}
+
+func resourceRoleGroupImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+	// id is delimited using `_`, eg. <role_id>_<group_ids>
+	u := regexp.MustCompile(`_`)
+
+	s := u.Split(d.Id(), 2)
+	if len(s) < 2 {
+		diag.Errorf("invalid id, should be of the form <role_id>_<group_ids>")
+	}
+
+	resErr := multierror.Append(
+		d.Set("role_id", s[0]),
+		d.Set("group_ids", u.Split(s[1], -1)),
+	).ErrorOrNil()
+	if resErr != nil {
+		return nil, resErr
+	}
+
+	return []*schema.ResourceData{d}, nil
 }
 
 func getGroupsOnRole(api *sdk.LookerSDK, roleID string) ([]string, error) {
