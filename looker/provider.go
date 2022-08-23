@@ -48,6 +48,7 @@ func Provider() *schema.Provider {
 			"looker_group":          resourceGroup(),
 			"looker_user_role":      resourceUserRole(),
 			"looker_permission_set": resourcePermissionSet(),
+			"looker_group_user":     resourceGroupUser(),
 			"looker_role_groups":    resourceRoleGroups(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
