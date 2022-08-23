@@ -3,10 +3,12 @@
 page_title: "looker_model_set Data Source - terraform-provider-looker"
 subcategory: ""
 description: |-
-  
+  This datasource reads a model set from a Looker instance.
 ---
 
 # looker_model_set (Data Source)
+
+This datasource reads a model set from a Looker instance.
 
 ## Example Usage 
 
@@ -30,6 +32,6 @@ data "looker_model_set" "test" {
 
 ### Read-Only
 
-- `models` (List of String) A list of models within the model set.
+- `models` (Set of String) A list of models within the model set.
 
 

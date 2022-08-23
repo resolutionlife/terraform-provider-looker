@@ -13,6 +13,8 @@ import (
 
 func datasourceRole() *schema.Resource {
 	return &schema.Resource{
+		Description: "This datasource reads a looker role from a Looker instance.",
+
 		ReadContext: datasourceRoleRead,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
