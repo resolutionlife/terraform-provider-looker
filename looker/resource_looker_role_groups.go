@@ -28,7 +28,7 @@ func resourceRoleGroups() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"role_ids": {
+			"role_id": {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "",
@@ -118,7 +118,7 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 	// get old and new groups set on this resource
 	old, ok := o.(*schema.Set)
 	if !ok {
-		return diag.Errorf("old role_ids is not of type *schema.Set")
+		return diag.Errorf("old role_id is not of type *schema.Set")
 	}
 	oldIDs, oErr := conv.SchemaSetToSliceString(old)
 	if oErr != nil {
@@ -126,7 +126,7 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 	}
 	new, ok := n.(*schema.Set)
 	if !ok {
-		return diag.Errorf("new role_ids is not of type *schema.Set")
+		return diag.Errorf("new role_id is not of type *schema.Set")
 	}
 	newIDs, nErr := conv.SchemaSetToSliceString(new)
 	if nErr != nil {
@@ -160,7 +160,7 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 	// groups
 	gIDs, ok := d.Get("group_ids").(*schema.Set)
 	if !ok {
-		return diag.Errorf("attribute role_ids is not of type *schema.Set")
+		return diag.Errorf("attribute role_id is not of type *schema.Set")
 	}
 	groupIDs, rErr := conv.SchemaSetToSliceString(gIDs)
 	if rErr != nil {

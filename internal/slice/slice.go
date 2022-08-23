@@ -1,18 +1,20 @@
 package slice
 
-func Diff(s, t []string) (diff []string) {
+func Diff(s, t []string) []string {
+	var diff = []string{}
+
 	for _, sval := range s {
 		if !contains(t, sval) {
 			diff = append(diff, sval)
 		}
 	}
-
 	for _, tval := range t {
 		if !contains(s, tval) {
 			diff = append(diff, tval)
 		}
 	}
-	return
+
+	return diff
 }
 
 func Delete(s []string, toDelete []string) (str []string) {
