@@ -73,7 +73,7 @@ func resourcePermissionSetCreate(ctx context.Context, d *schema.ResourceData, c 
 	}
 
 	if permissionSet.Id == nil {
-		return diag.Errorf("permission set %s has missing id", permissionSet.Name)
+		return diag.Errorf("permission set has missing id")
 	}
 	d.SetId(*permissionSet.Id)
 
@@ -88,8 +88,8 @@ func resourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c in
 		return diag.FromErr(err)
 	}
 
+	d.SetId(*permissionSet.Id)
 	result := multierror.Append(
-		d.Set("id", permissionSet.Id),
 		d.Set("name", permissionSet.Name),
 		d.Set("permissions", permissionSet.Permissions),
 	)
