@@ -73,7 +73,7 @@ func resourcePermissionSetCreate(ctx context.Context, d *schema.ResourceData, c 
 	}
 
 	if permissionSet.Id == nil {
-		return diag.Errorf("permission set %s has missing id", permissionSet.Name)
+		return diag.Errorf("permission set has missing id")
 	}
 	d.SetId(*permissionSet.Id)
 
