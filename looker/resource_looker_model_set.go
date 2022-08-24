@@ -83,7 +83,7 @@ func resourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interfa
 	}
 
 	result := multierror.Append(
-		d.Set("id", *modelSet.Id),
+		d.Set("id", modelSet.Id),
 		d.Set("name", modelSet.Name),
 		d.Set("models", modelSet.Models),
 	)

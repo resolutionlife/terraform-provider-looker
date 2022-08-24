@@ -89,7 +89,7 @@ func resourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c in
 	}
 
 	result := multierror.Append(
-		d.Set("id", *permissionSet.Id),
+		d.Set("id", permissionSet.Id),
 		d.Set("name", permissionSet.Name),
 		d.Set("permissions", permissionSet.Permissions),
 	)
