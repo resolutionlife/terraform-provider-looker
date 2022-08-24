@@ -82,12 +82,8 @@ func resourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interfa
 		return diag.FromErr(err)
 	}
 
-	if modelSet.Id != nil {
-		return diag.Errorf("")
-	}
-
-	d.SetId(*modelSet.Id)
 	result := multierror.Append(
+		d.Set("id", *modelSet.Id),
 		d.Set("name", modelSet.Name),
 		d.Set("models", modelSet.Models),
 	)
