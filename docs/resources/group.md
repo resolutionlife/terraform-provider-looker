@@ -3,12 +3,12 @@
 page_title: "looker_group Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages users of a Looker instance
+  This resource creates a user group in a looker instance. To add users to this group, use the lookergroupuser https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md resource.
 ---
 
 # looker_group (Resource)
 
-Manages users of a Looker instance
+This resource creates a user group in a looker instance. To add users to this group, use the [looker_group_user](https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md) resource.
 
 ## Example Usage 
 
