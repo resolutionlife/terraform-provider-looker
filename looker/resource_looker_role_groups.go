@@ -74,7 +74,7 @@ func resourceRoleGroupsCreate(ctx context.Context, d *schema.ResourceData, c int
 		diag.FromErr(setErr)
 	}
 
-	d.SetId(fmt.Sprintf("%s_%v", roleID, strings.Join(groupIDs, "_")))
+	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(groupIDs, "_")))
 
 	return resourceRoleGroupsRead(ctx, d, c)
 }
@@ -148,7 +148,7 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(setErr)
 	}
 
-	d.SetId(fmt.Sprintf("%s_%v", roleID, strings.Join(newIDs, "_")))
+	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(newIDs, "_")))
 
 	return resourceRoleGroupsRead(ctx, d, c)
 }
@@ -182,7 +182,7 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 
 func resourceRoleGroupImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	// id is delimited using `_`, eg. <role_id>_<group_ids>
-	s := strings.SplitN(d.Id(), "_", 2)
+	s := strings.Split(d.Id(), "_")
 	if len(s) < 2 {
 		diag.Errorf("invalid id, should be of the form <role_id>_<group_ids>")
 	}
