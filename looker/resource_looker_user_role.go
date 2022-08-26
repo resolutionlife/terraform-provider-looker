@@ -2,7 +2,7 @@ package looker
 
 import (
 	"context"
-	"regexp"
+	"fmt"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -66,8 +66,8 @@ func resourceUserRolesCreate(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.FromErr(errors.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
 	}
 
-	// the state has the role_ids provisioned in tf already, the id is a concat of the set role_ids and user_id
-	d.SetId(strings.Join(append(rscRoleIDs, userID), "_"))
+	// the state has the role_ids provisioned in tf already, the id is a concat of the user_id and role_ids
+	d.SetId(fmt.Sprintf("%s_%v", userID, strings.Join(rscRoleIDs, "_")))
 
 	return resourceUserRolesRead(ctx, d, c)
 }
@@ -141,6 +141,9 @@ func resourceUserRolesUpdate(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.Errorf(setErr.Error())
 	}
 
+	// reset the resource id to represent update
+	d.SetId(fmt.Sprintf("%s_%v", userID, strings.Join(newIDs, "_")))
+
 	return resourceUserRolesRead(ctx, d, c)
 }
 
@@ -165,16 +168,14 @@ func resourceUserRolesDelete(ctx context.Context, d *schema.ResourceData, c inte
 
 func resourceUserRolesImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	// id is delimited using `_`, eg. <user_id>_<role_ids>
-	u := regexp.MustCompile(`_`)
-
-	s := u.Split(d.Id(), 2)
+	s := strings.SplitN(d.Id(), "_", 2)
 	if len(s) < 2 {
 		diag.Errorf("invalid id, should be of the form <user_id>_<role_ids>")
 	}
 
 	resErr := multierror.Append(
 		d.Set("user_id", s[0]),
-		d.Set("role_ids", u.Split(s[1], -1)),
+		d.Set("role_ids", s[1:]),
 	).ErrorOrNil()
 	if resErr != nil {
 		return nil, resErr
