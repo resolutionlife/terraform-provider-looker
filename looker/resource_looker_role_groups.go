@@ -3,7 +3,6 @@ package looker
 import (
 	"context"
 	"fmt"
-	"regexp"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -149,7 +148,7 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(setErr)
 	}
 
-	d.SetId(strings.Join(append(newIDs, roleID), "_"))
+	d.SetId(fmt.Sprintf("%s_%v", roleID, strings.Join(newIDs, "_")))
 
 	return resourceRoleGroupsRead(ctx, d, c)
 }
@@ -183,16 +182,14 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 
 func resourceRoleGroupImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	// id is delimited using `_`, eg. <role_id>_<group_ids>
-	u := regexp.MustCompile(`_`)
-
-	s := u.Split(d.Id(), 2)
+	s := strings.SplitN(d.Id(), "_", 2)
 	if len(s) < 2 {
 		diag.Errorf("invalid id, should be of the form <role_id>_<group_ids>")
 	}
 
 	resErr := multierror.Append(
 		d.Set("role_id", s[0]),
-		d.Set("group_ids", u.Split(s[1], -1)),
+		d.Set("group_ids", s[1:]),
 	).ErrorOrNil()
 	if resErr != nil {
 		return nil, resErr
