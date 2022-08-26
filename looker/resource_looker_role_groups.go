@@ -112,43 +112,60 @@ func resourceRoleGroupsRead(ctx context.Context, d *schema.ResourceData, c inter
 func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	o, n := d.GetChange("group_ids")
-
 	// get old and new groups set on this resource
-	old, ok := o.(*schema.Set)
+	oG, nG := d.GetChange("group_ids")
+	old, ok := oG.(*schema.Set)
 	if !ok {
 		return diag.Errorf("old role_id is not of type *schema.Set")
 	}
-	oldIDs, oErr := conv.SchemaSetToSliceString(old)
+	oldGroupIDs, oErr := conv.SchemaSetToSliceString(old)
 	if oErr != nil {
 		return diag.FromErr(oErr)
 	}
-	new, ok := n.(*schema.Set)
+	new, ok := nG.(*schema.Set)
 	if !ok {
 		return diag.Errorf("new role_id is not of type *schema.Set")
 	}
-	newIDs, nErr := conv.SchemaSetToSliceString(new)
+	newGroupIDs, nErr := conv.SchemaSetToSliceString(new)
 	if nErr != nil {
 		return diag.FromErr(nErr)
 	}
 
-	// read groups already set on this role
-	roleID := d.Get("role_id").(string)
+	// if role_id has changes, delete old role from all groups
+	oR, nR := d.GetChange("role_id")
+	if d.HasChange("role_id") {
+		oldRoleID := oR.(string)
+
+		// inspect what groups are already set on the old role
+		lookerGroupIDs, groupsErr := getGroupsOnRole(api, oldRoleID)
+		if groupsErr != nil {
+			return diag.FromErr(groupsErr)
+		}
+
+		// remove groups that were in the old state
+		_, setErr := api.SetRoleGroups(oldRoleID, slice.Diff(oldGroupIDs, lookerGroupIDs), nil)
+		if setErr != nil {
+			return diag.FromErr(setErr)
+		}
+	}
+
+	// set new groups on the role_id, preserving existing roles
+	roleID := nR.(string)
 	lookerGroupIDs, groupsErr := getGroupsOnRole(api, roleID)
 	if groupsErr != nil {
 		return diag.FromErr(groupsErr)
 	}
 
 	// diff between what was has changed in the state and what is in looker
-	diff := slice.Diff(oldIDs, lookerGroupIDs)
+	diff := slice.Diff(oldGroupIDs, lookerGroupIDs)
 
-	// append
-	_, setErr := api.SetRoleGroups(roleID, append(diff, newIDs...), nil)
+	// set the new groups in the state and groups already provisioned in looker
+	_, setErr := api.SetRoleGroups(roleID, append(diff, newGroupIDs...), nil)
 	if setErr != nil {
 		return diag.FromErr(setErr)
 	}
 
-	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(newIDs, "_")))
+	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(newGroupIDs, "_")))
 
 	return resourceRoleGroupsRead(ctx, d, c)
 }
@@ -172,7 +189,8 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(groupsErr)
 	}
 
-	_, setErr := api.SetRoleGroups(roleID, slice.Diff(lookerGroupIDs, groupIDs), nil)
+	_, setErr := api.SetRoleGroups(
+		roleID, slice.Diff(lookerGroupIDs, groupIDs), nil)
 	if setErr != nil {
 		return diag.FromErr(setErr)
 	}
