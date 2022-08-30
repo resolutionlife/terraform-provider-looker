@@ -131,40 +131,43 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(nErr)
 	}
 
-	// if role_id has changes, delete old role from all groups
+	// get old and new role_ids set on this resource
 	oR, nR := d.GetChange("role_id")
-	if d.HasChange("role_id") {
-		oldRoleID := oR.(string)
-
-		// inspect what groups are already set on the old role
-		lookerGroupIDs, groupsErr := getGroupsOnRole(api, oldRoleID)
-		if groupsErr != nil {
-			return diag.FromErr(groupsErr)
-		}
-
-		// remove groups that were in the old state
-		_, setErr := api.SetRoleGroups(oldRoleID, slice.Diff(oldGroupIDs, lookerGroupIDs), nil)
-		if setErr != nil {
-			return diag.FromErr(setErr)
-		}
-	}
-
-	// set new groups on the role_id, preserving existing roles
 	roleID := nR.(string)
+
 	lookerGroupIDs, groupsErr := getGroupsOnRole(api, roleID)
 	if groupsErr != nil {
 		return diag.FromErr(groupsErr)
 	}
 
+	// toPreserve is a slice of group ids that are set in looker and are not provisioned by terraform
+	var toPreserve []string
 	// diff between what was has changed in the state and what is in looker
-	diff := slice.Diff(oldGroupIDs, lookerGroupIDs)
+	toPreserve = slice.Diff(oldGroupIDs, lookerGroupIDs)
+
+	// if role_id has changes, delete old role from all groups
+	if d.HasChange("role_id") {
+		oldRoleID := oR.(string)
+		// inspect what groups are already set on the old role
+		groupsWithOldRole, groupsErr := getGroupsOnRole(api, oldRoleID)
+		if groupsErr != nil {
+			return diag.FromErr(groupsErr)
+		}
+
+		// remove groups that were in the old state
+		_, setErr := api.SetRoleGroups(oldRoleID, slice.Diff(oldGroupIDs, groupsWithOldRole), nil)
+		if setErr != nil {
+			return diag.FromErr(setErr)
+		}
+
+		toPreserve = slice.LeftDiff(newGroupIDs, lookerGroupIDs)
+	}
 
 	// set the new groups in the state and groups already provisioned in looker
-	_, setErr := api.SetRoleGroups(roleID, append(diff, newGroupIDs...), nil)
+	_, setErr := api.SetRoleGroups(roleID, append(toPreserve, newGroupIDs...), nil)
 	if setErr != nil {
 		return diag.FromErr(setErr)
 	}
-
 	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(newGroupIDs, "_")))
 
 	return resourceRoleGroupsRead(ctx, d, c)

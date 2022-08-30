@@ -1,5 +1,6 @@
 package slice
 
+// Diff checks if s in contained within t and if t is contained within s. Diff returns all elements that are not in the intersection of s and t.
 func Diff(s, t []string) []string {
 	var diff = []string{}
 
@@ -8,6 +9,19 @@ func Diff(s, t []string) []string {
 			diff = append(diff, sval)
 		}
 	}
+	for _, tval := range t {
+		if !Contains(s, tval) {
+			diff = append(diff, tval)
+		}
+	}
+
+	return diff
+}
+
+// LeftDiff checks if t is contained within s and returns all elements not is s.
+func LeftDiff(s, t []string) []string {
+	var diff = []string{}
+
 	for _, tval := range t {
 		if !Contains(s, tval) {
 			diff = append(diff, tval)
