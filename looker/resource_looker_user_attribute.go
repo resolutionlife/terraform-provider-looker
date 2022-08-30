@@ -11,7 +11,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
-	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
 func resourceUserAttribute() *schema.Resource {
@@ -41,9 +40,10 @@ func resourceUserAttribute() *schema.Resource {
 				Description: "The user-friendly name displayed in the app for lists and filters",
 			},
 			"data_type": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "",
+				Type:             schema.TypeString,
+				Required:         true,
+				Description:      "",
+				ValidateDiagFunc: validationFunc([]string{"string", "number", "datetime", "yesno", "zipcode"}),
 			},
 			"hidden": {
 				Type:        schema.TypeBool,
@@ -51,24 +51,10 @@ func resourceUserAttribute() *schema.Resource {
 				Description: "If set the value will be treated like a password, and once set, no one will be able to decrypt and view it",
 			},
 			"user_access": {
-				Type:        schema.TypeString,
-				Required:    true,
-				Description: "If 'None', non-admins will not be able to see the value of this attribute for themselves. If 'View' is required to use this attribute in query filters. If 'Edit', the user will be able to set their own value of this attribute, so the user attribute will not be able to be used as an access filter.",
-				ValidateDiagFunc: func(i interface{}, p cty.Path) diag.Diagnostics {
-					validOptions := []string{"None", "View", "Edit"}
-					value := i.(string)
-
-					var diags diag.Diagnostics
-					if !slice.Contains(validOptions, value) {
-						diag := diag.Diagnostic{
-							Severity: diag.Error,
-							Summary:  "invalid option",
-							Detail:   fmt.Sprintf("%q is not included in valid options: %q", value, validOptions),
-						}
-						diags = append(diags, diag)
-					}
-					return diags
-				},
+				Type:             schema.TypeString,
+				Required:         true,
+				Description:      "If 'None', non-admins will not be able to see the value of this attribute for themselves. If 'View' is required to use this attribute in query filters. If 'Edit', the user will be able to set their own value of this attribute, so the user attribute will not be able to be used as an access filter.",
+				ValidateDiagFunc: validationFunc([]string{"None", "View", "Edit"}),
 			},
 			"default_value": {
 				Type:        schema.TypeString,
@@ -116,8 +102,18 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		return diag.FromErr(err)
 	}
 
-	// use has change since UI cannot give us value
-	// d.HasChange()
+	var defaultValue *string
+	// if hidden, default value cannot be retrieved from API
+	if *userAttributes.ValueIsHidden {
+		// use has change since API cannot give us default value
+		if d.HasChange("default_value") {
+			defaultValue = conv.PString("DEFAULT_IS_SET")
+		} else {
+			defaultValue = conv.PString(d.Get("default_value").(string))
+		}
+	} else {
+		defaultValue = userAttributes.DefaultValue
+	}
 
 	var userAccess string
 	if *userAttributes.UserCanView {
@@ -134,7 +130,7 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		d.Set("label", userAttributes.Label),
 		d.Set("data_type", userAttributes.Type),
 		d.Set("hidden", userAttributes.ValueIsHidden),
-		d.Set("default_value", userAttributes.DefaultValue),
+		d.Set("default_value", defaultValue),
 		d.Set("user_access", conv.PString(userAccess)),
 		// d.Set("domain_whitelist", userAttributes.HiddenValueDomainWhitelist),
 	)
@@ -150,7 +146,7 @@ func resourceUserAttributeUpdate(ctx context.Context, d *schema.ResourceData, c 
 		return diag.FromErr(err)
 	}
 
-	_, err = api.UpdateUserAttribute(d.Id(), *userAttrs, "", nil)
+	_, err = api.UpdateUserAttribute(d.Id(), *userAttrs, "id", nil)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -197,4 +193,31 @@ func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, e
 	// }
 
 	return &userAttr, nil
+}
+
+//Useful tools, maybe could be reused by other resources, need to find good home for these
+func validationFunc[T comparable](validOptions []T) func(i interface{}, p cty.Path) diag.Diagnostics {
+	return func(i interface{}, p cty.Path) diag.Diagnostics {
+		value := i.(T)
+
+		var diags diag.Diagnostics
+		if !contains(validOptions, value) {
+			diag := diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "invalid option",
+				Detail:   fmt.Sprintf("%v is not included in list of valid options: %v", value, validOptions),
+			}
+			diags = append(diags, diag)
+		}
+		return diags
+	}
+}
+
+func contains[T comparable](s []T, v T) bool {
+	for i := range s {
+		if s[i] == v {
+			return true
+		}
+	}
+	return false
 }
