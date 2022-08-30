@@ -46,7 +46,7 @@ func Provider() *schema.Provider {
 			"looker_role":           resourceRole(),
 			"looker_user":           resourceUser(),
 			"looker_group":          resourceGroup(),
-			"looker_user_role":      resourceUserRole(),
+			"looker_user_roles":     resourceUserRoles(),
 			"looker_permission_set": resourcePermissionSet(),
 			"looker_model_set":      resourceModelSet(),
 			"looker_group_user":     resourceGroupUser(),

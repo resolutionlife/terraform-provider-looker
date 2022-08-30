@@ -45,9 +45,10 @@ func resourceGroup() *schema.Resource {
 func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
+	name := d.Get("name").(string)
 	group, grErr := api.CreateGroup(
 		sdk.WriteGroup{
-			Name: conv.PString(d.Get("name").(string)),
+			Name: conv.PString(name),
 		},
 		"id,name", nil,
 	)
@@ -56,7 +57,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, c interfac
 	}
 
 	if group.Id == nil {
-		return diag.Errorf("group %s has missing id", group.Name)
+		return diag.Errorf("group %s has missing id", name)
 	}
 	d.SetId(*group.Id)
 
