@@ -2,14 +2,15 @@ package looker
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+	"github.com/pkg/errors"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
@@ -61,14 +62,14 @@ func resourceUserAttribute() *schema.Resource {
 				Optional:    true,
 				Description: "Value when no other value is set for the user or for one of the user's groups",
 			},
-			// "domain_whitelist": {
-			// 	Type: schema.TypeSet,
-			// 	Elem: &schema.Schema{
-			// 		Type: schema.TypeString,
-			// 	},
-			// 	Optional:    true,
-			// 	Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard '*'. You must set this when changing a user attribute to 'hidden'",
-			// },
+			"domain_whitelist": {
+				Type: schema.TypeSet,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional:    true,
+				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard '*'. You must set this when changing a user attribute to 'hidden'. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like 'my_domain/*' to 'my_domain/route/*')",
+			},
 		},
 	}
 }
@@ -124,6 +125,11 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		userAccess = "None"
 	}
 
+	var domainsWhitelistSlice []string
+	if userAttributes.HiddenValueDomainWhitelist != nil {
+		domainsWhitelistSlice = strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
+	}
+
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
 		d.Set("name", userAttributes.Name),
@@ -132,7 +138,7 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		d.Set("hidden", userAttributes.ValueIsHidden),
 		d.Set("default_value", defaultValue),
 		d.Set("user_access", conv.PString(userAccess)),
-		// d.Set("domain_whitelist", userAttributes.HiddenValueDomainWhitelist),
+		d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice)),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
@@ -182,15 +188,20 @@ func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, e
 		userAttr.UserCanEdit = conv.PBool(false)
 	}
 
-	// domainsWhitelist, ok := d.Get("domain_whitelist").(*schema.Set)
-	// if !ok {
-	// 	return diag.Errorf("domain_whitelist is not a set")
-	// }
+	domainsWhitelist, ok := d.Get("domain_whitelist").(*schema.Set)
+	if !ok {
+		return nil, errors.New("domain_whitelist is not a set")
+	}
 
-	// domainsWhitelistSlice, err := conv.SchemaSetToSliceString(domainsWhitelist)
-	// if err != nil {
-	// 	return diag.FromErr(err)
-	// }
+	domainsWhitelistSlice, err := conv.SchemaSetToSliceString(domainsWhitelist)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to convert domain_whitelist to string slice")
+	}
+
+	domainWhitelistString := strings.Join(domainsWhitelistSlice, ",")
+	if domainWhitelistString != "" {
+		userAttr.HiddenValueDomainWhitelist = conv.PString(domainWhitelistString)
+	}
 
 	return &userAttr, nil
 }
