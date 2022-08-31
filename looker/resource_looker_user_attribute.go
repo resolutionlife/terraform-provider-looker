@@ -157,11 +157,18 @@ func resourceUserAttributeUpdate(ctx context.Context, d *schema.ResourceData, c 
 		return diag.FromErr(err)
 	}
 
-	return resourcePermissionSetRead(ctx, d, c)
+	return resourceUserAttributeRead(ctx, d, c)
 }
 
 func resourceUserAttributeDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
-	return diag.Errorf("not yet implemented")
+	api := c.(*sdk.LookerSDK)
+
+	_, err := api.DeleteUserAttribute(d.Id(), nil)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	return nil
 }
 
 func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, error) {
