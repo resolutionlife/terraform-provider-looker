@@ -40,6 +40,11 @@ func resourceGroupBinding() *schema.Resource {
 				Description: "The id of the group to be added to the parent group",
 				ForceNew:    true,
 			},
+			"id": {
+				Type:        schema.TypeString,
+				Computed:    true,
+				Description: "The id of the looker_group_binding. This id is of the form <parent_group_id>_<group_id>",
+			},
 		},
 	}
 }
