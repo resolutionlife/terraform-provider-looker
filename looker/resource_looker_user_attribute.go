@@ -43,7 +43,7 @@ func resourceUserAttribute() *schema.Resource {
 			"data_type": {
 				Type:             schema.TypeString,
 				Required:         true,
-				Description:      "",
+				Description:      "Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode')",
 				ValidateDiagFunc: validationFunc([]string{"string", "number", "datetime", "yesno", "zipcode"}),
 			},
 			"hidden": {
