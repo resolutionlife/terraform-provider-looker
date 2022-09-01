@@ -17,7 +17,7 @@ import (
 
 func resourceGroupBinding() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource adds a single looker group to a parent group. If the fields in this resource are modified, it will be destroyed and recreated.",
+		Description: "This resource adds a single looker group to a parent group. If this resource is modified, it will be destroyed and recreated.",
 
 		// no update method needed as resource is destroyed and recreated if any fields are modified
 		CreateContext: resourceGroupBindingCreate,
@@ -80,8 +80,8 @@ func resourceGroupBindingRead(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(grErr)
 	}
 
-	// search result should only have one entry per group_id
-	// this case is almost impossible because every group is, by default, binded to the default 'All Users' looker group.
+	// search result should only have one entry
+	// this case is almost impossible because every group has 'All Users' as a parent group by default.
 	if len(groups) != 1 {
 		d.SetId("")
 		return nil
@@ -104,7 +104,10 @@ func resourceGroupBindingDelete(ctx context.Context, d *schema.ResourceData, c i
 		d.Get("group_id").(string),
 		nil,
 	)
+	// if the api call is successful the SDK returns an io.EOF error - this is not an error from looker and can be ignored
+	// TODO: amend this when the looker SDK has addressed this issue
 	if delErr != nil && !errors.Is(delErr, io.EOF) {
+		// TODO: handle the case where a user is not found
 		return diag.FromErr(delErr)
 	}
 

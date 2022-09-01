@@ -3,12 +3,12 @@
 page_title: "looker_group_binding Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource adds a single looker group to a parent group. If the fields in this resource are modified, it will be destroyed and recreated.
+  This resource adds a single looker group to a parent group. If this resource is modified, it will be destroyed and recreated.
 ---
 
 # looker_group_binding (Resource)
 
-This resource adds a single looker group to a parent group. If the fields in this resource are modified, it will be destroyed and recreated.
+This resource adds a single looker group to a parent group. If this resource is modified, it will be destroyed and recreated.
 
 ## Example Usage 
 ```terraform
