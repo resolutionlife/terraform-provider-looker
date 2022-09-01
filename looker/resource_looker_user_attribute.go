@@ -67,6 +67,7 @@ func resourceUserAttribute() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
+				ForceNew:    true,
 				Optional:    true,
 				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard '*'. You must set this when changing a user attribute to 'hidden'. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like 'my_domain/*' to 'my_domain/route/*')",
 			},
@@ -103,17 +104,10 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		return diag.FromErr(err)
 	}
 
-	var defaultValue *string
+	defaultValue := userAttributes.DefaultValue
 	// if hidden, default value cannot be retrieved from API
 	if *userAttributes.ValueIsHidden {
-		// use has change since API cannot give us default value
-		if d.HasChange("default_value") {
-			defaultValue = conv.PString("DEFAULT_IS_SET")
-		} else {
-			defaultValue = conv.PString(d.Get("default_value").(string))
-		}
-	} else {
-		defaultValue = userAttributes.DefaultValue
+		defaultValue = conv.PString(d.Get("default_value").(string))
 	}
 
 	var userAccess string
@@ -127,10 +121,7 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		userAccess = "None"
 	}
 
-	var domainsWhitelistSlice []string
-	if userAttributes.HiddenValueDomainWhitelist != nil {
-		domainsWhitelistSlice = strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
-	}
+	domainsWhitelistSlice := strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
 
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
