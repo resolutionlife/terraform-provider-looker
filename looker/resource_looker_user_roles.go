@@ -78,12 +78,14 @@ func resourceUserRolesRead(ctx context.Context, d *schema.ResourceData, c interf
 
 	diff, diffErr := userRolesDiff(api, d)
 	if diffErr != nil {
+		// TODO: handle when user is not found
 		return diag.FromErr(diffErr)
 	}
 
 	userID := d.Get("user_id").(string)
 	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
+		// TODO: handle when user is not found
 		diag.FromErr(rolesErr)
 	}
 
@@ -104,7 +106,7 @@ func resourceUserRolesUpdate(ctx context.Context, d *schema.ResourceData, c inte
 			oldIDs =    ["viewer", "developer"],
 			lookerRoles = ["viewer", "developer", "user"],
 			diff =   ["user"]
-			toSet =  ["user", ""developer""]
+			toSet =  ["user", "developer"]
 	*/
 
 	o, n := d.GetChange("role_ids")
@@ -189,7 +191,7 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 	// get role ids set in the resource data
 	rIDs, ok := d.Get("role_ids").(*schema.Set)
 	if !ok {
-		return nil, errors.New("rold_ids is not of type *schema.Set")
+		return nil, errors.New("role_ids is not of type *schema.Set")
 	}
 	rscRoleIDs, rscErr := conv.SchemaSetToSliceString(rIDs)
 	if rscErr != nil {
