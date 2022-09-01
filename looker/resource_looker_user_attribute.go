@@ -121,7 +121,10 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		userAccess = "None"
 	}
 
-	domainsWhitelistSlice := strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
+	var domainsWhitelistSlice []string
+	if userAttributes.HiddenValueDomainWhitelist != nil {
+		domainsWhitelistSlice = strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
+	}
 
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
