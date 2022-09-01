@@ -44,7 +44,7 @@ func resourceUserAttribute() *schema.Resource {
 				Type:             schema.TypeString,
 				Required:         true,
 				Description:      "Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode')",
-				ValidateDiagFunc: validationFunc([]string{"string", "number", "datetime", "yesno", "zipcode"}),
+				ValidateDiagFunc: validateOneOf([]string{"string", "number", "datetime", "yesno", "zipcode"}),
 			},
 			"hidden": {
 				Type:        schema.TypeBool,
@@ -54,8 +54,8 @@ func resourceUserAttribute() *schema.Resource {
 			"user_access": {
 				Type:             schema.TypeString,
 				Required:         true,
-				Description:      "If 'None', non-admins will not be able to see the value of this attribute for themselves. If 'View' is required to use this attribute in query filters. If 'Edit', the user will be able to set their own value of this attribute, so the user attribute will not be able to be used as an access filter.",
-				ValidateDiagFunc: validationFunc([]string{"None", "View", "Edit"}),
+				Description:      "If 'None', non-admins will not be able to see the value of this attribute for themselves. 'View' is required to use this attribute in query filters. If 'Edit', the user will be able to set their own value for this attribute, so the user attribute will not be able to be used as an access filter.",
+				ValidateDiagFunc: validateOneOf([]string{"None", "View", "Edit"}),
 			},
 			"default_value": {
 				Type:        schema.TypeString,
@@ -117,11 +117,13 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 	}
 
 	var userAccess string
-	if *userAttributes.UserCanView {
+	if *userAttributes.UserCanView && !*userAttributes.UserCanEdit {
 		userAccess = "View"
-	} else if *userAttributes.UserCanEdit {
+	}
+	if !*userAttributes.UserCanView && *userAttributes.UserCanEdit {
 		userAccess = "Edit"
-	} else {
+	}
+	if !*userAttributes.UserCanView && !*userAttributes.UserCanEdit {
 		userAccess = "None"
 	}
 
@@ -173,9 +175,9 @@ func resourceUserAttributeDelete(ctx context.Context, d *schema.ResourceData, c 
 
 func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, error) {
 	userAttr := sdk.WriteUserAttribute{
-		Name:          *conv.PString(d.Get("name").(string)),
-		Label:         *conv.PString(d.Get("label").(string)),
-		Type:          *conv.PString(d.Get("data_type").(string)),
+		Name:          d.Get("name").(string),
+		Label:         d.Get("label").(string),
+		Type:          d.Get("data_type").(string),
 		ValueIsHidden: conv.PBool(d.Get("hidden").(bool)),
 		DefaultValue:  conv.PString(d.Get("default_value").(string)),
 	}
@@ -187,8 +189,10 @@ func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, e
 
 	switch user_access {
 	case "View":
+		userAttr.UserCanEdit = conv.PBool(false)
 		userAttr.UserCanView = conv.PBool(true)
 	case "Edit":
+		userAttr.UserCanView = conv.PBool(true)
 		userAttr.UserCanEdit = conv.PBool(true)
 	case "None":
 		userAttr.UserCanView = conv.PBool(false)
@@ -213,8 +217,9 @@ func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, e
 	return &userAttr, nil
 }
 
-//Useful tools, maybe could be reused by other resources, need to find good home for these
-func validationFunc[T comparable](validOptions []T) func(i interface{}, p cty.Path) diag.Diagnostics {
+// Useful tools, maybe could be reused by other resources, need to find good home for these
+// There does exist the validation.StringInSlice method, but they return the deprecated SchemaValidateFunc instead
+func validateOneOf[T comparable](validOptions []T) schema.SchemaValidateDiagFunc {
 	return func(i interface{}, p cty.Path) diag.Diagnostics {
 		value := i.(T)
 
