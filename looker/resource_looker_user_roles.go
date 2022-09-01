@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -14,16 +15,16 @@ import (
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
-func resourceUserRole() *schema.Resource {
+func resourceUserRoles() *schema.Resource {
 	return &schema.Resource{
 		Description: "This resource binds a set of roles to a looker user. This is an additive and non-authorative resource that grants roles in addition to current roles configured in Looker.",
 
-		CreateContext: resourceUserRoleCreate,
-		ReadContext:   resourceUserRoleRead,
-		UpdateContext: resourceUserRoleUpdate,
-		DeleteContext: resourceUserRoleDelete,
+		CreateContext: resourceUserRolesCreate,
+		ReadContext:   resourceUserRolesRead,
+		UpdateContext: resourceUserRolesUpdate,
+		DeleteContext: resourceUserRolesDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceUserRolesImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -44,8 +45,8 @@ func resourceUserRole() *schema.Resource {
 	}
 }
 
-// resourceUserRoleCreate reads what exists in looker and appends the new roles to the existing roles
-func resourceUserRoleCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+// resourceUserRolesCreate reads what exists in looker and appends the new roles to the existing roles
+func resourceUserRolesCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	// get diff between roles in the resource data and in looker
@@ -65,24 +66,26 @@ func resourceUserRoleCreate(ctx context.Context, d *schema.ResourceData, c inter
 		return diag.FromErr(errors.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
 	}
 
-	// the state has the role_ids provisioned in tf already, the id is a concat of the set role_ids and user_id
-	d.SetId(strings.Join(append(rscRoleIDs, userID), "_"))
+	// the state has the role_ids provisioned in tf already, the id is a concat of the user_id and role_ids
+	d.SetId(fmt.Sprintf("%s_%s", userID, strings.Join(rscRoleIDs, "_")))
 
-	return resourceUserRoleRead(ctx, d, c)
+	return resourceUserRolesRead(ctx, d, c)
 }
 
-// resourceUserRoleRead reads what has been set in looker, and sets just what is provisioned in terraform to the state
-func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+// resourceUserRolesRead reads what has been set in looker, and sets just what is provisioned in terraform to the state
+func resourceUserRolesRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	diff, diffErr := userRolesDiff(api, d)
 	if diffErr != nil {
+		// TODO: handle when user is not found
 		return diag.FromErr(diffErr)
 	}
 
 	userID := d.Get("user_id").(string)
 	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
+		// TODO: handle when user is not found
 		diag.FromErr(rolesErr)
 	}
 
@@ -93,8 +96,8 @@ func resourceUserRoleRead(ctx context.Context, d *schema.ResourceData, c interfa
 	return diag.FromErr(result.ErrorOrNil())
 }
 
-// resourceUserRoleUpdate inspects the changes between the old and new state, and appends these changes to existing roles in looker for the given user_id.
-func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+// resourceUserRolesUpdate inspects the changes between the old and new state, and appends these changes to existing roles in looker for the given user_id.
+func resourceUserRolesUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	/*
@@ -103,7 +106,7 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 			oldIDs =    ["viewer", "developer"],
 			lookerRoles = ["viewer", "developer", "user"],
 			diff =   ["user"]
-			toSet =  ["user", ""developer""]
+			toSet =  ["user", "developer"]
 	*/
 
 	o, n := d.GetChange("role_ids")
@@ -140,10 +143,13 @@ func resourceUserRoleUpdate(ctx context.Context, d *schema.ResourceData, c inter
 		return diag.Errorf(setErr.Error())
 	}
 
-	return resourceUserRoleRead(ctx, d, c)
+	// reset the resource id to represent update
+	d.SetId(fmt.Sprintf("%s_%s", userID, strings.Join(newIDs, "_")))
+
+	return resourceUserRolesRead(ctx, d, c)
 }
 
-func resourceUserRoleDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceUserRolesDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	diff, diffErr := userRolesDiff(api, d)
@@ -162,12 +168,30 @@ func resourceUserRoleDelete(ctx context.Context, d *schema.ResourceData, c inter
 	return nil
 }
 
+func resourceUserRolesImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+	// id is delimited using `_`, eg. <user_id>_<role_ids>
+	s := strings.Split(d.Id(), "_")
+	if len(s) < 2 {
+		diag.Errorf("invalid id, should be of the form <user_id>_<role_ids>")
+	}
+
+	resErr := multierror.Append(
+		d.Set("user_id", s[0]),
+		d.Set("role_ids", s[1:]),
+	).ErrorOrNil()
+	if resErr != nil {
+		return nil, resErr
+	}
+
+	return []*schema.ResourceData{d}, nil
+}
+
 // userRolesDiff returns the diff between the looker remote roles and roles in the state.
 func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error) {
 	// get role ids set in the resource data
 	rIDs, ok := d.Get("role_ids").(*schema.Set)
 	if !ok {
-		return nil, errors.New("rold_ids is not of type *schema.Set")
+		return nil, errors.New("role_ids is not of type *schema.Set")
 	}
 	rscRoleIDs, rscErr := conv.SchemaSetToSliceString(rIDs)
 	if rscErr != nil {

@@ -12,7 +12,7 @@ data "looker_role" "producer" {
   name = "Producer"
 }
 
-resource "looker_user_role" "tina_roles" {
+resource "looker_user_roles" "tina_roles" {
   user_id  = looker_user.tina.id
   role_ids = [looker_role.director.id, looker_role.producer.id]
 }
