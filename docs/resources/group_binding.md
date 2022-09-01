@@ -12,16 +12,16 @@ This resource adds a single looker group to a parent group. If this resource is 
 
 ## Example Usage 
 ```terraform
-  resource "looker_group" "directors" {
-    name = "Directors"
+  resource "looker_group" "crew" {
+    name = "Crew"
   }
 
   resource "looker_group" "writers" {
     name = "Writers"
   }
 
-  resource "looker_group_binding" "director_writer" {
-    parent_group_id = looker_group.directors.id
+  resource "looker_group_binding" "crew_writer" {
+    parent_group_id = looker_group.crew.id
     group_id        = looker_group.writers.id
   }
 ```
@@ -43,6 +43,6 @@ This resource adds a single looker group to a parent group. If this resource is 
 A `looker_group_binding` resource can be imported by delimiting the `parent_group_id` and `group_id` with an underscore. E.g `{{parent_group_id}}_{{group_id}}`. See the below syntax. 
 
 ```
-terraform import looker_group_binding.director_writer {{director_group_id}}_{{writer_group_id}}
+terraform import looker_group_binding.crew_writer {{crew_group_id}}_{{writer_group_id}}
 ```
 
