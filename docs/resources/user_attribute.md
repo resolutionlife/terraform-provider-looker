@@ -30,7 +30,7 @@ Manages Looker User Attributes
 
 ### Required
 
-- `data_type` (String) Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode')
+- `data_type` (String) Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode', 'advanced_filter_number' 'advanced_filter_datetime', 'advanced_filter_string')
 - `hidden` (Boolean) If set the value will be treated like a password, and once set, no one will be able to decrypt and view it
 - `label` (String) The user-friendly name displayed in the app for lists and filters
 - `name` (String) The name of the user attribute, this is how you reference the attribute in Looker expressions and LookML
