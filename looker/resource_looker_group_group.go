@@ -15,16 +15,16 @@ import (
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
-func resourceGroupBinding() *schema.Resource {
+func resourceGroupGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: "This resource adds a single looker group to a parent group. If this resource is modified, it will be destroyed and recreated.",
 
 		// no update method needed as resource is destroyed and recreated if any fields are modified
-		CreateContext: resourceGroupBindingCreate,
-		ReadContext:   resourceGroupBindingRead,
-		DeleteContext: resourceGroupBindingDelete,
+		CreateContext: resourceGroupGroupCreate,
+		ReadContext:   resourceGroupGroupRead,
+		DeleteContext: resourceGroupGroupDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: resourceGroupBindingImport,
+			StateContext: resourceGroupGroupImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -43,13 +43,13 @@ func resourceGroupBinding() *schema.Resource {
 			"id": {
 				Type:        schema.TypeString,
 				Computed:    true,
-				Description: "The id of the looker_group_binding. This id is of the form <parent_group_id>_<group_id>",
+				Description: "The id of the resource. This id is of the form <parent_group_id>_<group_id>",
 			},
 		},
 	}
 }
 
-func resourceGroupBindingCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceGroupGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	parentGroupID := d.Get("parent_group_id").(string)
@@ -67,10 +67,10 @@ func resourceGroupBindingCreate(ctx context.Context, d *schema.ResourceData, c i
 
 	d.SetId(fmt.Sprintf("%s_%s", parentGroupID, groupID))
 
-	return resourceGroupBindingRead(ctx, d, c)
+	return resourceGroupGroupRead(ctx, d, c)
 }
 
-func resourceGroupBindingRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceGroupGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	groups, grErr := api.SearchGroupsWithHierarchy(sdk.RequestSearchGroups{
@@ -96,7 +96,7 @@ func resourceGroupBindingRead(ctx context.Context, d *schema.ResourceData, c int
 	return nil
 }
 
-func resourceGroupBindingDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceGroupGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	delErr := api.DeleteGroupFromGroup(
@@ -114,7 +114,7 @@ func resourceGroupBindingDelete(ctx context.Context, d *schema.ResourceData, c i
 	return nil
 }
 
-func resourceGroupBindingImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
+func resourceGroupGroupImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
 	// id is <parent_group_id>_<group_id>
 	s := strings.Split(d.Id(), "_")
 	if len(s) < 2 {
