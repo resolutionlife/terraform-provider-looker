@@ -13,7 +13,7 @@ import (
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
 		ProviderFunc: func() *schema.Provider {
-			return looker.Provider()
+			return looker.NewProvider()
 		},
 	})
 }
