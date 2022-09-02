@@ -24,7 +24,7 @@ func resourceGroupUser() *schema.Resource {
 		UpdateContext: resourceGroupUserUpdate,
 		DeleteContext: resourceGroupUserDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: groupUserImport,
+			StateContext: resourceGroupUserImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -134,7 +134,7 @@ func resourceGroupUserDelete(ctx context.Context, d *schema.ResourceData, c inte
 	return nil
 }
 
-func groupUserImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
+func resourceGroupUserImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
 	// id is <user_id>_<group_id>
 	s := strings.Split(d.Id(), "_")
 	if len(s) < 2 {
