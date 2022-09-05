@@ -84,6 +84,7 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
+	// Need to figure out how to do this when multiple resources are created
 	var result *multierror.Error
 	for _, usrAttrGrp := range usrAttrGrps {
 		result = multierror.Append(
