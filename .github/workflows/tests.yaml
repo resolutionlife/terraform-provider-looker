@@ -1,0 +1,71 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - ".github/workflows/test.yaml"
+      - "**.go"
+
+concurrency:
+  group: tests
+  cancel-in-progress: false
+
+env:
+  go-version: "1.19"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.go-version }}
+
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.49
+          args: -c ${{ github.workspace }}/.golangci.yaml
+
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.go-version }}
+
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: make test
+
+  acceptance:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.go-version }}
+
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: make testacc
+        env:
+          LOOKERSDK_BASE_URL: ${{ secrets.LOOKERSDK_BASE_URL }}
+          LOOKERSDK_CLIENT_ID: ${{ secrets.LOOKERSDK_CLIENT_ID }}
+          LOOKERSDK_CLIENT_SECRET: ${{ secrets.LOOKERSDK_CLIENT_SECRET }}
