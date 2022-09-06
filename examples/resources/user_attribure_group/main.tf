@@ -12,7 +12,7 @@ resource "looker_user_attribute" "test_attr" {
 }
 
 resource "looker_user_attribute_group" "test_attr_group" {
-  group_id          = looker_group.test_group.td
+  group_id          = looker_group.test_group.id
   user_attribute_id = looker_user_attribute.test_attr.id
   value             = "2"
 }

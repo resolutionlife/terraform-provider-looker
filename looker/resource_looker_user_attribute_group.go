@@ -70,6 +70,12 @@ func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceDat
 	}
 	d.SetId(*usrAttrGrp.Id)
 
+	tflog.Info(ctx, "CREATE", map[string]interface{}{
+		"groupId": *usrAttrGrp.GroupId,
+		"attrId":  *usrAttrGrp.UserAttributeId,
+		"value":   *usrAttrGrp.Value,
+	})
+
 	return resourceUserAttributeGroupRead(ctx, d, c)
 }
 
@@ -96,12 +102,6 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		value = conv.PString(d.Get("value").(string))
 	}
 
-	tflog.Info(ctx, "resourceUserAttributeGroupRead", map[string]interface{}{
-		"groupId": usrAttrGrp.GroupId,
-		"attrId":  usrAttrGrp.UserAttributeId,
-		"value":   value,
-	})
-
 	result := multierror.Append(
 		d.Set("id", usrAttrGrp.Id),
 		d.Set("group_id", usrAttrGrp.GroupId),
@@ -109,13 +109,19 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		d.Set("value", value),
 	)
 
+	tflog.Info(ctx, "READ", map[string]interface{}{
+		"groupId": usrAttrGrp.GroupId,
+		"attrId":  usrAttrGrp.UserAttributeId,
+		"value":   value,
+	})
+
 	return diag.FromErr(result.ErrorOrNil())
 }
 
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	_, err := api.UpdateUserAttributeGroupValue(
+	usrAttrGrp, err := api.UpdateUserAttributeGroupValue(
 		d.Get("group_id").(string),
 		d.Get("user_attribute_id").(string),
 		sdk.UserAttributeGroupValue{
@@ -128,6 +134,12 @@ func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceDat
 	if err != nil {
 		return diag.FromErr(err)
 	}
+
+	tflog.Info(ctx, "UPDATE", map[string]interface{}{
+		"groupId": *usrAttrGrp.GroupId,
+		"attrId":  *usrAttrGrp.UserAttributeId,
+		"value":   *usrAttrGrp.Value,
+	})
 
 	return resourceUserAttributeGroupRead(ctx, d, c)
 }
