@@ -84,16 +84,17 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
-	// Need to figure out how to do this when multiple resources are created
-	var result *multierror.Error
-	for _, usrAttrGrp := range usrAttrGrps {
-		result = multierror.Append(
-			d.Set("id", usrAttrGrp.Id),
-			d.Set("group_id", usrAttrGrp.GroupId),
-			d.Set("user_attribute_id", usrAttrGrp.UserAttributeId),
-			d.Set("value", usrAttrGrp.Value),
-		)
+	usrAttrGrp := getAttributeByGroupId(usrAttrGrps, d.Get("group_id").(string))
+	if usrAttrGrp == nil {
+		return diag.Errorf("unable to match user attribute to group")
 	}
+
+	result := multierror.Append(
+		d.Set("id", usrAttrGrp.Id),
+		d.Set("group_id", usrAttrGrp.GroupId),
+		d.Set("user_attribute_id", usrAttrGrp.UserAttributeId),
+		d.Set("value", usrAttrGrp.Value),
+	)
 
 	return diag.FromErr(result.ErrorOrNil())
 }
@@ -130,5 +131,14 @@ func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceDat
 		return diag.FromErr(err)
 	}
 
+	return nil
+}
+
+func getAttributeByGroupId(usrAttrGrps []sdk.UserAttributeGroupValue, grpId string) *sdk.UserAttributeGroupValue {
+	for _, usrAttrGrp := range usrAttrGrps {
+		if *usrAttrGrp.GroupId == grpId {
+			return &usrAttrGrp
+		}
+	}
 	return nil
 }
