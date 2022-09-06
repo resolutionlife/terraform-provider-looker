@@ -12,34 +12,34 @@ import (
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-// Provider returns an resource provider for Looker
-func Provider() *schema.Provider {
-	provider := schema.Provider{
+// NewProvider returns an new provider.
+func NewProvider() *schema.Provider {
+	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"base_url": {
 				Type:        schema.TypeString,
 				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_BASE_URL", nil),
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_BASE_URL", nil),
 			},
 			"client_id": {
 				Type:        schema.TypeString,
 				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_CLIENT_ID", nil),
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_CLIENT_ID", nil),
 			},
 			"client_secret": {
 				Type:        schema.TypeString,
 				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_CLIENT_SECRET", nil),
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_CLIENT_SECRET", nil),
 			},
 			"verify_ssl": {
 				Type:        schema.TypeBool,
 				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_VERIFY_SSL", true),
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_VERIFY_SSL", true),
 			},
 			"timeout": {
 				Type:        schema.TypeInt,
 				Optional:    true,
-				DefaultFunc: schema.EnvDefaultFunc("LOOKER_TIMEOUT", 120),
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_TIMEOUT", 120),
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
@@ -60,14 +60,13 @@ func Provider() *schema.Provider {
 			"looker_model_set":      datasourceModelSet(),
 			"looker_permission_set": dataSourcePermissionSet(),
 		},
+		ConfigureContextFunc: configureProvider,
 	}
 
-	provider.ConfigureContextFunc = configureProvider
-
-	return &provider
+	return provider
 }
 
-// configureProvider uses the environment variables to create a Looker client
+// configureProvider uses the environment variables to create a Looker client.
 func configureProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	authSession := rtl.NewAuthSession(rtl.ApiSettings{
 		BaseUrl:      data.Get("base_url").(string),
