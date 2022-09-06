@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
@@ -40,7 +41,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 			},
 			"value": {
 				Type:        schema.TypeString,
-				Optional:    true,
+				Required:    true,
 				Description: "Value of attribute overriding any existing default value",
 			},
 		},
@@ -89,11 +90,23 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.Errorf("unable to match user attribute to group")
 	}
 
+	value := usrAttrGrp.Value
+	// if hidden, default value cannot be retrieved from API
+	if *usrAttrGrp.ValueIsHidden {
+		value = conv.PString(d.Get("value").(string))
+	}
+
+	tflog.Info(ctx, "resourceUserAttributeGroupRead", map[string]interface{}{
+		"groupId": usrAttrGrp.GroupId,
+		"attrId":  usrAttrGrp.UserAttributeId,
+		"value":   value,
+	})
+
 	result := multierror.Append(
 		d.Set("id", usrAttrGrp.Id),
 		d.Set("group_id", usrAttrGrp.GroupId),
 		d.Set("user_attribute_id", usrAttrGrp.UserAttributeId),
-		d.Set("value", usrAttrGrp.Value),
+		d.Set("value", value),
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
@@ -140,5 +153,6 @@ func getAttributeByGroupId(usrAttrGrps []sdk.UserAttributeGroupValue, grpId stri
 			return &usrAttrGrp
 		}
 	}
+
 	return nil
 }
