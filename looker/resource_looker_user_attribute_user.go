@@ -100,10 +100,10 @@ func resourceUserAttributeUserRead(ctx context.Context, d *schema.ResourceData, 
 					return nil
 				}
 			} else {
+				// if the user attribute value is not hidden then set the value in the state
 				setValueErr = d.Set("value", ua.Value)
 			}
 
-			// if the user attribute value is not hidden then set the value in the state
 			result := multierror.Append(
 				setValueErr,
 				d.Set("user_attribute_id", ua.UserAttributeId),

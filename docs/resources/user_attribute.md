@@ -17,7 +17,7 @@ Manages Looker User Attributes
     name             = "id"
     label            = "secret_id"
     data_type        = "number"
-    hidden           = true
+    hidden           = false
     default_value    = 24
     user_access      = "View"
     domain_whitelist = ["my_domain/route/sub/*"]
