@@ -27,7 +27,6 @@ This resource sets a value onto a user for the given user attribute. If a defaul
     hidden           = false
     default_value    = "24"
     user_access      = "View"
-    domain_whitelist = ["my_domain/route/sub/*"]
   }
 
   resource "looker_user_attribute_user" "tina_secret_id" {
