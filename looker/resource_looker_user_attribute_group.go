@@ -111,15 +111,14 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
-	result := &multierror.Error{}
+	var result error
 	for _, userAttrGroup := range userAttrGroups {
-
-		result.Errors = append(result.Errors, d.Set("user_attribute_id", userAttrGroup.UserAttributeId))
+		result = multierror.Append(result, d.Set("user_attribute_id", userAttrGroup.UserAttributeId))
 		groupValues := d.Get("group_values").([]interface{})
 		for _, groupValue := range groupValues {
 			groupValueMap := groupValue.(map[string]interface{})
-			result.Errors = append(result.Errors, d.Set("group_id", groupValueMap["group_id"].(string)))
-			result.Errors = append(result.Errors, d.Set("value", groupValueMap["value"].(string)))
+			result = multierror.Append(result, d.Set("group_id", groupValueMap["group_id"].(string)))
+			result = multierror.Append(result, d.Set("value", groupValueMap["value"].(string)))
 		}
 
 		tflog.Info(ctx, "READ", map[string]interface{}{
