@@ -18,7 +18,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 		Description:   "Manages Looker User Attribute Groups",
 		CreateContext: resourceUserAttributeGroupCreate,
 		ReadContext:   resourceUserAttributeGroupRead,
-		//UpdateContext: resourceUserAttributeGroupUpdate,
+		UpdateContext: resourceUserAttributeGroupUpdate,
 		DeleteContext: resourceUserAttributeGroupDelete,
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
@@ -126,35 +126,39 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 			"groupId": *userAttrGroup.GroupId,
 			"attrId":  *userAttrGroup.UserAttributeId,
 			"value":   *userAttrGroup.Value,
-			"errors":  result.Errors,
 		})
 	}
 
+	//TODO: fix error or nil return
 	return nil
 }
 
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	usrAttrGrp, err := api.UpdateUserAttributeGroupValue(
-		d.Get("group_id").(string),
-		d.Get("user_attribute_id").(string),
-		sdk.UserAttributeGroupValue{
-			GroupId:         conv.PString(d.Get("group_id").(string)),
-			UserAttributeId: conv.PString(d.Get("user_attribute_id").(string)),
-			Value:           conv.PString(d.Get("value").(string)),
-		},
-		nil,
-	)
-	if err != nil {
-		return diag.FromErr(err)
-	}
+	groupValues := d.Get("group_values").([]interface{})
+	for _, groupValue := range groupValues {
+		groupValueMap := groupValue.(map[string]interface{})
+		usrAttrGrp, err := api.UpdateUserAttributeGroupValue(
+			groupValueMap["group_id"].(string),
+			d.Get("user_attribute_id").(string),
+			sdk.UserAttributeGroupValue{
+				GroupId:         conv.PString(groupValueMap["group_id"].(string)),
+				UserAttributeId: conv.PString(d.Get("user_attribute_id").(string)),
+				Value:           conv.PString(groupValueMap["value"].(string)),
+			},
+			nil,
+		)
+		if err != nil {
+			return diag.FromErr(err)
+		}
 
-	tflog.Info(ctx, "UPDATE", map[string]interface{}{
-		"groupId": *usrAttrGrp.GroupId,
-		"attrId":  *usrAttrGrp.UserAttributeId,
-		"value":   *usrAttrGrp.Value,
-	})
+		tflog.Info(ctx, "UPDATE", map[string]interface{}{
+			"groupId": *usrAttrGrp.GroupId,
+			"attrId":  *usrAttrGrp.UserAttributeId,
+			"value":   *usrAttrGrp.Value,
+		})
+	}
 
 	return resourceUserAttributeGroupRead(ctx, d, c)
 }
@@ -162,24 +166,18 @@ func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceDat
 func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	err := api.DeleteUserAttributeGroupValue(
-		d.Get("group_id").(string),
-		d.Get("user_attribute_id").(string),
-		nil,
-	)
-	if err != nil && !errors.Is(err, io.EOF) {
-		return diag.FromErr(err)
+	groupValues := d.Get("group_values").([]interface{})
+	for _, groupValue := range groupValues {
+		groupValueMap := groupValue.(map[string]interface{})
+		err := api.DeleteUserAttributeGroupValue(
+			groupValueMap["group_id"].(string),
+			d.Get("user_attribute_id").(string),
+			nil,
+		)
+		if err != nil && !errors.Is(err, io.EOF) {
+			return diag.FromErr(err)
+		}
 	}
 
 	return nil
 }
-
-// func getAttributeByGroupId(usrAttrGrps []sdk.UserAttributeGroupValue, grpId string) *sdk.UserAttributeGroupValue {
-// 	for _, usrAttrGrp := range usrAttrGrps {
-// 		if *usrAttrGrp.GroupId == grpId {
-// 			return &usrAttrGrp
-// 		}
-// 	}
-
-// 	return nil
-// }
