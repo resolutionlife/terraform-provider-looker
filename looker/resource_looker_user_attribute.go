@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/go-multierror"
-	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
@@ -132,9 +131,6 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 	if len(domainsWhitelistSlice) != 0 {
 		domainError = d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice))
 	}
-	tflog.Info(ctx, "DOMAIN_VALUE_READ", map[string]interface{}{
-		"value": domainsWhitelistSlice,
-	})
 
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
