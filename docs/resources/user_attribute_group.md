@@ -13,8 +13,12 @@ Manages Looker User Attribute Groups
 ## Example Usage
 
 ```terraform
-  resource "looker_group" "test_group" {
-    name = "Test"
+  resource "looker_group" "test_group_1" {
+    name = "Test_1"
+  }
+
+  resource "looker_group" "test_group_2" {
+    name = "Test_2"
   }
 
   resource "looker_user_attribute" "test_attr" {
@@ -26,10 +30,16 @@ Manages Looker User Attribute Groups
     user_access   = "View"
   }
 
-  resource "looker_user_attribute_group" "test_attr_group" {
-    group_id          = looker_group.test_group.id
+  resource "looker_user_attribute_group" "test_group_1" {
     user_attribute_id = looker_user_attribute.test_attr.id
-    value             = "2"
+    group_values {
+      group_id = looker_group.test_group_1.id
+      value    = "0"
+    }
+    group_values {
+      group_id = looker_group.test_group_2.id
+      value    = "1"
+    }
   }
 ```
 
@@ -39,10 +49,18 @@ Manages Looker User Attribute Groups
 
 ### Required
 
-- `group_id` (String) The id of the group to set user attribute for
+- `group_values` (Block List, Min: 1) (see [below for nested schema](#nestedblock--group_values))
 - `user_attribute_id` (String) The id of the user attribute to assign
-- `value` (String) Value of attribute overriding any existing default value
 
 ### Read-Only
 
 - `id` (String) The unique id of the user attribute group
+
+<a id="nestedblock--group_values"></a>
+
+### Nested Schema for `group_values`
+
+Required:
+
+- `group_id` (String) The id of the group to set user attribute for
+- `value` (String) Value of attribute overriding any existing default value
