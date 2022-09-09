@@ -111,25 +111,12 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
-	var result error
-	for _, userAttrGroup := range userAttrGroups {
-		result = multierror.Append(result, d.Set("user_attribute_id", userAttrGroup.UserAttributeId))
-		groupValues := d.Get("group_values").([]interface{})
-		for _, groupValue := range groupValues {
-			groupValueMap := groupValue.(map[string]interface{})
-			result = multierror.Append(result, d.Set("group_id", groupValueMap["group_id"].(string)))
-			result = multierror.Append(result, d.Set("value", groupValueMap["value"].(string)))
-		}
+	result := multierror.Append(
+		d.Set("user_attribute_id", userAttrGroups[0].UserAttributeId), // all share the same user attribute, therefore can just the first
+		d.Set("group_values", buildGroupValuesMap(ctx, d, userAttrGroups)),
+	)
 
-		tflog.Info(ctx, "READ", map[string]interface{}{
-			"groupId": *userAttrGroup.GroupId,
-			"attrId":  *userAttrGroup.UserAttributeId,
-			"value":   *userAttrGroup.Value,
-		})
-	}
-
-	//TODO: fix error or nil return
-	return nil
+	return diag.FromErr(result.ErrorOrNil())
 }
 
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
@@ -179,4 +166,31 @@ func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceDat
 	}
 
 	return nil
+}
+
+func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGroups []sdk.UserAttributeGroupValue) []map[string]interface{} {
+	var groupValuesMap []map[string]interface{}
+
+	groupValues := d.Get("group_values").([]interface{})
+	for i, userAttrGroup := range userAttrGroups {
+		groupid := *userAttrGroup.GroupId
+		value := *userAttrGroup.Value
+
+		if *userAttrGroup.ValueIsHidden {
+			value = groupValues[i].(map[string]interface{})["value"].(string)
+		}
+
+		groupValuesMap = append(groupValuesMap, map[string]interface{}{
+			"group_id": groupid,
+			"value":    value,
+		})
+
+		tflog.Info(ctx, "READ", map[string]interface{}{
+			"groupId": *userAttrGroup.GroupId,
+			"attrId":  *userAttrGroup.UserAttributeId,
+			"value":   *userAttrGroup.Value,
+		})
+	}
+
+	return groupValuesMap
 }
