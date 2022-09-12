@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"io"
+	"strings"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -21,7 +22,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 		UpdateContext: resourceUserAttributeGroupUpdate,
 		DeleteContext: resourceUserAttributeGroupDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
+			StateContext: resourceUserAttributeGroupImport,
 		},
 		Schema: map[string]*schema.Schema{
 			"id": {
@@ -81,12 +82,12 @@ func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceDat
 		return diag.FromErr(err)
 	}
 
-	var userAttrGroupId string
+	userAttrGroupId := *userAttrGroups[0].UserAttributeId
 	for _, userAttrGroup := range userAttrGroups {
 		if userAttrGroup.Id == nil {
 			return diag.Errorf("user attribute group has missing id")
 		}
-		userAttrGroupId += *userAttrGroup.Id
+		userAttrGroupId += "_" + *userAttrGroup.GroupId
 
 		tflog.Info(ctx, "CREATE", map[string]interface{}{
 			"groupId": *userAttrGroup.GroupId,
@@ -111,12 +112,14 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
-	result := multierror.Append(
-		d.Set("user_attribute_id", userAttrGroups[0].UserAttributeId), // all share the same user attribute, therefore can just the first
-		d.Set("group_values", buildGroupValuesMap(ctx, d, userAttrGroups)),
-	)
+	var result error
+	result = multierror.Append(result, d.Set("user_attribute_id", userAttrGroups[0].UserAttributeId))
 
-	return diag.FromErr(result.ErrorOrNil())
+	if !*userAttrGroups[0].ValueIsHidden {
+		result = multierror.Append(result, d.Set("group_values", buildGroupValuesMap(ctx, d, userAttrGroups)))
+	}
+
+	return diag.FromErr(result.(*multierror.Error).ErrorOrNil())
 }
 
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
@@ -173,7 +176,7 @@ func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGr
 
 	groupValues := d.Get("group_values").([]interface{})
 	for i, userAttrGroup := range userAttrGroups {
-		groupid := *userAttrGroup.GroupId
+		groupId := *userAttrGroup.GroupId
 		value := *userAttrGroup.Value
 
 		if *userAttrGroup.ValueIsHidden {
@@ -181,7 +184,7 @@ func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGr
 		}
 
 		groupValuesMap = append(groupValuesMap, map[string]interface{}{
-			"group_id": groupid,
+			"group_id": groupId,
 			"value":    value,
 		})
 
@@ -193,4 +196,30 @@ func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGr
 	}
 
 	return groupValuesMap
+}
+
+func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
+	ids := strings.Split(d.Id(), "_")
+	if len(ids) < 2 {
+		diag.Errorf("invalid id, should be of the form <user_attribute_id>_<group_id>_<...>")
+	}
+
+	var result error
+	result = multierror.Append(d.Set("user_attribute_id", ids[0]))
+	var groupIds []map[string]interface{}
+	for _, id := range ids[1:] {
+		groupIds = append(groupIds, map[string]interface{}{
+			"group_id": id,
+		})
+
+	}
+
+	result = multierror.Append(result, d.Set("group_values", groupIds))
+
+	resErr := result.(*multierror.Error).ErrorOrNil()
+	if resErr != nil {
+		return nil, resErr
+	}
+
+	return []*schema.ResourceData{d}, nil
 }
