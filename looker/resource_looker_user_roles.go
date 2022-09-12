@@ -58,7 +58,7 @@ func resourceUserRolesCreate(ctx context.Context, d *schema.ResourceData, c inte
 	userID := d.Get("user_id").(string)
 	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
-		diag.FromErr(rolesErr)
+		return diag.FromErr(rolesErr)
 	}
 
 	_, setErr := api.SetUserRoles(userID, append(diff, rscRoleIDs...), "", nil)
@@ -86,7 +86,7 @@ func resourceUserRolesRead(ctx context.Context, d *schema.ResourceData, c interf
 	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
 		// TODO: handle when user is not found
-		diag.FromErr(rolesErr)
+		return diag.FromErr(rolesErr)
 	}
 
 	result := multierror.Append(
@@ -132,7 +132,7 @@ func resourceUserRolesUpdate(ctx context.Context, d *schema.ResourceData, c inte
 	userID := d.Get("user_id").(string)
 	lookerRoles, rolesErr := getRolesByUser(api, userID)
 	if rolesErr != nil {
-		diag.FromErr(rolesErr)
+		return diag.FromErr(rolesErr)
 	}
 
 	// diff between what was has changed in the state and what is in looker
