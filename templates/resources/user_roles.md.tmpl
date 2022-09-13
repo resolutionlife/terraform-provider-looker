@@ -1,0 +1,30 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.ProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+This resource binds a set of roles to a looker user. This is an **additive and non-authorative** resource that grants roles **in addition** to current roles configured in Looker.
+
+~> **Note:** `looker_user_role` **cannot** be used in conjunction with another `looker_user_role` if they grant privilege to the same user, otherwise they will fight over what roles should be set.
+
+{{ if .HasExample -}}
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{- end }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+{{ if .HasImport -}}
+
+## Import
+
+{{ codefile  " ```" .ImportFile }}
+
+{{- end }}
