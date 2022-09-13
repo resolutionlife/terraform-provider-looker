@@ -112,6 +112,11 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
+	if len(userAttrGroups) < 1 {
+		d.SetId("")
+		return nil
+	}
+
 	var result error
 	result = multierror.Append(result, d.Set("user_attribute_id", userAttrGroups[0].UserAttributeId))
 
