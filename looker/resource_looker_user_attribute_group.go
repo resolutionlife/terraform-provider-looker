@@ -15,6 +15,13 @@ import (
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
+const (
+	userAttrIdKey  = "user_attribute_id"
+	groupValuesKey = "group_values"
+	groupIdKey     = "group_id"
+	valueKey       = "value"
+)
+
 func resourceUserAttributeGroup() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Manages Looker User Attribute Groups",
@@ -31,24 +38,24 @@ func resourceUserAttributeGroup() *schema.Resource {
 				Computed:    true,
 				Description: "The unique id of the user attribute group",
 			},
-			"user_attribute_id": {
+			userAttrIdKey: {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The id of the user attribute to assign",
 				ForceNew:    true,
 			},
-			"group_values": {
+			groupValuesKey: {
 				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"group_id": {
+						groupIdKey: {
 							Type:        schema.TypeString,
 							Required:    true,
 							ForceNew:    true,
 							Description: "The id of the group to set user attribute for",
 						},
-						"value": {
+						valueKey: {
 							Type:        schema.TypeString,
 							Required:    true,
 							Description: "Value of attribute overriding any existing default value",
@@ -63,19 +70,19 @@ func resourceUserAttributeGroup() *schema.Resource {
 func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get("group_values").([]interface{})
+	groupValues := d.Get(groupValuesKey).([]interface{})
 
 	var userAttrGroupVaules []sdk.UserAttributeGroupValue
 	for _, groupValue := range groupValues {
 		groupValueMap := groupValue.(map[string]interface{})
 		userAttrGroupVaules = append(userAttrGroupVaules, sdk.UserAttributeGroupValue{
-			GroupId: conv.PString(groupValueMap["group_id"].(string)),
-			Value:   conv.PString(groupValueMap["value"].(string)),
+			GroupId: conv.PString(groupValueMap[groupIdKey].(string)),
+			Value:   conv.PString(groupValueMap[valueKey].(string)),
 		})
 	}
 
 	userAttrGroups, err := api.SetUserAttributeGroupValues(
-		d.Get("user_attribute_id").(string),
+		d.Get(userAttrIdKey).(string),
 		userAttrGroupVaules,
 		nil,
 	)
@@ -105,7 +112,7 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 	api := c.(*sdk.LookerSDK)
 
 	userAttrGroups, err := api.AllUserAttributeGroupValues(
-		d.Get("user_attribute_id").(string),
+		d.Get(userAttrIdKey).(string),
 		"",
 		nil,
 	)
@@ -119,10 +126,10 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 	}
 
 	var result error
-	result = multierror.Append(result, d.Set("user_attribute_id", userAttrGroups[0].UserAttributeId))
+	result = multierror.Append(result, d.Set(userAttrIdKey, userAttrGroups[0].UserAttributeId))
 
 	if !*userAttrGroups[0].ValueIsHidden {
-		result = multierror.Append(result, d.Set("group_values", buildGroupValuesMap(ctx, d, userAttrGroups)))
+		result = multierror.Append(result, d.Set(groupValuesKey, buildGroupValuesMap(ctx, d, userAttrGroups)))
 	}
 
 	return diag.FromErr(result.(*multierror.Error).ErrorOrNil())
@@ -131,16 +138,16 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get("group_values").([]interface{})
+	groupValues := d.Get(groupValuesKey).([]interface{})
 	for _, groupValue := range groupValues {
 		groupValueMap := groupValue.(map[string]interface{})
 		usrAttrGrp, err := api.UpdateUserAttributeGroupValue(
-			groupValueMap["group_id"].(string),
-			d.Get("user_attribute_id").(string),
+			groupValueMap[groupIdKey].(string),
+			d.Get(userAttrIdKey).(string),
 			sdk.UserAttributeGroupValue{
-				GroupId:         conv.PString(groupValueMap["group_id"].(string)),
-				UserAttributeId: conv.PString(d.Get("user_attribute_id").(string)),
-				Value:           conv.PString(groupValueMap["value"].(string)),
+				GroupId:         conv.PString(groupValueMap[groupIdKey].(string)),
+				UserAttributeId: conv.PString(d.Get(userAttrIdKey).(string)),
+				Value:           conv.PString(groupValueMap[valueKey].(string)),
 			},
 			nil,
 		)
@@ -161,12 +168,12 @@ func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceDat
 func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get("group_values").([]interface{})
+	groupValues := d.Get(groupValuesKey).([]interface{})
 	for _, groupValue := range groupValues {
 		groupValueMap := groupValue.(map[string]interface{})
 		err := api.DeleteUserAttributeGroupValue(
-			groupValueMap["group_id"].(string),
-			d.Get("user_attribute_id").(string),
+			groupValueMap[groupIdKey].(string),
+			d.Get(userAttrIdKey).(string),
 			nil,
 		)
 		if err != nil && !errors.Is(err, io.EOF) {
@@ -180,18 +187,18 @@ func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceDat
 func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGroups []sdk.UserAttributeGroupValue) []map[string]interface{} {
 	var groupValuesMap []map[string]interface{}
 
-	groupValues := d.Get("group_values").([]interface{})
+	groupValues := d.Get(groupValuesKey).([]interface{})
 	for i, userAttrGroup := range userAttrGroups {
 		groupId := *userAttrGroup.GroupId
 		value := *userAttrGroup.Value
 
 		if *userAttrGroup.ValueIsHidden {
-			value = groupValues[i].(map[string]interface{})["value"].(string)
+			value = groupValues[i].(map[string]interface{})[valueKey].(string)
 		}
 
 		groupValuesMap = append(groupValuesMap, map[string]interface{}{
-			"group_id": groupId,
-			"value":    value,
+			groupIdKey: groupId,
+			valueKey:   value,
 		})
 
 		tflog.Info(ctx, "READ", map[string]interface{}{
@@ -222,15 +229,15 @@ func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceDat
 	}
 
 	var result error
-	result = multierror.Append(d.Set("user_attribute_id", ids[0]))
+	result = multierror.Append(d.Set(userAttrIdKey, ids[0]))
 	var groupIds []map[string]interface{}
 	for _, id := range ids[1:] {
 		groupIds = append(groupIds, map[string]interface{}{
-			"group_id": id,
+			groupIdKey: id,
 		})
 	}
 
-	result = multierror.Append(result, d.Set("group_values", groupIds))
+	result = multierror.Append(result, d.Set(groupValuesKey, groupIds))
 
 	resErr := result.(*multierror.Error).ErrorOrNil()
 	if resErr != nil {
