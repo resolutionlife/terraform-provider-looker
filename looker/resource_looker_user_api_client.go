@@ -49,10 +49,15 @@ func resourceUserAPIClientCreate(ctx context.Context, d *schema.ResourceData, c 
 	if res.ClientId == nil {
 		return diag.Errorf("client_id is missing")
 	}
-	d.Set("client_id", *res.ClientId)
+	if err := d.Set("client_id", *res.ClientId); err != nil {
+		return diag.FromErr(err)
+	}
 
 	if res.ClientSecret == nil {
 		return diag.Errorf("client_secret is missing")
+	}
+	if err := d.Set("client_secret", *res.ClientSecret); err != nil {
+		return diag.FromErr(err)
 	}
 
 	if res.Id == nil {
