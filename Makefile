@@ -45,3 +45,10 @@ testacc:
 sweep:
 	@echo "WARNING: This will destroy infrastructure. Only use on development instances."
 	@go test ./looker -v -sweep="phony" $(SWEEPARGS) -timeout 60m
+
+teardown:
+	@rm -rf ${NAMESPACE}/.terraform
+	@rm -rf ${NAMESPACE}/.terraform.lock.hcl
+
+local: teardown install
+	@cd $(NAMESPACE) && terraform init

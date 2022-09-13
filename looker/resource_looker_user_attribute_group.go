@@ -2,9 +2,10 @@ package looker
 
 import (
 	"context"
-	"errors"
 	"io"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -204,9 +205,20 @@ func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGr
 }
 
 func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
+	api := c.(*sdk.LookerSDK)
+
 	ids := strings.Split(d.Id(), "_")
 	if len(ids) < 2 {
 		diag.Errorf("invalid id, should be of the form <user_attribute_id>_<group_id>_<...>")
+	}
+
+	userAttributes, err := api.UserAttribute(ids[0], "", nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to retrieve user_attribute with id %v", ids[0])
+	}
+
+	if *userAttributes.ValueIsHidden {
+		return nil, errors.New("value for current user attribute is hidden, import is not supported for hidden values")
 	}
 
 	var result error
@@ -216,7 +228,6 @@ func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceDat
 		groupIds = append(groupIds, map[string]interface{}{
 			"group_id": id,
 		})
-
 	}
 
 	result = multierror.Append(result, d.Set("group_values", groupIds))
