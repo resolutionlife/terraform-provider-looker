@@ -64,3 +64,11 @@ Required:
 
 - `group_id` (String) The id of the group to set user attribute for
 - `value` (String) Value of attribute overriding any existing default value
+
+## Import:
+
+A `looker_user_attribute_group` resource can be imported by delimiting the `user_attribute_id` with a list of `group_id` with an underscore. E.g `{{user_attribute_id}}_{{group_id}}_{{...}}`. See the below syntax.
+
+```
+terraform import looker_user_attribute_group.test_group {{user_attribute_id}}_{{group_id}}
+```
