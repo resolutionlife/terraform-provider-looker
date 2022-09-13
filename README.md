@@ -57,3 +57,13 @@ To run acceptance testing, run the following
  ```
  make testacc
  ``` 
+
+## Logging and Debugging 
+
+This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` enviroment variable to the desired log level. For example: 
+
+```
+export TF_LOG_PROVIDER=INFO
+```
+
+See the [official documentation](https://www.terraform.io/plugin/log/managing#log-levels) for details on each log level.
