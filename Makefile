@@ -27,6 +27,8 @@ gen:
 .PHONY: clean
 clean: 
 	@rm -rf ${BUILD_DIR} ${HOME}/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}
+	@rm -rf ${NAMESPACE}/.terraform
+	@rm -rf ${NAMESPACE}/.terraform.lock.hcl
 
 .PHONY: lint
 lint:
@@ -45,3 +47,6 @@ testacc:
 sweep:
 	@echo "WARNING: This will destroy infrastructure. Only use on development instances."
 	@go test ./looker -v -sweep="phony" $(SWEEPARGS) -timeout 60m
+
+local: clean install
+	@cd $(NAMESPACE) && terraform init
