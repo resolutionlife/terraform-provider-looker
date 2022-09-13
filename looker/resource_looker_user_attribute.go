@@ -69,7 +69,7 @@ func resourceUserAttribute() *schema.Resource {
 				},
 				ForceNew:    true,
 				Optional:    true,
-				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard '*'. You must set this when changing a user attribute to 'hidden'. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like 'my_domain/*' to 'my_domain/route/*')",
+				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard `*`. You must set this when changing a user attribute to 'hidden'. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like 'my_domain/*' to 'my_domain/route/*')",
 			},
 		},
 	}
