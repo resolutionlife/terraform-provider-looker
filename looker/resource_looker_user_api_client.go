@@ -46,11 +46,6 @@ func resourceUserAPIClientCreate(ctx context.Context, d *schema.ResourceData, c 
 		return diag.FromErr(err)
 	}
 
-	if res.Id == nil {
-		return diag.Errorf("API credentials ID is missing")
-	}
-	d.SetId(*res.Id)
-
 	if res.ClientId == nil {
 		return diag.Errorf("client_id is missing")
 	}
@@ -59,7 +54,11 @@ func resourceUserAPIClientCreate(ctx context.Context, d *schema.ResourceData, c 
 	if res.ClientSecret == nil {
 		return diag.Errorf("client_secret is missing")
 	}
-	d.Set("client_secret", *res.ClientSecret)
+
+	if res.Id == nil {
+		return diag.Errorf("API credentials ID is missing")
+	}
+	d.SetId(*res.Id)
 
 	return resourceUserAPIClientRead(ctx, d, c)
 }
@@ -76,6 +75,10 @@ func resourceUserAPIClientDelete(ctx context.Context, d *schema.ResourceData, c 
 	api := c.(*sdk.LookerSDK)
 
 	// TODO: handle case when API credentials are not found.
-	_, err := api.DeleteUserCredentialsApi3(d.Get("user_id").(string), d.Id(), nil)
-	return diag.FromErr(err)
+	if _, err := api.DeleteUserCredentialsApi3(d.Get("user_id").(string), d.Id(), nil); err != nil {
+		return diag.FromErr(err)
+	}
+
+	d.SetId("")
+	return nil
 }
