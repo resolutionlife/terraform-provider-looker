@@ -73,7 +73,6 @@ func resourceSamlConfig() *schema.Resource {
 			"new_user_migration_types": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Default:     []string{"email"},
 				Description: "Merge first-time saml login to existing user account by email addresses. When a user logs in for the first time via saml this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -83,7 +82,6 @@ func resourceSamlConfig() *schema.Resource {
 			"default_new_user_role_ids": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Default:     []string{},
 				Description: "Array of ids of roles that will be applied to new users the first time they login via Saml",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -92,7 +90,6 @@ func resourceSamlConfig() *schema.Resource {
 			"default_new_user_group_ids": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Default:     []string{},
 				Description: "Array of ids of groups that will be applied to new users the first time they login via Saml",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
