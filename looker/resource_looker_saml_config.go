@@ -77,7 +77,6 @@ func resourceSamlConfig() *schema.Resource {
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
-				AtLeastOneOf: []string{"email", "ldap", "google"},
 			},
 			"default_new_user_role_ids": {
 				Type:        schema.TypeList,
@@ -147,7 +146,6 @@ func resourceSamlConfig() *schema.Resource {
 			"groups_with_roles_ids": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Default:     []sdk.SamlGroupWrite{},
 				Description: "Array of mappings between Saml Groups and arrays of Looker Role ids",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -175,6 +173,9 @@ func resourceSamlConfig() *schema.Resource {
 							Type:        schema.TypeList,
 							Required:    true,
 							Description: "Looker Role Ids",
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
@@ -212,6 +213,9 @@ func resourceSamlConfig() *schema.Resource {
 							Type:        schema.TypeList,
 							Required:    true,
 							Description: "Looker User Attribute Ids",
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
