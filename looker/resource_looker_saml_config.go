@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
@@ -137,11 +138,13 @@ func resourceSamlConfig() *schema.Resource {
 				Description: "Name of user record attributes used to indicate groups. Used when 'groups_finder_type' is set to 'grouped_attribute_values'",
 			},
 			"groups_finder_type": {
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "",
-				ExactlyOneOf: []string{"grouped_attribute_values", "individual_attributes"},
-				Description:  "Identifier for a strategy for how Looker will find groups in the SAML response.",
+				Type:     schema.TypeString,
+				Optional: true,
+				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{
+					"grouped_attribute_values",
+					"individual_attributes",
+				}, false)),
+				Description: "Identifier for a strategy for how Looker will find groups in the SAML response.",
 			},
 			"groups_with_roles_ids": {
 				Type:        schema.TypeList,
