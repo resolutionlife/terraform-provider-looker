@@ -72,7 +72,7 @@ func resourceRoleGroupsCreate(ctx context.Context, d *schema.ResourceData, c int
 		nil,
 	)
 	if setErr != nil {
-		diag.FromErr(setErr)
+		return diag.FromErr(setErr)
 	}
 
 	d.SetId(fmt.Sprintf("%s_%s", roleID, strings.Join(groupIDs, "_")))

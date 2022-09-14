@@ -61,6 +61,7 @@ func resourceUserAttribute() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "Value when no other value is set for the user or for one of the user's groups",
+				ForceNew:    true,
 			},
 			"domain_whitelist": {
 				Type: schema.TypeSet,
@@ -126,6 +127,11 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		domainsWhitelistSlice = strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
 	}
 
+	var domainError error
+	if len(domainsWhitelistSlice) != 0 {
+		domainError = d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice))
+	}
+
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
 		d.Set("name", userAttributes.Name),
@@ -134,7 +140,7 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		d.Set("hidden", userAttributes.ValueIsHidden),
 		d.Set("default_value", defaultValue),
 		d.Set("user_access", conv.PString(userAccess)),
-		d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice)),
+		domainError,
 	)
 
 	return diag.FromErr(result.ErrorOrNil())

@@ -94,7 +94,7 @@ func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, c interface
 		}, nil,
 	)
 	if updateErr != nil {
-		diag.FromErr(updateErr)
+		return diag.FromErr(updateErr)
 	}
 
 	return resourceRoleRead(ctx, d, c)
