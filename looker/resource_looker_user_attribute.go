@@ -12,6 +12,7 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/pkg/errors"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
+	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
 func resourceUserAttribute() *schema.Resource {
@@ -224,7 +225,7 @@ func validateOneOf[T comparable](validOptions []T) schema.SchemaValidateDiagFunc
 		value := i.(T)
 
 		var diags diag.Diagnostics
-		if !contains(validOptions, value) {
+		if !slice.Contains(validOptions, value) {
 			diag := diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "invalid option",
@@ -234,13 +235,4 @@ func validateOneOf[T comparable](validOptions []T) schema.SchemaValidateDiagFunc
 		}
 		return diags
 	}
-}
-
-func contains[T comparable](s []T, v T) bool {
-	for i := range s {
-		if s[i] == v {
-			return true
-		}
-	}
-	return false
 }

@@ -10,6 +10,7 @@ import (
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
+	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
 func init() {
@@ -80,6 +81,8 @@ func TestAccLookerGroupUser(t *testing.T) {
 				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttrSet("looker_group_user.test_acc", "group_id"),
+					resource.TestCheckResourceAttrSet("looker_group_user.test_acc", "user_id"),
 					testAccGroupUserBinding("looker_user.test_acc", "looker_group.test_acc"),
 				),
 			},
@@ -102,17 +105,24 @@ func testAccGroupUserBinding(userResource, groupResource string) resource.TestCh
 			return errors.Errorf("Not found: %s", groupResource)
 		}
 		if groupRes.Primary.ID == "" {
-			return errors.New("grou[] ID is not set")
+			return errors.New("group ID is not set")
 		}
 
 		client := testAccProvider.Meta().(*client.LookerSDK)
 
-		_, err := client.User(userRes.Primary.ID, "", nil)
+		user, err := client.User(userRes.Primary.ID, "", nil)
 		if err != nil {
 			return errors.Wrapf(err, "failed to retrieve user with id: %v", userRes.Primary.ID)
 		}
 
-		// TODO: Maybe find group and ensure user is part of said group?
+		group, err := client.Group(groupRes.Primary.ID, "", nil)
+		if err != nil {
+			return errors.Wrapf(err, "failed to retrieve group with id: %v", userRes.Primary.ID)
+		}
+
+		if !slice.Contains(*user.GroupIds, *group.Id) {
+			return errors.Errorf("group with ID %v does not contain user %v", *group.Id, *user.Id)
+		}
 
 		return nil
 	}
