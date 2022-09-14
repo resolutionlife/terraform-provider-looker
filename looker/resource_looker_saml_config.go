@@ -198,7 +198,6 @@ func resourceSamlConfig() *schema.Resource {
 			"user_attributes_with_ids": {
 				Type:        schema.TypeList,
 				Optional:    true,
-				Default:     []sdk.SamlUserAttributeWrite{},
 				Description: "Array of mappings between Saml User Attributes and arrays of Looker User Attribute ids",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
