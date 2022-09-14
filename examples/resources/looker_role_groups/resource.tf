@@ -10,8 +10,7 @@ resource "looker_group" "directors" {
   name = "Directors"
 }
 
-# give writers and directors the writer role
-resource "looker_role_groups" "tina-director" {
+resource "looker_role_groups" "writer" {
   role_id   = looker_role.writer.id
   group_ids = [looker_group.writer.id, looker_group.directors.id]
 }

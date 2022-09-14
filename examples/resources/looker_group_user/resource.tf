@@ -8,7 +8,7 @@ resource "looker_user" "tina" {
   email      = "tina@orange.com"
 }
 
-resource "looker_group_user" "tina-director" {
+resource "looker_group_user" "tina_director" {
   group_id = looker_group.directors.id
   user_id  = looker_user.tina.id
 }
