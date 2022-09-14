@@ -34,11 +34,6 @@ func init() {
 				if _, err := c.DeleteUser(*u.Id, nil); err != nil {
 					return err
 				}
-				for _, groupId := range *u.GroupIds {
-					if err := c.DeleteGroupUser(groupId, *u.Id, nil); err != nil {
-						return err
-					}
-				}
 			}
 
 			groups, err := c.SearchGroups(sdk.RequestSearchGroups{
