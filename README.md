@@ -8,6 +8,7 @@ This provider is not yet published to the terraform registry. Documentation for 
 
 - [Resources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/resources) 
 - [Data sources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/data-sources)
+
 ## Installation
 
 Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry, so the provider binary must be built locally. 
@@ -53,10 +54,15 @@ LOOKERSDK_CLIENT_SECRET="<my-client-secret>" \
 
 ## Acceptance testing 
 
-To run acceptance testing, run the following 
+Acceptance tests are run against a test looker instance as part of the developer workflow. To run acceptance testing locally, run the following:
  ```
  make testacc
- ``` 
+```
+Sweepers are available to clean up dangling resources that can occur when acceptance tests fail. To run the sweeper, run the following:
+
+```
+make sweep
+```
 
 ## Logging and Debugging 
 
