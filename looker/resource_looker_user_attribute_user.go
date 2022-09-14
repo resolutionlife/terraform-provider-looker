@@ -2,10 +2,11 @@ package looker
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -136,10 +137,21 @@ func resourceUserAttributeUserDelete(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceUserAttributeUserImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
+	api := c.(*sdk.LookerSDK)
+
 	// id is <user_attribute_id>_<user_id>
 	s := strings.Split(d.Id(), "_")
 	if len(s) < 2 {
 		diag.Errorf("invalid id, should be of the form <parent_group_id>_<group_id>")
+	}
+
+	userAttributes, err := api.UserAttribute(s[0], "", nil)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to retrieve user_attribute with id %v", s[0])
+	}
+
+	if *userAttributes.ValueIsHidden {
+		return nil, errors.New("value for current user attribute is hidden, import is not supported for hidden values")
 	}
 
 	resErr := multierror.Append(
