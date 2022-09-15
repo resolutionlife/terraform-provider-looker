@@ -2,6 +2,8 @@ package looker
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -34,6 +36,7 @@ func resourceSamlConfig() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "Identity Provider Certificate (provided by IdP)",
+				Sensitive:   true,
 			},
 			"idp_url": {
 				Type:        schema.TypeString,
@@ -77,6 +80,9 @@ func resourceSamlConfig() *schema.Resource {
 				Description: "Merge first-time saml login to existing user account by email addresses. When a user logs in for the first time via saml this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user.",
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
+					ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{
+						"email", "ldap", "google",
+					}, false)),
 				},
 			},
 			"default_new_user_role_ids": {
@@ -140,6 +146,7 @@ func resourceSamlConfig() *schema.Resource {
 			"groups_finder_type": {
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "grouped_attribute_values",
 				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{
 					"grouped_attribute_values",
 					"individual_attributes",
@@ -154,12 +161,12 @@ func resourceSamlConfig() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"id": {
 							Type:        schema.TypeString,
-							Computed:    true,
+							Required:    true,
 							Description: "Unique Id",
 						},
 						"looker_group_id": {
 							Type:        schema.TypeString,
-							Required:    true,
+							Computed:    true,
 							Description: "Unique Id of group in Looker",
 						},
 						"looker_group_name": {
@@ -222,6 +229,11 @@ func resourceSamlConfig() *schema.Resource {
 					},
 				},
 			},
+			"id": {
+				Description: "This is set to a random value at create time",
+				Computed:    true,
+				Type:        schema.TypeString,
+			},
 		},
 	}
 }
@@ -234,6 +246,16 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		return diag.FromErr(err)
 	}
 
+	defaultNewUserRoleIds := make([]string, 0)
+	for _, role := range *cfg.DefaultNewUserRoles {
+		defaultNewUserRoleIds = append(defaultNewUserRoleIds, *role.Id)
+	}
+
+	defaultNewUseGroupIds := make([]string, 0)
+	for _, role := range *cfg.DefaultNewUserGroups {
+		defaultNewUseGroupIds = append(defaultNewUseGroupIds, *role.Id)
+	}
+
 	result := multierror.Append(
 		d.Set("enabled", cfg.Enabled),
 		d.Set("idp_cert", cfg.IdpCert),
@@ -244,8 +266,8 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		d.Set("user_attribute_map_email", cfg.UserAttributeMapEmail),
 		d.Set("user_attribute_map_first_name", cfg.UserAttributeMapFirstName),
 		d.Set("user_attribute_map_last_name", cfg.UserAttributeMapLastName),
-		d.Set("default_new_user_role_ids", cfg.DefaultNewUserRoleIds),
-		d.Set("default_new_user_group_ids", cfg.DefaultNewUserGroupIds),
+		d.Set("default_new_user_role_ids", defaultNewUserRoleIds),
+		d.Set("default_new_user_group_ids", defaultNewUseGroupIds),
 		d.Set("auth_requires_role", cfg.AuthRequiresRole),
 		d.Set("bypass_login_page", cfg.BypassLoginPage),
 		d.Set("allow_direct_roles", cfg.AllowDirectRoles),
@@ -254,10 +276,10 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		d.Set("allow_roles_from_normal_groups", cfg.AllowRolesFromNormalGroups),
 		d.Set("groups_attribute", cfg.GroupsAttribute),
 		d.Set("groups_finder_type", cfg.GroupsFinderType),
-		d.Set("groups_with_roles_ids", flattenGroupsWithRoleIDs(cfg.GroupsWithRoleIds)),
+		d.Set("groups_with_roles_ids", flattenGroupsWithRoleIDs(cfg.Groups)),
 		d.Set("groups_member_value", cfg.GroupsMemberValue),
 		d.Set("set_roles_from_groups", cfg.SetRolesFromGroups),
-		d.Set("user_attributes_with_ids", flattenUserAttributesWithIDs(cfg.UserAttributesWithIds)),
+		d.Set("user_attributes_with_ids", flattenUserAttributesWithIDs(cfg.UserAttributes)),
 	)
 
 	if cfg.NewUserMigrationTypes != nil {
@@ -325,6 +347,7 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 		return diag.FromErr(err)
 	}
 
+	d.SetId(fmt.Sprintf("%d", rand.Int()))
 	return resourceGroupRead(ctx, d, c)
 }
 
@@ -360,10 +383,12 @@ func resourceSamlConfigDelete(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(err)
 	}
 
+	d.SetId("")
+
 	return nil
 }
 
-func flattenGroupsWithRoleIDs(sgws *[]sdk.SamlGroupWrite) []interface{} {
+func flattenGroupsWithRoleIDs(sgws *[]sdk.SamlGroupRead) []interface{} {
 	if sgws == nil {
 		return nil
 	}
@@ -372,17 +397,18 @@ func flattenGroupsWithRoleIDs(sgws *[]sdk.SamlGroupWrite) []interface{} {
 
 	for i, sgw := range *sgws {
 		groupsWithRoleIDs[i] = map[string]interface{}{
-			"id":              sgw.Id,
-			"looker_group_id": sgw.LookerGroupId,
-			"name":            sgw.LookerGroupName,
-			"role_ids":        sgw.RoleIds,
+			"id":                sgw.Id,
+			"looker_group_id":   sgw.LookerGroupId,
+			"looker_group_name": sgw.LookerGroupName,
+			"name":              sgw.Name,
+			"role_ids":          flattenRoles(sgw.Roles),
 		}
 	}
 
 	return groupsWithRoleIDs
 }
 
-func flattenUserAttributesWithIDs(suaws *[]sdk.SamlUserAttributeWrite) []interface{} {
+func flattenUserAttributesWithIDs(suaws *[]sdk.SamlUserAttributeRead) []interface{} {
 	if suaws == nil {
 		return nil
 	}
@@ -393,9 +419,35 @@ func flattenUserAttributesWithIDs(suaws *[]sdk.SamlUserAttributeWrite) []interfa
 		userAttributeWithIDs[i] = map[string]interface{}{
 			"name":               suaw.Name,
 			"required":           suaw.Required,
-			"user_attribute_ids": suaw.UserAttributeIds,
+			"user_attribute_ids": flattenUserAttributes(suaw.UserAttributes),
 		}
 	}
 
 	return userAttributeWithIDs
+}
+
+func flattenRoles(roles *[]sdk.Role) []string {
+	if roles == nil {
+		return nil
+	}
+
+	roleIDs := make([]string, len(*roles))
+	for i, role := range *roles {
+		roleIDs[i] = *role.Id
+	}
+
+	return roleIDs
+}
+
+func flattenUserAttributes(userAttributes *[]sdk.UserAttribute) []string {
+	if userAttributes == nil {
+		return nil
+	}
+
+	userAttributeIDs := make([]string, len(*userAttributes))
+	for i, userAttribute := range *userAttributes {
+		userAttributeIDs[i] = *userAttribute.Id
+	}
+
+	return userAttributeIDs
 }
