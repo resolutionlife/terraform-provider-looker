@@ -1,7 +1,6 @@
 package looker
 
 import (
-	"reflect"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -108,19 +107,4 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 
 		return nil
 	}
-}
-
-/*
-  flattens a slice of struct to a slice of given struct fields
-  e.g.
-  flattenByField([{a: 1, b: 3}, {a: 5, b: 8}, {a: 7, b: 4}], a) => [1, 5, 7]
-  flattenByField([{a: 1, b: 3}, {a: 5, b: 8}, {a: 7, b: 4}], b) => [3, 8, 4]
-*/
-func flattenByField[T, S any](structSlice []T, fieldName string) []S {
-	var flattenedSlice []S
-	for _, s := range structSlice {
-		flattenedSlice = append(flattenedSlice, reflect.ValueOf(s).FieldByName(fieldName).Interface().(S))
-	}
-
-	return flattenedSlice
 }
