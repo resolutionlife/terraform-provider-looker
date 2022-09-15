@@ -11,9 +11,13 @@ This provider is not yet published to the terraform registry. Documentation for 
 
 ## Installation
 
-Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry, so the provider binary must be built locally. 
+Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry a binary of the provider must be built and stored locally.
 
-To build a binary locally, run `make install`. Then, run `terraform init` using the below configuration.
+### Running the provider locally
+g
+To run the terraform provider, run `make install` to build the binary locally. Then, run `terraform init` using the below configuration.
+
+_Note: To configure the provider, an API key and secret is required for your looker instance. [See documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys). You must be an admin to create an API key._
 
 ```terraform
 terraform {
@@ -38,7 +42,6 @@ $ make install
 ```sh
 $ terraform init
 ```
-
 ## Environment Variables
 
 You can configure the provider with the `LOOKERSDK_BASE_URL`,
@@ -51,6 +54,15 @@ LOOKERSDK_BASE_URL="<my-instance-url>" \
 LOOKERSDK_CLIENT_ID="<my-client-id>" \
 LOOKERSDK_CLIENT_SECRET="<my-client-secret>" \
 ```
+## Logging and Debugging 
+
+This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` enviroment variable to the desired log level. For example: 
+
+```
+export TF_LOG_PROVIDER=INFO
+```
+
+See the [official documentation](https://www.terraform.io/plugin/log/managing#log-levels) for details on each log level.
 
 ## Acceptance testing 
 
@@ -63,13 +75,3 @@ Sweepers are available to clean up dangling resources that can occur when accept
 ```
 make sweep
 ```
-
-## Logging and Debugging 
-
-This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` enviroment variable to the desired log level. For example: 
-
-```
-export TF_LOG_PROVIDER=INFO
-```
-
-See the [official documentation](https://www.terraform.io/plugin/log/managing#log-levels) for details on each log level.
