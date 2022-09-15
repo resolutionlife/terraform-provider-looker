@@ -348,6 +348,7 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 	}
 
 	d.SetId(fmt.Sprintf("%d", rand.Int()))
+
 	return resourceGroupRead(ctx, d, c)
 }
 
@@ -382,8 +383,6 @@ func resourceSamlConfigDelete(ctx context.Context, d *schema.ResourceData, c int
 	}, nil); err != nil {
 		return diag.FromErr(err)
 	}
-
-	d.SetId("")
 
 	return nil
 }
