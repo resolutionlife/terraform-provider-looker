@@ -3,7 +3,7 @@ data "looker_group" "all" {
 }
 
 output "all_users_id" {
-  value = data.looker_group.id
+  value = data.looker_group.all.id
 }
 
 data "looker_group" "all_id" {
@@ -11,5 +11,5 @@ data "looker_group" "all_id" {
 }
 
 output "all_users_name" {
-  value = data.looker_group.name
+  value = data.looker_group.all_id.name
 }
