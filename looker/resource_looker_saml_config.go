@@ -306,7 +306,7 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 	}
 
 	userAttributesWithIds := make([]sdk.SamlUserAttributeWrite, 0)
-	for _, v := range d.Get("groups_with_role_ids").([]interface{}) {
+	for _, v := range d.Get("user_attributes_with_ids").([]interface{}) {
 		suaw := v.(map[string]interface{})
 		userAttributesWithIds = append(userAttributesWithIds, sdk.SamlUserAttributeWrite{
 			Name:             conv.P(suaw["name"].(string)),
