@@ -35,7 +35,6 @@ func init() {
 				}
 			}
 
-			// could user c.DeleteGroupFromGroup(), but deleting all groups should be sufficient
 			return nil
 		},
 	})
@@ -95,7 +94,6 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 			return errors.Wrapf(err, "failed to retrieve parent group with id: %v", parentRes.Primary.ID)
 		}
 
-		// TODO: get the flatten function working
 		groupIds := []string{}
 		for _, subGroup := range parentSubGroups {
 			groupIds = append(groupIds, *subGroup.Id)
