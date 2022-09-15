@@ -1,1 +1,77 @@
 # Terraform Provider for Looker
+
+This terraform provider interacts with the Looker API to configure Looker resources.
+
+## Documentation 
+
+This provider is not yet published to the terraform registry. Documentation for each resource and datasource supported can be found below.
+
+- [Resources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/resources) 
+- [Data sources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/data-sources)
+
+## Installation
+
+Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry a binary of the provider must be built and stored locally.
+
+### Running the provider locally
+g
+To run the terraform provider, run `make install` to build the binary locally. Then, run `terraform init` using the below configuration.
+
+_Note: To configure the provider, an API key and secret is required for your looker instance. [See documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys). You must be an admin to create an API key._
+
+```terraform
+terraform {
+  required_providers {
+    looker = {
+      source  = "terraform.example.com/local/looker"
+      version = "0.0.1"
+    }
+  }
+}
+
+provider "looker" {
+    base_url      = "https://my-instance.cloud.looker.com"
+    client_id     = "my-client-id"
+    client_secret = "my-client-secret"
+}
+```
+
+```sh
+$ make install
+```
+```sh
+$ terraform init
+```
+## Environment Variables
+
+You can configure the provider with the `LOOKERSDK_BASE_URL`,
+`LOOKERSDK_CLIENT_ID`, `LOOKERSDK_CLIENT_SECRET` environment variables. You can
+also skip SSL verification with `LOOKERSDK_VERIFY_SSL` and define the timeout
+duration with `LOOKERSDK_TIMEOUT`.  For example 
+
+```shell
+LOOKERSDK_BASE_URL="<my-instance-url>" \
+LOOKERSDK_CLIENT_ID="<my-client-id>" \
+LOOKERSDK_CLIENT_SECRET="<my-client-secret>" \
+```
+## Logging and Debugging 
+
+This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` enviroment variable to the desired log level. For example: 
+
+```
+export TF_LOG_PROVIDER=INFO
+```
+
+See the [official documentation](https://www.terraform.io/plugin/log/managing#log-levels) for details on each log level.
+
+## Acceptance testing 
+
+Acceptance tests are run against a test looker instance as part of the developer workflow. To run acceptance testing locally, run the following:
+ ```
+ make testacc
+```
+Sweepers are available to clean up dangling resources that can occur when acceptance tests fail. To run the sweeper, run the following:
+
+```
+make sweep
+```

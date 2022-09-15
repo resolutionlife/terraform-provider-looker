@@ -10,7 +10,8 @@ description: |-
 
 Manages users of a Looker instance
 
-## Example Usage 
+## Example Usage
+
 ```terraform
 resource "looker_user" "my_user" {
   email      = "test@example.com"

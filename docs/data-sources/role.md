@@ -11,6 +11,7 @@ description: |-
 This datasource reads a looker role from a Looker instance.
 
 ## Example Usage
+
 ```terraform
 data "looker_role" "developer" {
   name = "Developer"

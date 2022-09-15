@@ -10,7 +10,7 @@ description: |-
 
 This datasource reads a model set from a Looker instance.
 
-## Example Usage 
+## Example Usage
 
 ```terraform
 data "looker_model_set" "all" {

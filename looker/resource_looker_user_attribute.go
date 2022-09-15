@@ -12,6 +12,7 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/pkg/errors"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
+	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
 
 func resourceUserAttribute() *schema.Resource {
@@ -61,6 +62,7 @@ func resourceUserAttribute() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "Value when no other value is set for the user or for one of the user's groups",
+				ForceNew:    true,
 			},
 			"domain_whitelist": {
 				Type: schema.TypeSet,
@@ -69,7 +71,7 @@ func resourceUserAttribute() *schema.Resource {
 				},
 				ForceNew:    true,
 				Optional:    true,
-				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard '*'. You must set this when changing a user attribute to 'hidden'. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like 'my_domain/*' to 'my_domain/route/*')",
+				Description: "A list of urls that will be allowed as a destination for this user attribute, optionally using a wildcard `*`. You must set this when changing a user attribute to `hidden`. Once set values can only be changed to be more restrictive. (I.e. removing elements from the list or changing an entry like `my_domain/*` to `my_domain/route/*`)",
 			},
 		},
 	}
@@ -126,6 +128,11 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		domainsWhitelistSlice = strings.Split(*userAttributes.HiddenValueDomainWhitelist, ",")
 	}
 
+	var domainError error
+	if len(domainsWhitelistSlice) != 0 {
+		domainError = d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice))
+	}
+
 	result := multierror.Append(
 		d.Set("id", userAttributes.Id),
 		d.Set("name", userAttributes.Name),
@@ -134,7 +141,7 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 		d.Set("hidden", userAttributes.ValueIsHidden),
 		d.Set("default_value", defaultValue),
 		d.Set("user_access", conv.PString(userAccess)),
-		d.Set("domain_whitelist", conv.PSlices(domainsWhitelistSlice)),
+		domainError,
 	)
 
 	return diag.FromErr(result.ErrorOrNil())
@@ -218,7 +225,7 @@ func validateOneOf[T comparable](validOptions []T) schema.SchemaValidateDiagFunc
 		value := i.(T)
 
 		var diags diag.Diagnostics
-		if !contains(validOptions, value) {
+		if !slice.Contains(validOptions, value) {
 			diag := diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "invalid option",
@@ -228,13 +235,4 @@ func validateOneOf[T comparable](validOptions []T) schema.SchemaValidateDiagFunc
 		}
 		return diags
 	}
-}
-
-func contains[T comparable](s []T, v T) bool {
-	for i := range s {
-		if s[i] == v {
-			return true
-		}
-	}
-	return false
 }
