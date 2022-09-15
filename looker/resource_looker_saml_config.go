@@ -75,7 +75,7 @@ func resourceSamlConfig() *schema.Resource {
 				Description: "Name of user record attributes used to indicate last name",
 			},
 			"new_user_migration_types": {
-				Type:        schema.TypeList,
+				Type:        schema.TypeSet,
 				Optional:    true,
 				Description: "Merge first-time saml login to existing user account by email addresses. When a user logs in for the first time via saml this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user.",
 				Elem: &schema.Schema{
@@ -86,7 +86,7 @@ func resourceSamlConfig() *schema.Resource {
 				},
 			},
 			"default_new_user_role_ids": {
-				Type:        schema.TypeList,
+				Type:        schema.TypeSet,
 				Optional:    true,
 				Description: "Array of ids of roles that will be applied to new users the first time they login via Saml",
 				Elem: &schema.Schema{
@@ -94,7 +94,7 @@ func resourceSamlConfig() *schema.Resource {
 				},
 			},
 			"default_new_user_group_ids": {
-				Type:        schema.TypeList,
+				Type:        schema.TypeSet,
 				Optional:    true,
 				Description: "Array of ids of groups that will be applied to new users the first time they login via Saml",
 				Elem: &schema.Schema{
@@ -180,7 +180,7 @@ func resourceSamlConfig() *schema.Resource {
 							Description: "Name of group in Saml",
 						},
 						"role_ids": {
-							Type:        schema.TypeList,
+							Type:        schema.TypeSet,
 							Required:    true,
 							Description: "Looker Role Ids",
 							Elem: &schema.Schema{
@@ -219,7 +219,7 @@ func resourceSamlConfig() *schema.Resource {
 							Description: "Required to be in Saml assertion for login to be allowed to succeed",
 						},
 						"user_attribute_ids": {
-							Type:        schema.TypeList,
+							Type:        schema.TypeSet,
 							Required:    true,
 							Description: "Looker User Attribute Ids",
 							Elem: &schema.Schema{
@@ -293,27 +293,54 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 	api := c.(*sdk.LookerSDK)
 
 	groupsWithRoleIDs := make([]sdk.SamlGroupWrite, 0)
-	for _, v := range d.Get("groups_with_role_ids").([]interface{}) {
-		sgw := v.(map[string]interface{})
-		groupsWithRoleIDs = append(groupsWithRoleIDs, sdk.SamlGroupWrite{
-			Id:              conv.P(sgw["id"].(string)),
-			LookerGroupId:   conv.P(sgw["looker_group_id"].(string)),
-			LookerGroupName: conv.P(sgw["looker_group_name"].(string)),
-			Name:            conv.P(sgw["name"].(string)),
-			RoleIds:         conv.P(sgw["role_ids"].([]string)),
-			Url:             conv.P(sgw["url"].(string)),
-		})
+	if vs, ok := d.GetOk("groups_with_role_ids"); ok {
+		for _, v := range vs.([]interface{}) {
+			sgw := v.(map[string]interface{})
+			roleIDs, err := conv.SchemaSetToSliceString(sgw["role_ids"].(*schema.Set))
+			if err != nil {
+				return diag.FromErr(err)
+			}
+			groupsWithRoleIDs = append(groupsWithRoleIDs, sdk.SamlGroupWrite{
+				Id:              conv.P(sgw["id"].(string)),
+				LookerGroupId:   conv.P(sgw["looker_group_id"].(string)),
+				LookerGroupName: conv.P(sgw["looker_group_name"].(string)),
+				Name:            conv.P(sgw["name"].(string)),
+				RoleIds:         conv.P(roleIDs),
+				Url:             conv.P(sgw["url"].(string)),
+			})
+		}
 	}
 
 	userAttributesWithIds := make([]sdk.SamlUserAttributeWrite, 0)
-	for _, v := range d.Get("user_attributes_with_ids").([]interface{}) {
-		suaw := v.(map[string]interface{})
-		userAttributesWithIds = append(userAttributesWithIds, sdk.SamlUserAttributeWrite{
-			Name:             conv.P(suaw["name"].(string)),
-			Required:         conv.P(suaw["required"].(bool)),
-			UserAttributeIds: conv.P(suaw["user_attribute_ids"].([]string)),
-			Url:              conv.P(suaw["url"].(string)),
-		})
+	if vs, ok := d.GetOk("user_attributes_with_ids"); ok {
+		for _, v := range vs.([]interface{}) {
+			suaw := v.(map[string]interface{})
+			userAttributeIDs, err := conv.SchemaSetToSliceString(suaw["user_attribute_ids"].(*schema.Set))
+			if err != nil {
+				return diag.FromErr(err)
+			}
+			userAttributesWithIds = append(userAttributesWithIds, sdk.SamlUserAttributeWrite{
+				Name:             conv.P(suaw["name"].(string)),
+				Required:         conv.P(suaw["required"].(bool)),
+				UserAttributeIds: conv.P(userAttributeIDs),
+				Url:              conv.P(suaw["url"].(string)),
+			})
+		}
+	}
+
+	newUserMigrationTypes, err := conv.SchemaSetToSliceString(d.Get("new_user_migration_types").(*schema.Set))
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	defaultNewUserGroupIds, err := conv.SchemaSetToSliceString(d.Get("default_new_user_group_ids").(*schema.Set))
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	defaultNewUserRoleIds, err := conv.SchemaSetToSliceString(d.Get("default_new_user_role_ids").(*schema.Set))
+	if err != nil {
+		return diag.FromErr(err)
 	}
 
 	cfg := sdk.WriteSamlConfig{
@@ -322,13 +349,13 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 		IdpUrl:                     conv.P(d.Get("idp_url").(string)),
 		IdpIssuer:                  conv.P(d.Get("idp_issuer").(string)),
 		IdpAudience:                conv.P(d.Get("idp_audience").(string)),
-		AllowedClockDrift:          conv.P(d.Get("allowed_clock_drift").(int64)),
+		AllowedClockDrift:          conv.P(int64(d.Get("allowed_clock_drift").(int))),
 		UserAttributeMapEmail:      conv.P(d.Get("user_attribute_map_email").(string)),
 		UserAttributeMapFirstName:  conv.P(d.Get("user_attribute_map_first_name").(string)),
 		UserAttributeMapLastName:   conv.P(d.Get("user_attribute_map_last_name").(string)),
-		NewUserMigrationTypes:      conv.P(strings.Join(d.Get("new_user_migration_types").([]string), ",")),
-		DefaultNewUserGroupIds:     conv.P(d.Get("default_new_user_group_ids").([]string)),
-		DefaultNewUserRoleIds:      conv.P(d.Get("default_new_user_role_ids").([]string)),
+		NewUserMigrationTypes:      conv.P(strings.Join(newUserMigrationTypes, ",")),
+		DefaultNewUserGroupIds:     conv.P(defaultNewUserGroupIds),
+		DefaultNewUserRoleIds:      conv.P(defaultNewUserRoleIds),
 		AuthRequiresRole:           conv.P(d.Get("auth_requires_role").(bool)),
 		BypassLoginPage:            conv.P(d.Get("bypass_login_page").(bool)),
 		AllowDirectRoles:           conv.P(d.Get("allow_direct_roles").(bool)),
