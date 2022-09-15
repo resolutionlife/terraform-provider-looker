@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -59,36 +60,28 @@ func datasourceIdpMetadataRead(ctx context.Context, d *schema.ResourceData, c in
 	url := conv.PString(d.Get("idp_metadata_url").(string))
 	xml := conv.PString(d.Get("idp_metadata_xml").(string))
 
+	var res sdk.SamlMetadataParseResult
+	var err error
+
 	switch {
 	case xml != nil:
-		res, err := api.ParseSamlIdpMetadata(*xml, nil)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-
-		result := multierror.Append(
-			d.Set("idp_url", res.IdpUrl),
-			d.Set("idp_issuer", res.IdpIssuer),
-			d.Set("idp_cert", res.IdpCert),
-		)
-
-		d.SetId(*res.IdpUrl)
-		return diag.FromErr(result.ErrorOrNil())
+		res, err = api.ParseSamlIdpMetadata(*xml, nil)
 	case url != nil:
-		res, err := api.FetchAndParseSamlIdpMetadata(*url, nil)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-
-		result := multierror.Append(
-			d.Set("idp_url", res.IdpUrl),
-			d.Set("idp_issuer", res.IdpIssuer),
-			d.Set("idp_cert", res.IdpCert),
-		)
-
-		d.SetId(*res.IdpUrl)
-		return diag.FromErr(result.ErrorOrNil())
+		res, err = api.FetchAndParseSamlIdpMetadata(*url, nil)
 	default:
-		return diag.Errorf("Missing URL or XML")
+		err = errors.New("missing URL or XML")
 	}
+
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	result := multierror.Append(
+		d.Set("idp_url", res.IdpUrl),
+		d.Set("idp_issuer", res.IdpIssuer),
+		d.Set("idp_cert", res.IdpCert),
+	)
+
+	d.SetId(*res.IdpUrl)
+	return diag.FromErr(result.ErrorOrNil())
 }
