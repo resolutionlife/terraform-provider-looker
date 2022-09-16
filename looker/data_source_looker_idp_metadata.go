@@ -17,10 +17,6 @@ func datasourceLookerIdpMetadata() *schema.Resource {
 		Description: "This datasource parsed IdP metadata.",
 
 		ReadContext: datasourceIdpMetadataRead,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"idp_metadata_url": {
 				Type:         schema.TypeString,
