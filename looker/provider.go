@@ -62,6 +62,7 @@ func NewProvider() *schema.Provider {
 			"looker_role":           datasourceRole(),
 			"looker_model_set":      datasourceModelSet(),
 			"looker_permission_set": dataSourcePermissionSet(),
+			"looker_idp_metadata":   datasourceLookerIdpMetadata(),
 		},
 		ConfigureContextFunc: configureProvider,
 	}
