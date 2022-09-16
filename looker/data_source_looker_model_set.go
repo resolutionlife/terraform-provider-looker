@@ -16,10 +16,6 @@ func datasourceModelSet() *schema.Resource {
 		Description: "This datasource reads a model set from a Looker instance.",
 
 		ReadContext: dataSourceModelSetRead,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:         schema.TypeString,

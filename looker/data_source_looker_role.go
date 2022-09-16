@@ -16,10 +16,6 @@ func datasourceRole() *schema.Resource {
 		Description: "This datasource reads a looker role from a Looker instance.",
 
 		ReadContext: datasourceRoleRead,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:         schema.TypeString,
