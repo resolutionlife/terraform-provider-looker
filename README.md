@@ -14,7 +14,6 @@ This provider is not yet published to the terraform registry. Documentation for 
 Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry a binary of the provider must be built and stored locally.
 
 ### Running the provider locally
-g
 To run the terraform provider, run `make install` to build the binary locally. Then, run `terraform init` using the below configuration.
 
 _Note: To configure the provider, an API key and secret is required for your looker instance. [See documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys). You must be an admin to create an API key._

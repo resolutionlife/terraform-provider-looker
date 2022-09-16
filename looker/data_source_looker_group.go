@@ -15,10 +15,6 @@ func datasourceGroup() *schema.Resource {
 		Description: "This datasource reads a looker group from a Looker instance.",
 
 		ReadContext: datasourceGroupRead,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:         schema.TypeString,
