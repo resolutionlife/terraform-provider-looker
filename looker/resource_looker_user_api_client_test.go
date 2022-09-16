@@ -13,7 +13,7 @@ func TestAccLookerUserAPIClient(t *testing.T) {
 			{
 				Config: `
 				resource "looker_user" "test_acc" {
-				    email      = "test-acc@resolutionlife.com"
+				    email      = "test-acc@email.com"
 				    first_name = "Tina"
 				    last_name  = "Fey"
 				  }
