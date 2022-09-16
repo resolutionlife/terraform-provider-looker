@@ -25,6 +25,10 @@ func PBool(b bool) *bool {
 	return &b
 }
 
+func P[T any](v T) *T {
+	return &v
+}
+
 func SchemaSetToSliceString(set *schema.Set) ([]string, error) {
 	slice := make([]string, set.Len())
 	for i, v := range set.List() {

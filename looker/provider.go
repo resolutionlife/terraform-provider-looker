@@ -56,6 +56,7 @@ func NewProvider() *schema.Provider {
 			"looker_user_attribute_user":  resourceUserAttributeUser(),
 			"looker_user_attribute_group": resourceUserAttributeGroup(),
 			"looker_user_api_client":      resourceUserAPIClient(),
+			"looker_saml_config":          resourceSamlConfig(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"looker_role":           datasourceRole(),
