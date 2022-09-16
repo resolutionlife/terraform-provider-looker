@@ -65,7 +65,7 @@ func TestAccLookerGroupUser(t *testing.T) {
 			{
 				Config: `
 				resource "looker_user" "test_acc" {
-				    email      = "test-acc@resolutionlife.com"
+				    email      = "test-acc@email.com"
 				    first_name = "John"
 				    last_name  = "Doe"
 				}

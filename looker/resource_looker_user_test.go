@@ -43,13 +43,13 @@ func TestAccLookerUser(t *testing.T) {
 			{
 				Config: `
 				  resource "looker_user" "test_acc" {
-				    email      = "test-acc@resolutionlife.com"
+				    email      = "test-acc@email.com"
 				    first_name = "John"
 				    last_name  = "Doe"
 				  }
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("looker_user.test_acc", "email", "test-acc@resolutionlife.com"),
+					resource.TestCheckResourceAttr("looker_user.test_acc", "email", "test-acc@email.com"),
 					resource.TestCheckResourceAttr("looker_user.test_acc", "first_name", "John"),
 					resource.TestCheckResourceAttr("looker_user.test_acc", "last_name", "Doe"),
 				),
@@ -57,7 +57,7 @@ func TestAccLookerUser(t *testing.T) {
 			{
 				Config: `
 				  resource "looker_user" "test_acc" {
-				    email      = "test-acc@resolutionlife.com"
+				    email      = "test-acc@email.com"
 				    first_name = "Jane"
 				    last_name  = "Smith"
 				  }
