@@ -48,7 +48,7 @@ func TestAccLookerModelSet(t *testing.T) {
 				resource "looker_model_set" "test_acc" {
 					name   = "test-acc-model-set"
 					models = ["test_dataset_1", "test_dataset_2", "test_both_datasets"]
-				  }
+				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("looker_model_set.test_acc", "name", "test-acc-model-set"),
