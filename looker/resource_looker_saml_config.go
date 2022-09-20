@@ -153,15 +153,15 @@ func resourceSamlConfig() *schema.Resource {
 				}, false)),
 				Description: "Identifier for a strategy for how Looker will find groups in the SAML response.",
 			},
-			"groups_with_roles_ids": {
-				Type:        schema.TypeList,
+			"groups_with_role_ids": {
+				Type:        schema.TypeSet,
 				Optional:    true,
 				Description: "Array of mappings between Saml Groups and arrays of Looker Role ids",
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": {
 							Type:        schema.TypeString,
-							Required:    true,
+							Computed:    true,
 							Description: "Unique Id",
 						},
 						"looker_group_id": {
@@ -203,7 +203,7 @@ func resourceSamlConfig() *schema.Resource {
 				Description: "Set user roles in Looker based on groups from Saml",
 			},
 			"user_attributes_with_ids": {
-				Type:        schema.TypeList,
+				Type:        schema.TypeSet,
 				Optional:    true,
 				Description: "Array of mappings between Saml User Attributes and arrays of Looker User Attribute ids",
 				Elem: &schema.Resource{
@@ -246,16 +246,6 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		return diag.FromErr(err)
 	}
 
-	defaultNewUserRoleIds := make([]string, 0)
-	for _, role := range *cfg.DefaultNewUserRoles {
-		defaultNewUserRoleIds = append(defaultNewUserRoleIds, *role.Id)
-	}
-
-	defaultNewUseGroupIds := make([]string, 0)
-	for _, role := range *cfg.DefaultNewUserGroups {
-		defaultNewUseGroupIds = append(defaultNewUseGroupIds, *role.Id)
-	}
-
 	result := multierror.Append(
 		d.Set("enabled", cfg.Enabled),
 		d.Set("idp_cert", cfg.IdpCert),
@@ -266,8 +256,8 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		d.Set("user_attribute_map_email", cfg.UserAttributeMapEmail),
 		d.Set("user_attribute_map_first_name", cfg.UserAttributeMapFirstName),
 		d.Set("user_attribute_map_last_name", cfg.UserAttributeMapLastName),
-		d.Set("default_new_user_role_ids", defaultNewUserRoleIds),
-		d.Set("default_new_user_group_ids", defaultNewUseGroupIds),
+		d.Set("default_new_user_role_ids", flattenRoles(cfg.DefaultNewUserRoles)),
+		d.Set("default_new_user_group_ids", flattenGroups(cfg.DefaultNewUserGroups)),
 		d.Set("auth_requires_role", cfg.AuthRequiresRole),
 		d.Set("bypass_login_page", cfg.BypassLoginPage),
 		d.Set("allow_direct_roles", cfg.AllowDirectRoles),
@@ -276,7 +266,7 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 		d.Set("allow_roles_from_normal_groups", cfg.AllowRolesFromNormalGroups),
 		d.Set("groups_attribute", cfg.GroupsAttribute),
 		d.Set("groups_finder_type", cfg.GroupsFinderType),
-		d.Set("groups_with_roles_ids", flattenGroupsWithRoleIDs(cfg.Groups)),
+		d.Set("groups_with_role_ids", flattenGroupsWithRoleIDs(cfg.Groups)),
 		d.Set("groups_member_value", cfg.GroupsMemberValue),
 		d.Set("set_roles_from_groups", cfg.SetRolesFromGroups),
 		d.Set("user_attributes_with_ids", flattenUserAttributesWithIDs(cfg.UserAttributes)),
@@ -294,26 +284,31 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 
 	groupsWithRoleIDs := make([]sdk.SamlGroupWrite, 0)
 	if vs, ok := d.GetOk("groups_with_role_ids"); ok {
-		for _, v := range vs.([]interface{}) {
+		for _, v := range vs.(*schema.Set).List() {
 			sgw := v.(map[string]interface{})
 			roleIDs, err := conv.SchemaSetToSliceString(sgw["role_ids"].(*schema.Set))
 			if err != nil {
 				return diag.FromErr(err)
 			}
-			groupsWithRoleIDs = append(groupsWithRoleIDs, sdk.SamlGroupWrite{
-				Id:              conv.P(sgw["id"].(string)),
-				LookerGroupId:   conv.P(sgw["looker_group_id"].(string)),
+
+			write := sdk.SamlGroupWrite{
 				LookerGroupName: conv.P(sgw["looker_group_name"].(string)),
 				Name:            conv.P(sgw["name"].(string)),
 				RoleIds:         conv.P(roleIDs),
-				Url:             conv.P(sgw["url"].(string)),
-			})
+			}
+
+			// check for existing ID to ensure we update existing relationship
+			if _, ok := sgw["id"]; ok && sgw["id"].(string) != "" {
+				write.Id = conv.P(sgw["id"].(string))
+			}
+
+			groupsWithRoleIDs = append(groupsWithRoleIDs, write)
 		}
 	}
 
 	userAttributesWithIds := make([]sdk.SamlUserAttributeWrite, 0)
 	if vs, ok := d.GetOk("user_attributes_with_ids"); ok {
-		for _, v := range vs.([]interface{}) {
+		for _, v := range vs.(*schema.Set).List() {
 			suaw := v.(map[string]interface{})
 			userAttributeIDs, err := conv.SchemaSetToSliceString(suaw["user_attribute_ids"].(*schema.Set))
 			if err != nil {
@@ -323,7 +318,6 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 				Name:             conv.P(suaw["name"].(string)),
 				Required:         conv.P(suaw["required"].(bool)),
 				UserAttributeIds: conv.P(userAttributeIDs),
-				Url:              conv.P(suaw["url"].(string)),
 			})
 		}
 	}
@@ -376,7 +370,7 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 
 	d.SetId(fmt.Sprintf("%d", rand.Int()))
 
-	return resourceGroupRead(ctx, d, c)
+	return resourceSamlConfigRead(ctx, d, c)
 }
 
 func resourceSamlConfigDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
@@ -452,9 +446,22 @@ func flattenUserAttributesWithIDs(suaws *[]sdk.SamlUserAttributeRead) []interfac
 	return userAttributeWithIDs
 }
 
+func flattenGroups(groups *[]sdk.Group) []string {
+	if groups == nil {
+		return []string{}
+	}
+
+	groupIDs := make([]string, len(*groups))
+	for i, group := range *groups {
+		groupIDs[i] = *group.Id
+	}
+
+	return groupIDs
+}
+
 func flattenRoles(roles *[]sdk.Role) []string {
 	if roles == nil {
-		return nil
+		return []string{}
 	}
 
 	roleIDs := make([]string, len(*roles))
@@ -467,7 +474,7 @@ func flattenRoles(roles *[]sdk.Role) []string {
 
 func flattenUserAttributes(userAttributes *[]sdk.UserAttribute) []string {
 	if userAttributes == nil {
-		return nil
+		return []string{}
 	}
 
 	userAttributeIDs := make([]string, len(*userAttributes))

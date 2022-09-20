@@ -5,7 +5,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/pkg/errors"
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
@@ -87,7 +86,7 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 			return errors.New("child group ID is not set")
 		}
 
-		client := testAccProvider.Meta().(*client.LookerSDK)
+		client := testAccProvider.Meta().(*sdk.LookerSDK)
 
 		parentSubGroups, err := client.AllGroupGroups(parentRes.Primary.ID, "", nil)
 		if err != nil {
