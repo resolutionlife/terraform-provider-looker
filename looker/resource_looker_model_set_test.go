@@ -60,7 +60,7 @@ func TestAccLookerModelSet(t *testing.T) {
 	})
 }
 
-func testAccModelSet(modelSetResource string, modelsSets []string) resource.TestCheckFunc {
+func testAccModelSet(modelSetResource string, expectedModelsSets []string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		modelSetRes, ok := s.RootModule().Resources[modelSetResource]
 		if !ok {
@@ -77,8 +77,8 @@ func testAccModelSet(modelSetResource string, modelsSets []string) resource.Test
 			return errors.Wrapf(err, "failed to retrieve model set with id: %v", modelSetRes.Primary.ID)
 		}
 
-		if !slice.UnorderedEqual(*modelSet.Models, modelsSets) {
-			return errors.Errorf("models in model set do not match expected: %v actual: %v", modelsSets, *modelSet.Models)
+		if !slice.UnorderedEqual(*modelSet.Models, expectedModelsSets) {
+			return errors.Errorf("models in model set do not match expected: %v actual: %v", expectedModelsSets, *modelSet.Models)
 		}
 
 		return nil
