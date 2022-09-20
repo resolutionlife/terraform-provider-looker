@@ -103,7 +103,7 @@ func testAccRole(roleResource string, expectedModelsSets, expectedPermSets []str
 			return errors.Errorf("Not found: %s", roleResource)
 		}
 		if roleRes.Primary.ID == "" {
-			return errors.New("role set ID is not set")
+			return errors.New("role ID is not set")
 		}
 
 		client := testAccProvider.Meta().(*sdk.LookerSDK)
