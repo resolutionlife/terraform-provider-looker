@@ -60,33 +60,33 @@ resource "looker_saml_config" "saml" {
 - `alternate_email_login_allowed` (Boolean) Allow alternate email-based login via '/login/email' for admins and for specified users with the 'login_special_email' permission. This option is useful as a fallback during ldap setup, if ldap config problems occur later, or if you need to support some users who are not in your ldap directory. Looker email/password logins are always disabled for regular users when ldap is enabled.
 - `auth_requires_role` (Boolean) Users will not be allowed to login at all unless a role for them is found in Saml if set to true
 - `bypass_login_page` (Boolean) Bypass the login page when user authentication is required. Redirect to IdP immediately instead.
-- `default_new_user_group_ids` (List of String) Array of ids of groups that will be applied to new users the first time they login via Saml
-- `default_new_user_role_ids` (List of String) Array of ids of roles that will be applied to new users the first time they login via Saml
+- `default_new_user_group_ids` (Set of String) Array of ids of groups that will be applied to new users the first time they login via Saml
+- `default_new_user_role_ids` (Set of String) Array of ids of roles that will be applied to new users the first time they login via Saml
 - `groups_attribute` (String) Name of user record attributes used to indicate groups. Used when 'groups_finder_type' is set to 'grouped_attribute_values'
 - `groups_finder_type` (String) Identifier for a strategy for how Looker will find groups in the SAML response.
 - `groups_member_value` (String) Value for group attribute used to indicate membership. Used when 'groups_finder_type' is set to 'individual_attributes'
-- `groups_with_roles_ids` (Block List) Array of mappings between Saml Groups and arrays of Looker Role ids (see [below for nested schema](#nestedblock--groups_with_roles_ids))
+- `groups_with_role_ids` (Block Set) Array of mappings between Saml Groups and arrays of Looker Role ids (see [below for nested schema](#nestedblock--groups_with_role_ids))
 - `idp_audience` (String) Identity Provider Audience (set in IdP config). Optional in Looker. Set this only if you want Looker to validate the audience value returned by the IdP.
-- `new_user_migration_types` (List of String) Merge first-time saml login to existing user account by email addresses. When a user logs in for the first time via saml this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user.
+- `new_user_migration_types` (Set of String) Merge first-time saml login to existing user account by email addresses. When a user logs in for the first time via saml this option will connect this user into their existing account by finding the account with a matching email address by testing the given types of credentials for existing users. Otherwise a new user account will be created for the user.
 - `set_roles_from_groups` (Boolean) Set user roles in Looker based on groups from Saml
-- `user_attributes_with_ids` (Block List) Array of mappings between Saml User Attributes and arrays of Looker User Attribute ids (see [below for nested schema](#nestedblock--user_attributes_with_ids))
+- `user_attributes_with_ids` (Block Set) Array of mappings between Saml User Attributes and arrays of Looker User Attribute ids (see [below for nested schema](#nestedblock--user_attributes_with_ids))
 
 ### Read-Only
 
 - `id` (String) This is set to a random value at create time
 
-<a id="nestedblock--groups_with_roles_ids"></a>
-### Nested Schema for `groups_with_roles_ids`
+<a id="nestedblock--groups_with_role_ids"></a>
+### Nested Schema for `groups_with_role_ids`
 
 Required:
 
-- `id` (String) Unique Id
 - `looker_group_name` (String) Name of group in Looker
 - `name` (String) Name of group in Saml
-- `role_ids` (List of String) Looker Role Ids
+- `role_ids` (Set of String) Looker Role Ids
 
 Read-Only:
 
+- `id` (String) Unique Id
 - `looker_group_id` (String) Unique Id of group in Looker
 
 
@@ -97,6 +97,6 @@ Required:
 
 - `name` (String) Name of User Attribute in Saml
 - `required` (Boolean) Required to be in Saml assertion for login to be allowed to succeed
-- `user_attribute_ids` (List of String) Looker User Attribute Ids
+- `user_attribute_ids` (Set of String) Looker User Attribute Ids
 
 
