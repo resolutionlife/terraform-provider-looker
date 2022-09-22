@@ -56,6 +56,19 @@ func TestAccLookerPermissionSet(t *testing.T) {
 					testAccPermissionSet("looker_permission_set.test_acc", []string{"access_data", "see_lookml", "see_lookml_dashboards"}),
 				),
 			},
+			{
+				Config: `
+				resource "looker_permission_set" "test_acc" {
+					name        = "test-acc-permission-set"
+					permissions = ["see_lookml", "see_lookml_dashboards"]
+				}
+				`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("looker_permission_set.test_acc", "name", "test-acc-permission-set"),
+					resource.TestCheckResourceAttr("looker_permission_set.test_acc", "permissions.#", "2"),
+					testAccPermissionSet("looker_permission_set.test_acc", []string{"see_lookml", "see_lookml_dashboards"}),
+				),
+			},
 		},
 	})
 }
