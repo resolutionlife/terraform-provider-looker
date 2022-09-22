@@ -92,6 +92,29 @@ func TestAccLookerRole(t *testing.T) {
 					testAccRole("looker_role.test_acc", []string{"test_dataset_1", "test_dataset_2", "test_both_datasets"}, []string{"access_data", "see_lookml", "see_lookml_dashboards"}),
 				),
 			},
+			{
+				Config: `
+				resource "looker_permission_set" "test_acc" {
+					name        = "test-acc-permission-set"
+					permissions = ["see_lookml", "see_lookml_dashboards"]
+				}
+
+				resource "looker_model_set" "test_acc" {
+					name   = "test-acc-model-set"
+					models = ["test_dataset_1", "test_both_datasets"]
+				}
+
+				resource "looker_role" "test_acc" {
+					name              = "test-acc-role"
+					model_set_id      = looker_model_set.test_acc.id
+					permission_set_id = looker_permission_set.test_acc.id
+				}
+				`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("looker_role.test_acc", "name", "test-acc-role"),
+					testAccRole("looker_role.test_acc", []string{"test_dataset_1", "test_both_datasets"}, []string{"see_lookml", "see_lookml_dashboards"}),
+				),
+			},
 		},
 	})
 }
