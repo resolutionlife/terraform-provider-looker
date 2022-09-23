@@ -1,6 +1,8 @@
 package slice
 
 import (
+	"strings"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/exp/constraints"
@@ -61,4 +63,25 @@ the ordered constraint ensures only ints, floats and strings are usable with thi
 */
 func UnorderedEqual[T constraints.Ordered](a, b []T) bool {
 	return cmp.Equal(a, b, cmpopts.SortSlices(func(a, b T) bool { return a < b }))
+}
+
+// Predicate defines the expected filter functions Filter accepts
+type Predicate[T constraints.Ordered] func(elem T) bool
+
+// StartsWithString returns true if the predicate string starts with the provided prefix
+func StartsWithString(prefix string) Predicate[string] {
+	return func(elem string) bool {
+		return strings.HasPrefix(elem, prefix)
+	}
+}
+
+// Filter takes a generic slice and a predicate func and returns a slice of all elements in the original slice that satisfy the predicate
+func Filter[T constraints.Ordered](slice []T, predicateFunc Predicate[T]) []T {
+	filtered := make([]T, 0)
+	for _, elem := range slice {
+		if predicateFunc(elem) {
+			filtered = append(filtered, elem)
+		}
+	}
+	return filtered
 }
