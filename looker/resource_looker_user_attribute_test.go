@@ -20,14 +20,14 @@ func init() {
 			}
 
 			userAttrs, err := c.AllUserAttributes(sdk.RequestAllBoardSections{
-				Fields: conv.PString(""),
-				Sorts:  conv.PString(""),
+				Fields: conv.P(""),
+				Sorts:  conv.P(""),
 			}, nil)
 			if err != nil {
 				return err
 			}
 
-			filteredUserAttrs := make([]sdk.UserAttribute, 0)
+			filteredUserAttrs := make([]sdk.UserAttribute, 0, len(userAttrs))
 			for _, userAttr := range userAttrs {
 				if strings.HasPrefix(userAttr.Name, "test_acc_") {
 					filteredUserAttrs = append(filteredUserAttrs, userAttr)
