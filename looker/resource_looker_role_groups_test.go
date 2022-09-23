@@ -37,7 +37,7 @@ func init() {
 				}
 			}
 
-			permissionSets, err := c.SearchPermissionSets(sdk.RequestSearchModelSets{
+			permissionSets, err := c.SearchPermissionSets(sdk.RequestSearchPermissionSets{
 				Name: conv.P("test-acc%"),
 			}, nil)
 			if err != nil {

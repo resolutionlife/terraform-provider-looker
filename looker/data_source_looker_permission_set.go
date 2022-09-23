@@ -49,7 +49,7 @@ func dataSourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c 
 	id := conv.PString(d.Get("id").(string))
 
 	permSets, permSetsErr := api.SearchPermissionSets(
-		sdk.RequestSearchModelSets{
+		sdk.RequestSearchPermissionSets{
 			Name: name,
 			Id:   id,
 		}, nil,
