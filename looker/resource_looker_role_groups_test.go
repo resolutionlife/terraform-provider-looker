@@ -24,8 +24,21 @@ func init() {
 				return err
 			}
 
+			roles, err := c.SearchRoles(sdk.RequestSearchRoles{
+				Name: conv.P("test-acc%"),
+			}, nil)
+			if err != nil {
+				return err
+			}
+
+			for _, role := range roles {
+				if _, err := c.DeleteRole(*role.Id, nil); err != nil {
+					return err
+				}
+			}
+
 			permissionSets, err := c.SearchPermissionSets(sdk.RequestSearchModelSets{
-				Name: conv.PString("test-acc%"),
+				Name: conv.P("test-acc%"),
 			}, nil)
 			if err != nil {
 				return err
@@ -38,7 +51,7 @@ func init() {
 			}
 
 			modelSets, err := c.SearchModelSets(sdk.RequestSearchModelSets{
-				Name: conv.PString("test-acc%"),
+				Name: conv.P("test-acc%"),
 			}, nil)
 			if err != nil {
 				return err
@@ -51,7 +64,7 @@ func init() {
 			}
 
 			groups, err := c.SearchGroups(sdk.RequestSearchGroups{
-				Name: conv.PString("test-acc%"),
+				Name: conv.P("test-acc%"),
 			}, nil)
 			if err != nil {
 				return err
@@ -59,19 +72,6 @@ func init() {
 
 			for _, g := range groups {
 				if _, err := c.DeleteGroup(*g.Id, nil); err != nil {
-					return err
-				}
-			}
-
-			roles, err := c.SearchRoles(sdk.RequestSearchRoles{
-				Name: conv.PString("test-acc%"),
-			}, nil)
-			if err != nil {
-				return err
-			}
-
-			for _, role := range roles {
-				if _, err := c.DeleteRole(*role.Id, nil); err != nil {
 					return err
 				}
 			}
