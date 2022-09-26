@@ -95,12 +95,14 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedVal
 			return errors.Wrapf(err, "failed to retrieve user attribute group value with id: %v", userAttrGroupRes.Primary.ID)
 		}
 
-		for _, ua := range userAttrs {
-			if *ua.GroupId == groupRes.Primary.ID && *ua.Value == expectedValue {
-				return nil
+		for _, userAttr := range userAttrs {
+			if *userAttr.GroupId == groupRes.Primary.ID {
+				if *userAttr.Value != expectedValue {
+					return errors.Errorf("value in user attribute group does not match expected: %v actual: %v", expectedValue, *userAttr.Value)
+				}
 			}
 		}
 
-		return errors.Errorf("user attribute %s not found on group %s", userAttrGroupRes.Primary.ID, groupRes.Primary.ID)
+		return nil
 	}
 }
