@@ -73,7 +73,7 @@ func resourceGroupGroupCreate(ctx context.Context, d *schema.ResourceData, c int
 func resourceGroupGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groups, grErr := api.SearchGroupsWithHierarchy(sdk.RequestSearchGroups{
+	groups, grErr := api.SearchGroupsWithHierarchy(sdk.RequestSearchGroupsWithHierarchy{
 		Id: conv.PString(d.Get("group_id").(string)),
 	}, nil)
 	if grErr != nil {

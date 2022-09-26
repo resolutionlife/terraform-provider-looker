@@ -19,7 +19,7 @@ func init() {
 				return err
 			}
 
-			userAttrs, err := c.AllUserAttributes(sdk.RequestAllBoardSections{
+			userAttrs, err := c.AllUserAttributes(sdk.RequestAllUserAttributes{
 				Fields: conv.P(""),
 				Sorts:  conv.P(""),
 			}, nil)

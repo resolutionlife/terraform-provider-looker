@@ -21,7 +21,7 @@ func init() {
 				return err
 			}
 
-			permissionSets, err := c.SearchPermissionSets(sdk.RequestSearchModelSets{
+			permissionSets, err := c.SearchPermissionSets(sdk.RequestSearchPermissionSets{
 				Name: conv.PString("test-acc%"),
 			}, nil)
 			if err != nil {
