@@ -1,9 +1,13 @@
 package looker
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+	"github.com/pkg/errors"
 )
 
 func init() {
@@ -54,8 +58,50 @@ func TestAccLookerUserAttributeGroup(t *testing.T) {
 							"value": "25",
 						},
 					),
+					testAccUserAttributeGroup("looker_user_attribute_group.test_acc", "looker_group.test_acc"),
 				),
 			},
 		},
 	})
+}
+
+func testAccUserAttributeGroup(userAttrGroupResource, groupResource string) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		userAttrGroupRes, ok := s.RootModule().Resources[userAttrGroupResource]
+		if !ok {
+			return errors.Errorf("Not found: %s", userAttrGroupResource)
+		}
+		if userAttrGroupRes.Primary.ID == "" {
+			return errors.New("user attribute group ID is not set")
+		}
+
+		groupRes, ok := s.RootModule().Resources[groupResource]
+		if !ok {
+			return errors.Errorf("Not found: %s", groupRes)
+		}
+		if groupRes.Primary.ID == "" {
+			return errors.New("group ID is not set")
+		}
+
+		client := testAccProvider.Meta().(*sdk.LookerSDK)
+
+		userAttrGroupIds := strings.Split(userAttrGroupRes.Primary.ID, "_")
+		if len(userAttrGroupIds) < 2 {
+			return errors.New("invalid id, should be of the form <user_attribute_id>_<group_id>_<...>")
+		}
+
+		// id of user attribute is in form <user_attribute_id>_<group_id>_<...>
+		userAttrs, err := client.AllUserAttributeGroupValues(userAttrGroupIds[0], "", nil)
+		if err != nil {
+			return errors.Wrapf(err, "failed to retrieve user attribute group value with id: %v", userAttrGroupRes.Primary.ID)
+		}
+
+		for _, ua := range userAttrs {
+			if *ua.GroupId == groupRes.Primary.ID {
+				return nil
+			}
+		}
+
+		return errors.Errorf("user attribute %s not found on group %s", userAttrGroupRes.Primary.ID, groupRes.Primary.ID)
+	}
 }
