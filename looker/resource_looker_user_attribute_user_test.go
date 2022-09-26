@@ -1,7 +1,6 @@
 package looker
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -15,47 +14,9 @@ import (
 func init() {
 	// Add a sweeper to remove user attributes and users that have names starting with `test_acc`.
 	resource.AddTestSweepers("looker_user_attribute_user", &resource.Sweeper{
-		Name: "looker_user_attribute_user",
+		Dependencies: []string{"looker_user_attribute", "looker_user"},
+		Name:         "looker_user_attribute_user",
 		F: func(r string) error {
-			c, err := newTestLookerSDK()
-			if err != nil {
-				return err
-			}
-
-			userAttrs, err := c.AllUserAttributes(sdk.RequestAllBoardSections{
-				Fields: conv.P(""),
-				Sorts:  conv.P(""),
-			}, nil)
-			if err != nil {
-				return err
-			}
-
-			filteredUserAttrs := make([]sdk.UserAttribute, 0, len(userAttrs))
-			for _, userAttr := range userAttrs {
-				if strings.HasPrefix(userAttr.Name, "test_acc_") {
-					filteredUserAttrs = append(filteredUserAttrs, userAttr)
-				}
-			}
-
-			for _, filteredUserAttr := range filteredUserAttrs {
-				if _, err := c.DeleteUserAttribute(*filteredUserAttr.Id, nil); err != nil {
-					return err
-				}
-			}
-
-			users, err := c.SearchUsers(sdk.RequestSearchUsers{
-				Email: conv.P("test-acc%"),
-			}, nil)
-			if err != nil {
-				return err
-			}
-
-			for _, u := range users {
-				if _, err := c.DeleteUser(*u.Id, nil); err != nil {
-					return err
-				}
-			}
-
 			return nil
 		},
 	})
@@ -107,7 +68,7 @@ func testAccRoleUserAttributeUser(userResource string) resource.TestCheckFunc {
 			return errors.Errorf("Not found: %s", userResource)
 		}
 		if userRes.Primary.ID == "" {
-			return errors.New("role user ID is not set")
+			return errors.New("user ID is not set")
 		}
 
 		client := testAccProvider.Meta().(*sdk.LookerSDK)
@@ -117,7 +78,7 @@ func testAccRoleUserAttributeUser(userResource string) resource.TestCheckFunc {
 			Fields: conv.P(""),
 		}, nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve group with id: %v", userRes.Primary.ID)
+			return errors.Wrapf(err, "failed to retrieve user attribute with id: %v", userRes.Primary.ID)
 		}
 
 		userIds := []string{}
