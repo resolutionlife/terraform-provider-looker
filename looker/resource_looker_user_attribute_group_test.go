@@ -35,10 +35,9 @@ func TestAccLookerUserAttributeGroup(t *testing.T) {
 					name             = "test_acc_user_attribute_name"
 					label            = "test-acc-user-attribute-label"
 					data_type        = "number"
-					hidden           = true
+					hidden           = false
 					default_value    = 24
 					user_access      = "View"
-					domain_whitelist = ["my_domain/route/sub/*"]
 				}
 
 				resource "looker_user_attribute_group" "test_acc" {
@@ -58,14 +57,14 @@ func TestAccLookerUserAttributeGroup(t *testing.T) {
 							"value": "25",
 						},
 					),
-					testAccUserAttributeGroup("looker_user_attribute_group.test_acc", "looker_group.test_acc"),
+					testAccUserAttributeGroup("looker_user_attribute_group.test_acc", "looker_group.test_acc", "25"),
 				),
 			},
 		},
 	})
 }
 
-func testAccUserAttributeGroup(userAttrGroupResource, groupResource string) resource.TestCheckFunc {
+func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedValue string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		userAttrGroupRes, ok := s.RootModule().Resources[userAttrGroupResource]
 		if !ok {
@@ -97,7 +96,7 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource string) reso
 		}
 
 		for _, ua := range userAttrs {
-			if *ua.GroupId == groupRes.Primary.ID {
+			if *ua.GroupId == groupRes.Primary.ID && *ua.Value == expectedValue {
 				return nil
 			}
 		}
