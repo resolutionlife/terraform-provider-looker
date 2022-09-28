@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -54,7 +56,7 @@ var (
 func NewTestProvider(cassettePath string) func() error {
 	r, err := recorder.NewWithOptions(&recorder.Options{
 		CassetteName:       cassettePath,
-		Mode:               recorder.ModeReplayWithNewEpisodes,
+		Mode:               recorder.ModeRecordOnly,
 		SkipRequestLatency: true,
 		RealTransport:      http.DefaultTransport,
 	})
@@ -73,6 +75,19 @@ func NewTestProvider(cassettePath string) func() error {
 		fmt.Println("============================")
 		return nil
 	}, recorder.AfterCaptureHook)
+
+	// ensures creds do not leak
+	r.AddHook(func(i *cassette.Interaction) error {
+		if strings.Contains(i.Request.Body, "client_id") || strings.Contains(i.Request.Body, "client_secret") {
+			forms := make(url.Values)
+			forms.Add("client_id", "[REDACTED]")
+			forms.Add("client_secret", "[REDACTED]")
+			i.Request.Form = forms
+			i.Request.Body = "[REDACTED]"
+			i.Response.Body = `{"access_token": "[REDACTED]"}`
+		}
+		return nil
+	}, recorder.BeforeSaveHook)
 
 	testAccProvider = NewProvider(WithRecorder(r))
 	testAccProviders = map[string]func() (*schema.Provider, error){
