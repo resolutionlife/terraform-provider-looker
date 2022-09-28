@@ -4,16 +4,26 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/resolutionlife/terraform-provider-looker/version"
+	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
+type ProviderOptions func(*schema.Provider)
+
+func WithRecorder(rec *recorder.Recorder) ProviderOptions {
+	return func(p *schema.Provider) {
+		p.ConfigureContextFunc = configWrapper(rec)
+	}
+}
+
 // NewProvider returns an new provider.
-func NewProvider() *schema.Provider {
+func NewProvider(opts ...ProviderOptions) *schema.Provider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"base_url": {
@@ -65,23 +75,72 @@ func NewProvider() *schema.Provider {
 			"looker_permission_set": dataSourcePermissionSet(),
 			"looker_idp_metadata":   datasourceLookerIdpMetadata(),
 		},
-		ConfigureContextFunc: configureProvider,
+		ConfigureContextFunc: configWrapper(nil),
 	}
+
+	for _, opt := range opts {
+		opt(provider)
+	}
+
+	spew.Dump(provider.ConfigureContextFunc)
 
 	return provider
 }
 
-// configureProvider uses the environment variables to create a Looker client.
-func configureProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
-	authSession := rtl.NewAuthSession(rtl.ApiSettings{
-		BaseUrl:      data.Get("base_url").(string),
-		ClientId:     data.Get("client_id").(string),
-		ClientSecret: data.Get("client_secret").(string),
-		ApiVersion:   "4.0", // this provider only supports API verison 4.0
-		VerifySsl:    data.Get("verify_ssl").(bool),
-		Timeout:      int32(data.Get("timeout").(int)),
-		AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
-	})
+func configWrapper(rec *recorder.Recorder) schema.ConfigureContextFunc {
+	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+		apiSettings := rtl.ApiSettings{
+			BaseUrl:      d.Get("base_url").(string),
+			ClientId:     d.Get("client_id").(string),
+			ClientSecret: d.Get("client_secret").(string),
+			ApiVersion:   "4.0", // this provider only supports API version 4.0
+			VerifySsl:    d.Get("verify_ssl").(bool),
+			Timeout:      int32(d.Get("timeout").(int)),
+			AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
+		}
 
-	return client.NewLookerSDK(authSession), nil
+		var authSession *rtl.AuthSession
+		if rec == nil {
+			authSession = rtl.NewAuthSession(apiSettings)
+		} else {
+			authSession = rtl.NewAuthSessionWithTransport(apiSettings, rec)
+		}
+
+		return client.NewLookerSDK(authSession), nil
+	}
 }
+
+// // configureRecordedProvider uses the environment variables to create a Looker client and injects a custom roundTripper.
+// func configureRecordedProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
+// 	authSession := rtl.NewAuthSessionWithTransport(
+// 		rtl.ApiSettings{
+// 			BaseUrl:      data.Get("base_url").(string),
+// 			ClientId:     data.Get("client_id").(string),
+// 			ClientSecret: data.Get("client_secret").(string),
+// 			ApiVersion:   "4.0", // this provider only supports API version 4.0
+// 			VerifySsl:    data.Get("verify_ssl").(bool),
+// 			Timeout:      int32(data.Get("timeout").(int)),
+// 			AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
+// 		},
+// 		nil,
+// 	)
+
+// 	return client.NewLookerSDK(authSession), nil
+// }
+
+// // configureProvider uses the environment variables to create a Looker client and is the default configuration.
+// func configureProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
+// 	authSession := rtl.NewAuthSession(
+// 		rtl.ApiSettings{
+// 			BaseUrl:      data.Get("base_url").(string),
+// 			ClientId:     data.Get("client_id").(string),
+// 			ClientSecret: data.Get("client_secret").(string),
+// 			ApiVersion:   "4.0", // this provider only supports API version 4.0
+// 			VerifySsl:    data.Get("verify_ssl").(bool),
+// 			Timeout:      int32(data.Get("timeout").(int)),
+// 			AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
+// 		},
+// 	)
+
+// 	return client.NewLookerSDK(authSession), nil
+// }

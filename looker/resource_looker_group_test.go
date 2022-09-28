@@ -40,6 +40,9 @@ func init() {
 }
 
 func TestAccLookerGroup(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_group")
+	defer stop()
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

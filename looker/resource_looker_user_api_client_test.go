@@ -7,6 +7,9 @@ import (
 )
 
 func TestAccLookerUserAPIClient(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_user_api_client")
+	defer stop()
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

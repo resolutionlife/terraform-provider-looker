@@ -46,6 +46,9 @@ func init() {
 }
 
 func TestAccLookerUserAttribute(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_user_attribute")
+	defer stop()
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

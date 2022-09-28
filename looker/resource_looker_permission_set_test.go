@@ -40,6 +40,9 @@ func init() {
 }
 
 func TestAccLookerPermissionSet(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_permission_set")
+	defer stop()
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
