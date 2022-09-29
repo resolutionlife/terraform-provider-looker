@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 	"testing"
 
@@ -64,8 +65,15 @@ func filterCredentials(i *cassette.Interaction) error {
 		form.Add("client_secret", "[REDACTED]")
 
 		i.Request.Form = form
-		i.Request.Body = "[REDACTED]"
 		i.Response.Body = `{"access_token": "[REDACTED]"}`
+		requestUrl, err := url.Parse(i.Request.URL)
+		if err != nil {
+			return err
+		}
+
+		if path.Base(requestUrl.Path) == "login" {
+			i.Request.Body = "[REDACTED]"
+		}
 	}
 
 	return nil

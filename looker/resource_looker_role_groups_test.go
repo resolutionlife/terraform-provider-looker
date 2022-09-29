@@ -102,7 +102,7 @@ func TestAccLookerRoleGroups(t *testing.T) {
 
 				resource "looker_role" "test_acc" {
 					name              = "test-acc-role"
-					model_set_id      = looker_model_set.test_acc.id
+					model_set_id      = looker_model_set.test_acc.id 
 					permission_set_id = looker_permission_set.test_acc.id
 				}
 
@@ -112,6 +112,10 @@ func TestAccLookerRoleGroups(t *testing.T) {
 
 				resource "looker_group" "test_acc_2" {
 					name = "test-acc-group-2"
+
+					depends_on = [
+						looker_group.test_acc_1
+					]
 				}
 
 				resource "looker_role_groups" "test_acc" {

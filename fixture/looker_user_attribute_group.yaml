@@ -38,7 +38,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:14 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -47,7 +47,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 94.942654ms
+        duration: 91.916782ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -78,14 +78,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"415"}'
+        body: '{"id":"423"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Set-Cookie:
-                - looker.browser=14375693; expires=Sun, 28 Sep 2025 09:48:15 GMT; HttpOnly
+                - looker.browser=4309801; expires=Sun, 28 Sep 2025 10:37:20 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 108.043747ms
+        duration: 108.406976ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -125,14 +125,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1180","name":"test-acc-group"}'
+        body: '{"id":"1198","name":"test-acc-group"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Set-Cookie:
-                - looker.browser=31222284; expires=Sun, 28 Sep 2025 09:48:15 GMT; HttpOnly
+                - looker.browser=8652421; expires=Sun, 28 Sep 2025 10:37:20 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -141,7 +141,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 129.195075ms
+        duration: 118.438448ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -162,7 +162,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1198?fields=id%2Cname%2Cexternally_managed
         method: GET
       response:
         proto: HTTP/1.1
@@ -172,12 +172,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"415","name":"test_acc_user_attribute_name","label":"test-acc-user-attribute-label","type":"number","default_value":"24","is_system":false,"is_permanent":false,"value_is_hidden":false,"user_can_view":true,"user_can_edit":false,"hidden_value_domain_whitelist":null,"can":{"show":true,"index":true,"create":true,"show_value":true,"update":true,"destroy":true,"set_value":true}}'
+        body: '{"id":"1198","name":"test-acc-group","externally_managed":false}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -186,7 +186,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 81.098179ms
+        duration: 60.874008ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -207,7 +207,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1180?fields=id%2Cname%2Cexternally_managed
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423
         method: GET
       response:
         proto: HTTP/1.1
@@ -217,12 +217,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1180","name":"test-acc-group","externally_managed":false}'
+        body: '{"id":"423","name":"test_acc_user_attribute_name","label":"test-acc-user-attribute-label","type":"number","default_value":"24","is_system":false,"is_permanent":false,"value_is_hidden":false,"user_can_view":true,"user_can_edit":false,"hidden_value_domain_whitelist":null,"can":{"show":true,"index":true,"create":true,"show_value":true,"update":true,"destroy":true,"set_value":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -231,7 +231,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 65.312349ms
+        duration: 73.801872ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -243,7 +243,7 @@ interactions:
         host: atoscerebro.cloud.looker.com:443
         remote_addr: ""
         request_uri: ""
-        body: '[{"group_id":"1180","value":"25"}]'
+        body: '[{"group_id":"1198","value":"25"}]'
         form: {}
         headers:
             Accept:
@@ -252,7 +252,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415/group_values
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423/group_values
         method: POST
       response:
         proto: HTTP/1.1
@@ -262,14 +262,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"453","group_id":"1180","user_attribute_id":"415","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
+        body: '[{"id":"455","group_id":"1198","user_attribute_id":"423","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Set-Cookie:
-                - looker.browser=6994685; expires=Sun, 28 Sep 2025 09:48:15 GMT; HttpOnly
+                - looker.browser=46901372; expires=Sun, 28 Sep 2025 10:37:20 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -278,7 +278,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 109.677647ms
+        duration: 112.962582ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -299,7 +299,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415/group_values
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423/group_values
         method: GET
       response:
         proto: HTTP/1.1
@@ -309,12 +309,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"453","group_id":"1180","user_attribute_id":"415","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
+        body: '[{"id":"455","group_id":"1198","user_attribute_id":"423","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -323,7 +323,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 67.465768ms
+        duration: 69.581329ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -344,7 +344,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415/group_values
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423/group_values
         method: GET
       response:
         proto: HTTP/1.1
@@ -354,12 +354,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"453","group_id":"1180","user_attribute_id":"415","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
+        body: '[{"id":"455","group_id":"1198","user_attribute_id":"423","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -368,7 +368,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 75.918256ms
+        duration: 80.180595ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -406,7 +406,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:15 GMT
+                - Thu, 29 Sep 2022 10:37:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -415,7 +415,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 166.475692ms
+        duration: 119.819683ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -436,7 +436,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423
         method: GET
       response:
         proto: HTTP/1.1
@@ -446,12 +446,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"415","name":"test_acc_user_attribute_name","label":"test-acc-user-attribute-label","type":"number","default_value":"24","is_system":false,"is_permanent":false,"value_is_hidden":false,"user_can_view":true,"user_can_edit":false,"hidden_value_domain_whitelist":null,"can":{"show":true,"index":true,"create":true,"show_value":true,"update":true,"destroy":true,"set_value":true}}'
+        body: '{"id":"423","name":"test_acc_user_attribute_name","label":"test-acc-user-attribute-label","type":"number","default_value":"24","is_system":false,"is_permanent":false,"value_is_hidden":false,"user_can_view":true,"user_can_edit":false,"hidden_value_domain_whitelist":null,"can":{"show":true,"index":true,"create":true,"show_value":true,"update":true,"destroy":true,"set_value":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -460,7 +460,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 63.306729ms
+        duration: 65.297853ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -481,7 +481,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1180?fields=id%2Cname%2Cexternally_managed
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1198?fields=id%2Cname%2Cexternally_managed
         method: GET
       response:
         proto: HTTP/1.1
@@ -491,12 +491,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1180","name":"test-acc-group","externally_managed":false}'
+        body: '{"id":"1198","name":"test-acc-group","externally_managed":false}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -505,7 +505,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 68.676843ms
+        duration: 67.565164ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -526,7 +526,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415/group_values
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423/group_values
         method: GET
       response:
         proto: HTTP/1.1
@@ -536,12 +536,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"453","group_id":"1180","user_attribute_id":"415","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
+        body: '[{"id":"455","group_id":"1198","user_attribute_id":"423","value_is_hidden":false,"rank":1,"value":"25","can":{}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -550,7 +550,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 70.229379ms
+        duration: 63.890074ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -588,7 +588,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -597,7 +597,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 133.09662ms
+        duration: 116.717531ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -618,7 +618,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1180/attribute_values/415
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1198/attribute_values/423
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -633,9 +633,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:22 GMT
             Set-Cookie:
-                - looker.browser=57723335; expires=Sun, 28 Sep 2025 09:48:16 GMT; HttpOnly
+                - looker.browser=1381596; expires=Sun, 28 Sep 2025 10:37:22 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -644,7 +644,7 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 93.964931ms
+        duration: 94.642548ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -665,7 +665,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/415
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1198
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -680,9 +680,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:22 GMT
             Set-Cookie:
-                - looker.browser=54180383; expires=Sun, 28 Sep 2025 09:48:16 GMT; HttpOnly
+                - looker.browser=54610272; expires=Sun, 28 Sep 2025 10:37:22 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -691,7 +691,7 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 85.706188ms
+        duration: 87.853781ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -712,7 +712,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1180
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/user_attributes/423
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -727,9 +727,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 09:48:16 GMT
+                - Thu, 29 Sep 2022 10:37:22 GMT
             Set-Cookie:
-                - looker.browser=69944778; expires=Sun, 28 Sep 2025 09:48:16 GMT; HttpOnly
+                - looker.browser=76069954; expires=Sun, 28 Sep 2025 10:37:22 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -738,4 +738,4 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 97.059455ms
+        duration: 97.673273ms
