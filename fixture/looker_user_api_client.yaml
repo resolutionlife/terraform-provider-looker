@@ -38,7 +38,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:17 GMT
+                - Thu, 29 Sep 2022 11:19:30 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -47,7 +47,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 88.880482ms
+        duration: 96.918124ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -78,14 +78,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=blank","credentials_api3":[],"credentials_email":null,"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"","first_name":"Tina","id":"861","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"892","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/861","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
+        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=blank","credentials_api3":[],"credentials_email":null,"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"","first_name":"Tina","id":"865","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"896","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/865","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:17 GMT
+                - Thu, 29 Sep 2022 11:19:31 GMT
             Set-Cookie:
-                - looker.browser=89593545; expires=Sun, 28 Sep 2025 10:37:17 GMT; HttpOnly
+                - looker.browser=34372196; expires=Sun, 28 Sep 2025 11:19:31 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 191.66311ms
+        duration: 340.107692ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -115,7 +115,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_email
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_email
         method: POST
       response:
         proto: HTTP/1.1
@@ -125,14 +125,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"created_at":"2022-09-29T10:37:17.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"","url":"https://localhost:19999/api/4.0/users/861/credentials_email","user_url":"https://localhost:19999/api/4.0/users/861","can":{"show_password_reset_url":true}}'
+        body: '{"created_at":"2022-09-29T11:19:31.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"","url":"https://localhost:19999/api/4.0/users/865/credentials_email","user_url":"https://localhost:19999/api/4.0/users/865","can":{"show_password_reset_url":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:17 GMT
+                - Thu, 29 Sep 2022 11:19:31 GMT
             Set-Cookie:
-                - looker.browser=72681182; expires=Sun, 28 Sep 2025 10:37:17 GMT; HttpOnly
+                - looker.browser=49036298; expires=Sun, 28 Sep 2025 11:19:31 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -141,7 +141,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 145.051161ms
+        duration: 156.498745ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -162,7 +162,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_email/send_password_reset
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_email/send_password_reset
         method: POST
       response:
         proto: HTTP/1.1
@@ -172,14 +172,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"created_at":"2022-09-29T10:37:17.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/ztfhhq4nvxhjbGppfD7qnPwwX4wb3Jv3","url":"https://localhost:19999/api/4.0/users/861/credentials_email","user_url":"https://localhost:19999/api/4.0/users/861","can":{"show_password_reset_url":true}}'
+        body: '{"created_at":"2022-09-29T11:19:31.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/bHWQJzxzFFCfBFkHgHbbpwFgWtX4jhMW","url":"https://localhost:19999/api/4.0/users/865/credentials_email","user_url":"https://localhost:19999/api/4.0/users/865","can":{"show_password_reset_url":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:17 GMT
+                - Thu, 29 Sep 2022 11:19:31 GMT
             Set-Cookie:
-                - looker.browser=59163805; expires=Sun, 28 Sep 2025 10:37:17 GMT; HttpOnly
+                - looker.browser=12083744; expires=Sun, 28 Sep 2025 11:19:31 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 291.321609ms
+        duration: 235.86328ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -209,7 +209,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865
         method: GET
       response:
         proto: HTTP/1.1
@@ -219,12 +219,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?d=blank","credentials_api3":[],"credentials_email":{"created_at":"2022-09-29T10:37:17.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/ztfhhq4nvxhjbGppfD7qnPwwX4wb3Jv3","url":"https://localhost:19999/api/4.0/users/861/credentials_email","user_url":"https://localhost:19999/api/4.0/users/861","can":{"show_password_reset_url":true}},"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"test-acc@email.com","first_name":"Tina","id":"861","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"892","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/861","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
+        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?d=blank","credentials_api3":[],"credentials_email":{"created_at":"2022-09-29T11:19:31.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/bHWQJzxzFFCfBFkHgHbbpwFgWtX4jhMW","url":"https://localhost:19999/api/4.0/users/865/credentials_email","user_url":"https://localhost:19999/api/4.0/users/865","can":{"show_password_reset_url":true}},"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"test-acc@email.com","first_name":"Tina","id":"865","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"896","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/865","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:17 GMT
+                - Thu, 29 Sep 2022 11:19:31 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -233,7 +233,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 113.860103ms
+        duration: 109.932966ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -254,7 +254,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_api3
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_api3
         method: POST
       response:
         proto: HTTP/1.1
@@ -264,14 +264,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"197","client_id":"pyYDtXQcbDMwDStFFhyc","created_at":"2022-09-29T10:37:17.000+00:00","type":"api3","client_secret":"JQ67g9r88hk2MF9VJ2Hw6zyC","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/861/credentials_api3/197","can":{}}'
+        body: '{"id":"198","client_id":"PZptTcZwMBKDdFwzNtn4","created_at":"2022-09-29T11:19:31.000+00:00","type":"api3","client_secret":"PjWDYGHksp47WzQ8dC3dr8HG","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/865/credentials_api3/198","can":{}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:18 GMT
+                - Thu, 29 Sep 2022 11:19:31 GMT
             Set-Cookie:
-                - looker.browser=93055122; expires=Sun, 28 Sep 2025 10:37:18 GMT; HttpOnly
+                - looker.browser=789314; expires=Sun, 28 Sep 2025 11:19:31 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -280,7 +280,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 144.942971ms
+        duration: 128.798946ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -301,7 +301,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_api3/197
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_api3/198
         method: GET
       response:
         proto: HTTP/1.1
@@ -311,12 +311,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"197","client_id":"pyYDtXQcbDMwDStFFhyc","created_at":"2022-09-29T10:37:17.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/861/credentials_api3/197","can":{}}'
+        body: '{"id":"198","client_id":"PZptTcZwMBKDdFwzNtn4","created_at":"2022-09-29T11:19:31.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/865/credentials_api3/198","can":{}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:18 GMT
+                - Thu, 29 Sep 2022 11:19:32 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -325,7 +325,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 106.024078ms
+        duration: 94.153591ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -363,7 +363,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:18 GMT
+                - Thu, 29 Sep 2022 11:19:32 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -372,7 +372,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 117.145178ms
+        duration: 133.485662ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -393,7 +393,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865
         method: GET
       response:
         proto: HTTP/1.1
@@ -403,12 +403,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?d=blank","credentials_api3":[{"id":"197","client_id":"pyYDtXQcbDMwDStFFhyc","created_at":"2022-09-29T10:37:17.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/861/credentials_api3/197","can":{}}],"credentials_email":{"created_at":"2022-09-29T10:37:17.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/ztfhhq4nvxhjbGppfD7qnPwwX4wb3Jv3","url":"https://localhost:19999/api/4.0/users/861/credentials_email","user_url":"https://localhost:19999/api/4.0/users/861","can":{"show_password_reset_url":true}},"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"test-acc@email.com","first_name":"Tina","id":"861","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"892","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/861","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
+        body: '{"avatar_url":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?s=156\u0026d=blank","avatar_url_without_sizing":"https://gravatar.lookercdn.com/avatar/62d851eae8b5277f4c2a533e6c239943?d=blank","credentials_api3":[{"id":"198","client_id":"PZptTcZwMBKDdFwzNtn4","created_at":"2022-09-29T11:19:31.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/865/credentials_api3/198","can":{}}],"credentials_email":{"created_at":"2022-09-29T11:19:31.000+00:00","logged_in_at":"","type":"email","email":"test-acc@email.com","forced_password_reset_at_next_login":false,"is_disabled":true,"password_reset_url":"https://atoscerebro.cloud.looker.com/password/reset/bHWQJzxzFFCfBFkHgHbbpwFgWtX4jhMW","url":"https://localhost:19999/api/4.0/users/865/credentials_email","user_url":"https://localhost:19999/api/4.0/users/865","can":{"show_password_reset_url":true}},"credentials_embed":[],"credentials_google":null,"credentials_ldap":null,"credentials_looker_openid":null,"credentials_oidc":null,"credentials_saml":null,"credentials_totp":null,"email":"test-acc@email.com","first_name":"Tina","id":"865","last_name":"Fey","locale":"en","looker_versions":[],"models_dir_validated":null,"ui_state":null,"embed_group_folder_id":null,"home_folder_id":"1","personal_folder_id":"896","presumed_looker_employee":false,"sessions":[],"verified_looker_employee":false,"roles_externally_managed":false,"allow_direct_roles":true,"allow_normal_group_membership":true,"allow_roles_from_normal_groups":true,"display_name":"Tina Fey","group_ids":["1"],"is_disabled":false,"role_ids":[],"url":"https://localhost:19999/api/4.0/users/865","can":{"show":true,"index":true,"show_details":true,"index_details":true,"sudo":true}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:18 GMT
+                - Thu, 29 Sep 2022 11:19:32 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -417,7 +417,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 141.397207ms
+        duration: 182.797414ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -438,7 +438,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_api3/197
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_api3/198
         method: GET
       response:
         proto: HTTP/1.1
@@ -448,12 +448,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"197","client_id":"pyYDtXQcbDMwDStFFhyc","created_at":"2022-09-29T10:37:17.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/861/credentials_api3/197","can":{}}'
+        body: '{"id":"198","client_id":"PZptTcZwMBKDdFwzNtn4","created_at":"2022-09-29T11:19:31.000+00:00","type":"api3","is_disabled":false,"url":"https://localhost:19999/api/4.0/users/865/credentials_api3/198","can":{}}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:18 GMT
+                - Thu, 29 Sep 2022 11:19:32 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -462,7 +462,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 84.099068ms
+        duration: 84.734131ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -500,7 +500,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 10:37:19 GMT
+                - Thu, 29 Sep 2022 11:19:33 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -509,7 +509,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 123.079865ms
+        duration: 215.812292ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -530,7 +530,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861/credentials_api3/197
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865/credentials_api3/198
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -545,9 +545,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 10:37:19 GMT
+                - Thu, 29 Sep 2022 11:19:33 GMT
             Set-Cookie:
-                - looker.browser=75352897; expires=Sun, 28 Sep 2025 10:37:19 GMT; HttpOnly
+                - looker.browser=91171804; expires=Sun, 28 Sep 2025 11:19:33 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -556,7 +556,7 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 109.407813ms
+        duration: 122.326769ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -577,7 +577,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/861
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/users/865
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -592,9 +592,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 10:37:19 GMT
+                - Thu, 29 Sep 2022 11:19:33 GMT
             Set-Cookie:
-                - looker.browser=21789477; expires=Sun, 28 Sep 2025 10:37:19 GMT; HttpOnly
+                - looker.browser=65230265; expires=Sun, 28 Sep 2025 11:19:33 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -603,4 +603,4 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 191.803813ms
+        duration: 142.839761ms
