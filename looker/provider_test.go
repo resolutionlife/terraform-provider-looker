@@ -24,7 +24,7 @@ var (
 func NewTestProvider(cassettePath string) func() error {
 	r, err := recorder.NewWithOptions(&recorder.Options{
 		CassetteName:       cassettePath,
-		Mode:               recorder.ModeReplayOnly,
+		Mode:               recorder.ModeRecordOnce,
 		SkipRequestLatency: true,
 		RealTransport:      http.DefaultTransport,
 	})
