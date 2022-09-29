@@ -112,10 +112,6 @@ func TestAccLookerRoleGroups(t *testing.T) {
 
 				resource "looker_group" "test_acc_2" {
 					name = "test-acc-group-2"
-
-					depends_on = [
-						looker_group.test_acc_1
-					]
 				}
 
 				resource "looker_role_groups" "test_acc" {

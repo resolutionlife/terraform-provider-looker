@@ -1,7 +1,9 @@
 package looker
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -37,6 +39,8 @@ func NewTestProvider(cassettePath string) func() error {
 	r.AddHook(filterAuthHeaders, recorder.AfterCaptureHook)
 	r.AddHook(filterCredentials, recorder.BeforeSaveHook)
 
+	r.SetMatcher(customBodyMatcher)
+
 	testAccProvider = NewProvider(WithRecorder(r))
 	testAccProviders = map[string]func() (*schema.Provider, error){
 		"looker": func() (*schema.Provider, error) { return testAccProvider, nil },
@@ -66,14 +70,15 @@ func filterCredentials(i *cassette.Interaction) error {
 
 		i.Request.Form = form
 		i.Response.Body = `{"access_token": "[REDACTED]"}`
-		requestUrl, err := url.Parse(i.Request.URL)
-		if err != nil {
-			return err
-		}
+	}
 
-		if path.Base(requestUrl.Path) == "login" {
-			i.Request.Body = "[REDACTED]"
-		}
+	requestUrl, err := url.Parse(i.Request.URL)
+	if err != nil {
+		return err
+	}
+
+	if path.Base(requestUrl.Path) == "login" {
+		i.Request.Body = "[REDACTED]"
 	}
 
 	return nil
@@ -82,4 +87,25 @@ func filterCredentials(i *cassette.Interaction) error {
 func filterAuthHeaders(i *cassette.Interaction) error {
 	delete(i.Request.Headers, "Authorization")
 	return nil
+}
+
+func customBodyMatcher(r *http.Request, i cassette.Request) bool {
+	if i.Body == "[REDACTED]" {
+		return true
+	}
+
+	if r.Body == nil || r.Body == http.NoBody {
+		return cassette.DefaultMatcher(r, i)
+	}
+
+	var reqBody []byte
+	var err error
+	reqBody, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal("failed to read request body")
+	}
+	r.Body.Close()
+	r.Body = ioutil.NopCloser(bytes.NewBuffer(reqBody))
+
+	return r.Method == i.Method && r.URL.String() == i.URL && string(reqBody) == i.Body
 }

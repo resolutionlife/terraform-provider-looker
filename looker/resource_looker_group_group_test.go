@@ -54,10 +54,6 @@ func TestAccLookerGroupGroup(t *testing.T) {
 
 				resource "looker_group" "test_acc_child" {
 					name = "test-acc-child-group"
-
-					depends_on = [
-						looker_group.test_acc_parent
-					]
 				}
 
 				resource "looker_group_group" "test_acc_group" {
