@@ -3,7 +3,7 @@ package looker
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -100,12 +100,12 @@ func customBodyMatcher(r *http.Request, i cassette.Request) bool {
 
 	var reqBody []byte
 	var err error
-	reqBody, err = ioutil.ReadAll(r.Body)
+	reqBody, err = io.ReadAll(r.Body)
 	if err != nil {
 		log.Fatal("failed to read request body")
 	}
 	r.Body.Close()
-	r.Body = ioutil.NopCloser(bytes.NewBuffer(reqBody))
+	r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 
 	return r.Method == i.Method && r.URL.String() == i.URL && string(reqBody) == i.Body
 }
