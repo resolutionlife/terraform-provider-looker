@@ -43,6 +43,10 @@ test:
 testacc:
 	@TF_ACC=1 go test ${GO_PACKAGES} -v $(TESTARGS) -timeout 120m
 
+.PHONY: rectestacc
+rectestacc:
+	@TF_ACC=1 TF_REC=true go test ${GO_PACKAGES} -v $(TESTARGS) -timeout 120m
+
 .PHONY: sweep
 sweep:
 	@echo "WARNING: This will destroy infrastructure. Only use on development instances."

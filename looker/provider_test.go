@@ -13,8 +13,10 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
+	"github.com/resolutionlife/terraform-provider-looker/internal"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
@@ -25,9 +27,19 @@ var (
 )
 
 func NewTestProvider(cassettePath string) func() error {
+	conf := new(internal.Config)
+	if err := envconfig.Process("tf", conf); err != nil {
+		log.Fatalf("failed to load env config: %v", err)
+	}
+
+	rec := recorder.ModeRecordOnce
+	if conf.RecMode {
+		rec = recorder.ModeRecordOnly
+	}
+
 	r, err := recorder.NewWithOptions(&recorder.Options{
 		CassetteName:       cassettePath,
-		Mode:               recorder.ModeRecordOnce,
+		Mode:               rec,
 		SkipRequestLatency: true,
 		RealTransport:      http.DefaultTransport,
 	})
