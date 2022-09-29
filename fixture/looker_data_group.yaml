@@ -38,7 +38,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:20 GMT
+                - Thu, 29 Sep 2022 09:47:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -47,7 +47,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 175.264877ms
+        duration: 139.723947ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -64,8 +64,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer jQ775YPDg8DQX2T4KqsmJfV5FFtN49YXKKcmxxjT
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -85,7 +83,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:20 GMT
+                - Thu, 29 Sep 2022 09:47:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +92,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 102.551791ms
+        duration: 89.582066ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -132,7 +130,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:20 GMT
+                - Thu, 29 Sep 2022 09:47:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -141,7 +139,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 123.825664ms
+        duration: 126.796405ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -158,8 +156,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer cHVXbxMVcm47qkHBqrDpK9gH7qHXDynKv3sfQjMM
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -179,7 +175,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:20 GMT
+                - Thu, 29 Sep 2022 09:47:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +184,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 82.348125ms
+        duration: 77.802374ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -226,7 +222,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:21 GMT
+                - Thu, 29 Sep 2022 09:47:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -235,7 +231,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 152.723338ms
+        duration: 128.327211ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -252,8 +248,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer sFGnXr2Xw6XrnsWBxsk7d423PSKNByqFm3vn8QX9
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -273,7 +267,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:21 GMT
+                - Thu, 29 Sep 2022 09:47:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -282,7 +276,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 85.619375ms
+        duration: 78.683599ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -320,7 +314,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:21 GMT
+                - Thu, 29 Sep 2022 09:47:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -329,7 +323,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 129.253954ms
+        duration: 124.42619ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -346,8 +340,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer dcMYnbcqVWCdJqnCG6xDrfH89zZrKQ9mfbFJZZpW
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -367,7 +359,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:21 GMT
+                - Thu, 29 Sep 2022 09:47:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -376,7 +368,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 194.639273ms
+        duration: 87.082704ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -414,7 +406,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -423,7 +415,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 139.823626ms
+        duration: 137.439288ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -440,8 +432,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer 2szdQS3J23PfS8nFn4XVsDHBZ7nnrb5j2JgNYsNV
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -461,7 +451,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -470,7 +460,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 79.413633ms
+        duration: 75.714031ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -508,7 +498,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -517,7 +507,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 122.765494ms
+        duration: 124.863825ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -534,8 +524,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer HPxj9M9pN4sQT58PmT2Wq2fys4MwybHg7p79sXRM
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -555,7 +543,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -564,7 +552,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 87.850297ms
+        duration: 69.985474ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -602,7 +590,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -611,7 +599,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 135.642647ms
+        duration: 127.328606ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -628,8 +616,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer qJdYJcmt338QrJ44jB3jnmJ25sMmztFPv7NzKMK5
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -649,7 +635,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:22 GMT
+                - Thu, 29 Sep 2022 09:47:39 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -658,7 +644,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 77.292498ms
+        duration: 83.622106ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -696,7 +682,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:23 GMT
+                - Thu, 29 Sep 2022 09:47:40 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -705,7 +691,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 137.467002ms
+        duration: 131.829404ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -722,8 +708,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer 5FtQt9Xnw6qyfSyHWXvznbwCZ5NgB92CywKFgTJf
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -743,7 +727,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:23 GMT
+                - Thu, 29 Sep 2022 09:47:40 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -752,7 +736,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 83.547897ms
+        duration: 87.561535ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -790,7 +774,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:23 GMT
+                - Thu, 29 Sep 2022 09:47:40 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -799,7 +783,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 117.952351ms
+        duration: 119.964733ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -816,8 +800,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer bYdpRXcbQPQ8DwT75tTjtkDVRJvmYwjjQRDhFhzb
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -837,7 +819,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:23 GMT
+                - Thu, 29 Sep 2022 09:47:41 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -846,7 +828,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 86.000523ms
+        duration: 1.092270867s
     - id: 18
       request:
         proto: HTTP/1.1
@@ -884,7 +866,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:24 GMT
+                - Thu, 29 Sep 2022 09:47:42 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -893,7 +875,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 136.185498ms
+        duration: 127.841044ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -910,8 +892,6 @@ interactions:
         headers:
             Accept:
                 - application/json
-            Authorization:
-                - Bearer TkzGnnQfTp3msWqny3KRxySBFjXyVC6mkYtcj2bz
             Content-Type:
                 - application/json
             X-Looker-Appid:
@@ -931,7 +911,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 09:23:24 GMT
+                - Thu, 29 Sep 2022 09:47:42 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -940,4 +920,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 97.831943ms
+        duration: 81.548888ms

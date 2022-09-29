@@ -8,7 +8,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
@@ -34,21 +33,8 @@ func NewTestProvider(cassettePath string) func() error {
 	}
 
 	// ensures creds do not leak
-	r.AddHook(func(i *cassette.Interaction) error {
-		if strings.Contains(i.Request.Body, "client_id") || strings.Contains(i.Request.Body, "client_secret") {
-			form := make(url.Values)
-			form.Add("client_id", "[REDACTED]")
-			form.Add("client_secret", "[REDACTED]")
-
-			i.Request.Form = form
-			i.Request.Body = "[REDACTED]"
-			i.Response.Body = `{"access_token": "[REDACTED]"}`
-
-			spew.Dump(i.Request.Headers)
-		}
-
-		return nil
-	}, recorder.BeforeSaveHook)
+	r.AddHook(filterAuthHeaders, recorder.AfterCaptureHook)
+	r.AddHook(filterCredentials, recorder.BeforeSaveHook)
 
 	testAccProvider = NewProvider(WithRecorder(r))
 	testAccProviders = map[string]func() (*schema.Provider, error){
@@ -71,9 +57,21 @@ func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
 
-// func incHeader(headers http.Header) http.Header {
-// 	var filteredHeaders http.Header
-// 	for _, header := range headers {
-// 		header["Authorization"] = ""
-// 	}
-// }
+func filterCredentials(i *cassette.Interaction) error {
+	if strings.Contains(i.Request.Body, "client_id") || strings.Contains(i.Request.Body, "client_secret") {
+		form := make(url.Values)
+		form.Add("client_id", "[REDACTED]")
+		form.Add("client_secret", "[REDACTED]")
+
+		i.Request.Form = form
+		i.Request.Body = "[REDACTED]"
+		i.Response.Body = `{"access_token": "[REDACTED]"}`
+	}
+
+	return nil
+}
+
+func filterAuthHeaders(i *cassette.Interaction) error {
+	delete(i.Request.Headers, "Authorization")
+	return nil
+}

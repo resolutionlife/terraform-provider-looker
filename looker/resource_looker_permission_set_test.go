@@ -41,7 +41,7 @@ func init() {
 
 func TestAccLookerPermissionSet(t *testing.T) {
 	stop := NewTestProvider("../fixture/looker_permission_set")
-	defer stop()
+	defer stop() //nolint:errcheck
 
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
