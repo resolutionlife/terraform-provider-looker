@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
@@ -21,42 +22,10 @@ var (
 	testAccProvider  *schema.Provider
 )
 
-// func init() {
-// 	r, err := recorder.NewWithOptions(&recorder.Options{
-// 		CassetteName:       cassettePath,
-// 		Mode:               recorder.ModeRecordOnly,
-// 		SkipRequestLatency: true,
-// 		RealTransport:      http.DefaultTransport,
-// 	})
-// 	if err != nil {
-// 		log.Fatalf("failed to create new recorder: %v", err)
-// 	}
-
-// 	// want to stop only at end of all tests
-// 	defer r.Stop()
-
-// 	if !r.IsRecording() {
-// 		log.Fatalf("recorder not recording to cassette: %v", err)
-// 	}
-
-// 	r.AddHook(func(i *cassette.Interaction) error {
-// 		fmt.Printf("Req: %v \n", i.Request.Body)
-// 		fmt.Println("")
-// 		fmt.Printf("Res: %v \n", i.Response.Body)
-// 		fmt.Println("============================")
-// 		return nil
-// 	}, recorder.AfterCaptureHook)
-
-// 	testAccProvider = NewProvider(WithRecorder(r))
-// 	testAccProviders = map[string]func() (*schema.Provider, error){
-// 		"looker": func() (*schema.Provider, error) { return testAccProvider, nil },
-// 	}
-// }
-
 func NewTestProvider(cassettePath string) func() error {
 	r, err := recorder.NewWithOptions(&recorder.Options{
 		CassetteName:       cassettePath,
-		Mode:               recorder.ModeRecordOnly,
+		Mode:               recorder.ModeReplayOnly,
 		SkipRequestLatency: true,
 		RealTransport:      http.DefaultTransport,
 	})
@@ -64,28 +33,20 @@ func NewTestProvider(cassettePath string) func() error {
 		log.Fatalf("failed to create new recorder: %v", err)
 	}
 
-	// if !r.IsRecording() {
-	// 	log.Fatalf("recorder not recording to cassette: %v", err)
-	// }
-
-	r.AddHook(func(i *cassette.Interaction) error {
-		fmt.Printf("Req: %v \n", i.Request.Body)
-		fmt.Println("")
-		fmt.Printf("Res: %v \n", i.Response.Body)
-		fmt.Println("============================")
-		return nil
-	}, recorder.AfterCaptureHook)
-
 	// ensures creds do not leak
 	r.AddHook(func(i *cassette.Interaction) error {
 		if strings.Contains(i.Request.Body, "client_id") || strings.Contains(i.Request.Body, "client_secret") {
-			forms := make(url.Values)
-			forms.Add("client_id", "[REDACTED]")
-			forms.Add("client_secret", "[REDACTED]")
-			i.Request.Form = forms
+			form := make(url.Values)
+			form.Add("client_id", "[REDACTED]")
+			form.Add("client_secret", "[REDACTED]")
+
+			i.Request.Form = form
 			i.Request.Body = "[REDACTED]"
 			i.Response.Body = `{"access_token": "[REDACTED]"}`
+
+			spew.Dump(i.Request.Headers)
 		}
+
 		return nil
 	}, recorder.BeforeSaveHook)
 
@@ -109,3 +70,10 @@ func newTestLookerSDK() (*client.LookerSDK, error) {
 func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
+
+// func incHeader(headers http.Header) http.Header {
+// 	var filteredHeaders http.Header
+// 	for _, header := range headers {
+// 		header["Authorization"] = ""
+// 	}
+// }

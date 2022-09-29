@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/resolutionlife/terraform-provider-looker/version"
@@ -82,8 +81,6 @@ func NewProvider(opts ...ProviderOptions) *schema.Provider {
 		opt(provider)
 	}
 
-	spew.Dump(provider.ConfigureContextFunc)
-
 	return provider
 }
 
@@ -109,38 +106,3 @@ func configWrapper(rec *recorder.Recorder) schema.ConfigureContextFunc {
 		return client.NewLookerSDK(authSession), nil
 	}
 }
-
-// // configureRecordedProvider uses the environment variables to create a Looker client and injects a custom roundTripper.
-// func configureRecordedProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
-// 	authSession := rtl.NewAuthSessionWithTransport(
-// 		rtl.ApiSettings{
-// 			BaseUrl:      data.Get("base_url").(string),
-// 			ClientId:     data.Get("client_id").(string),
-// 			ClientSecret: data.Get("client_secret").(string),
-// 			ApiVersion:   "4.0", // this provider only supports API version 4.0
-// 			VerifySsl:    data.Get("verify_ssl").(bool),
-// 			Timeout:      int32(data.Get("timeout").(int)),
-// 			AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
-// 		},
-// 		nil,
-// 	)
-
-// 	return client.NewLookerSDK(authSession), nil
-// }
-
-// // configureProvider uses the environment variables to create a Looker client and is the default configuration.
-// func configureProvider(ctx context.Context, data *schema.ResourceData) (interface{}, diag.Diagnostics) {
-// 	authSession := rtl.NewAuthSession(
-// 		rtl.ApiSettings{
-// 			BaseUrl:      data.Get("base_url").(string),
-// 			ClientId:     data.Get("client_id").(string),
-// 			ClientSecret: data.Get("client_secret").(string),
-// 			ApiVersion:   "4.0", // this provider only supports API version 4.0
-// 			VerifySsl:    data.Get("verify_ssl").(bool),
-// 			Timeout:      int32(data.Get("timeout").(int)),
-// 			AgentTag:     fmt.Sprintf("Terraform Looker Provider (%s)", version.ProviderVersion),
-// 		},
-// 	)
-
-// 	return client.NewLookerSDK(authSession), nil
-// }
