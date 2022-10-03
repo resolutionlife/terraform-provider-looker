@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -9,7 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
 
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
@@ -63,7 +63,7 @@ func resourceUserRolesCreate(ctx context.Context, d *schema.ResourceData, c inte
 
 	_, setErr := api.SetUserRoles(userID, append(diff, rscRoleIDs...), "", nil)
 	if err != nil {
-		return diag.FromErr(errors.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
+		return diag.FromErr(fmt.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
 	}
 
 	// the state has the role_ids provisioned in tf already, the id is a concat of the user_id and role_ids
@@ -222,7 +222,7 @@ func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 	roleIDs := make([]string, len(ur))
 	for i, role := range ur {
 		if role.Id == nil {
-			return nil, errors.Errorf("the user has a role with a missing id")
+			return nil, errors.New("the user has a role with a missing id")
 		}
 		roleIDs[i] = *role.Id
 	}

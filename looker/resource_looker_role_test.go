@@ -1,12 +1,14 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -123,7 +125,7 @@ func testAccRole(roleResource string, expectedModelsSets, expectedPermSets []str
 	return func(s *terraform.State) error {
 		roleRes, ok := s.RootModule().Resources[roleResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", roleResource)
+			return fmt.Errorf("Not found: %s", roleResource)
 		}
 		if roleRes.Primary.ID == "" {
 			return errors.New("role ID is not set")
@@ -133,15 +135,15 @@ func testAccRole(roleResource string, expectedModelsSets, expectedPermSets []str
 
 		role, err := client.Role(roleRes.Primary.ID, nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve role with id: %v", roleRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve role with id %v: %w", roleRes.Primary.ID, err)
 		}
 
 		if !slice.UnorderedEqual(*role.PermissionSet.Permissions, expectedPermSets) {
-			return errors.Errorf("permissions in role do not match expected permissions: %v actual: %v", expectedPermSets, *role.PermissionSet.Permissions)
+			return fmt.Errorf("permissions in role do not match expected permissions: %v actual: %v", expectedPermSets, *role.PermissionSet.Permissions)
 		}
 
 		if !slice.UnorderedEqual(*role.ModelSet.Models, expectedModelsSets) {
-			return errors.Errorf("models in role do not match expected models: %v actual: %v", expectedModelsSets, *role.ModelSet.Models)
+			return fmt.Errorf("models in role do not match expected models: %v actual: %v", expectedModelsSets, *role.ModelSet.Models)
 		}
 
 		return nil

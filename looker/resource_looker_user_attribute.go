@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -10,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -207,7 +208,7 @@ func buildUserAttributeInput(d *schema.ResourceData) (*sdk.WriteUserAttribute, e
 
 	domainsWhitelistSlice, err := conv.SchemaSetToSliceString(domainsWhitelist)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to convert domain_whitelist to string slice")
+		return nil, fmt.Errorf("failed to convert domain_whitelist to string slice: %w", err)
 	}
 
 	domainWhitelistString := strings.Join(domainsWhitelistSlice, ",")

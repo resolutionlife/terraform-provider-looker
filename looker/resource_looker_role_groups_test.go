@@ -1,6 +1,8 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -8,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -161,7 +163,7 @@ func testAccRoleGroups(roleGroupResource string, groupResources []string) resour
 	return func(s *terraform.State) error {
 		roleGroupsRes, ok := s.RootModule().Resources[roleGroupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", roleGroupResource)
+			return fmt.Errorf("Not found: %s", roleGroupResource)
 		}
 		if roleGroupsRes.Primary.ID == "" {
 			return errors.New("role groups ID is not set")
@@ -171,7 +173,7 @@ func testAccRoleGroups(roleGroupResource string, groupResources []string) resour
 		for _, groupResource := range groupResources {
 			groupRes, ok := s.RootModule().Resources[groupResource]
 			if !ok {
-				return errors.Errorf("Not found: %s", groupResource)
+				return fmt.Errorf("Not found: %s", groupResource)
 			}
 			if groupRes.Primary.ID == "" {
 				return errors.New("group ID is not set")
@@ -190,7 +192,7 @@ func testAccRoleGroups(roleGroupResource string, groupResources []string) resour
 
 		roleGroups, err := client.RoleGroups(roleId[0], "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve role group with id: %v", roleGroupsRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve role group with id %v: %w", roleGroupsRes.Primary.ID, err)
 		}
 
 		groupIds := []string{}
@@ -199,7 +201,7 @@ func testAccRoleGroups(roleGroupResource string, groupResources []string) resour
 		}
 
 		if !slice.UnorderedEqual(groupIds, expectedGroupIds) {
-			return errors.Errorf("groups in role do not match expected: %v actual: %v", expectedGroupIds, groupIds)
+			return fmt.Errorf("groups in role do not match expected: %v actual: %v", expectedGroupIds, groupIds)
 		}
 
 		return nil
