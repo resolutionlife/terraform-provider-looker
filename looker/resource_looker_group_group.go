@@ -81,10 +81,8 @@ func resourceGroupGroupRead(ctx context.Context, d *schema.ResourceData, c inter
 	}
 
 	// search result should only have one entry
-	// this case is almost impossible because every group has 'All Users' as a parent group by default.
 	if len(groups) != 1 {
-		d.SetId("")
-		return nil
+		return diag.Errorf("group with group id %s not found", d.Get("group_id").(string))
 	}
 
 	// inspect parent groups and check if parent group is contained in this slice
@@ -105,9 +103,8 @@ func resourceGroupGroupDelete(ctx context.Context, d *schema.ResourceData, c int
 		nil,
 	)
 	// if the api call is successful the SDK returns an io.EOF error - this is not an error from looker and can be ignored
-	// TODO: amend this when the looker SDK has addressed this issue
-	if delErr != nil && !errors.Is(delErr, io.EOF) {
-		// TODO: handle the case where a user is not found
+	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
+	if !errors.Is(delErr, io.EOF) && !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 

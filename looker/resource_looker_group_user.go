@@ -80,6 +80,7 @@ func resourceGroupUserRead(ctx context.Context, d *schema.ResourceData, c interf
 		return diag.FromErr(usersErr)
 	}
 
+	// userIDs will be empty if user does not belong to group
 	usrIds := make([]string, len(userIDs))
 	for _, usr := range userIDs {
 		if usr.Id == nil {
@@ -94,6 +95,7 @@ func resourceGroupUserRead(ctx context.Context, d *schema.ResourceData, c interf
 
 	return nil
 }
+
 func resourceGroupUserUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
@@ -102,6 +104,7 @@ func resourceGroupUserUpdate(ctx context.Context, d *schema.ResourceData, c inte
 
 	// delete old user from old group
 	delErr := api.DeleteGroupUser(oldGr.(string), oldUsr.(string), nil)
+	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
 	if delErr != nil && !errors.Is(delErr, io.EOF) {
 		return diag.FromErr(delErr)
 	}
@@ -126,8 +129,8 @@ func resourceGroupUserDelete(ctx context.Context, d *schema.ResourceData, c inte
 
 	delErr := api.DeleteGroupUser(d.Get("group_id").(string), d.Get("user_id").(string), nil)
 	// the sdk attempts to decode the api response body into a nil struct - this is not an error from looker and can be ignored
-	// TODO: amend this when the looker SDK has addressed this issue
-	if delErr != nil && !errors.Is(delErr, io.EOF) {
+	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
+	if !errors.Is(delErr, io.EOF) {
 		return diag.FromErr(delErr)
 	}
 

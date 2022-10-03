@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -68,8 +69,11 @@ func resourceGroupRead(ctx context.Context, d *schema.ResourceData, c interface{
 	api := c.(*sdk.LookerSDK)
 
 	group, grErr := api.Group(d.Id(), "id,name,externally_managed", nil)
+	if errors.Is(grErr, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if grErr != nil {
-		// TODO: handle the case where a user is not found
 		return diag.FromErr(grErr)
 	}
 
@@ -96,7 +100,6 @@ func resourceGroupUpdate(ctx context.Context, d *schema.ResourceData, c interfac
 		"", nil,
 	)
 	if grErr != nil {
-		// TODO: handle the case where a user is not found
 		return diag.FromErr(grErr)
 	}
 	return resourceGroupRead(ctx, d, c)
@@ -106,8 +109,7 @@ func resourceGroupDelete(ctx context.Context, d *schema.ResourceData, c interfac
 	api := c.(*sdk.LookerSDK)
 
 	_, delErr := api.DeleteGroup(d.Id(), nil)
-	if delErr != nil {
-		// TODO: handle the case where a user is not found
+	if !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 

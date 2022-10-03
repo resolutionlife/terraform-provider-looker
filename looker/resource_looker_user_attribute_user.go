@@ -85,6 +85,9 @@ func resourceUserAttributeUserRead(ctx context.Context, d *schema.ResourceData, 
 		UserId: userID,
 		Fields: conv.PString("user_attribute_id,user_id,value,value_is_hidden,source"),
 	}, nil)
+	if errors.Is(uaErr, sdk.ErrNotFound) {
+		return diag.Errorf("user with id %s cannot be found", userID)
+	}
 	if uaErr != nil {
 		return diag.FromErr(uaErr)
 	}
@@ -128,8 +131,8 @@ func resourceUserAttributeUserDelete(ctx context.Context, d *schema.ResourceData
 
 	// this delete removes the custom value and reverts back to the default value of the attribute, if set.
 	delErr := api.DeleteUserAttributeUserValue(userID, userAttrID, nil)
-	if delErr != nil && !errors.Is(delErr, io.EOF) {
-		// TODO: cover the case when the user has already been deleted
+	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
+	if !errors.Is(delErr, io.EOF) && !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 

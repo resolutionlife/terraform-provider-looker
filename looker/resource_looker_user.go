@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -83,8 +84,11 @@ func resourceUserRead(ctx context.Context, d *schema.ResourceData, c interface{}
 
 	userID := d.Id()
 	user, userErr := api.User(userID, "", nil)
+	if errors.Is(userErr, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if userErr != nil {
-		// TODO: handle the case where a user has been deleted
 		return diag.FromErr(userErr)
 	}
 
@@ -136,9 +140,8 @@ func resourceUserDelete(ctx context.Context, d *schema.ResourceData, c interface
 	api := c.(*sdk.LookerSDK)
 
 	_, delErr := api.DeleteUser(d.Id(), nil)
-	if delErr != nil {
-		// TODO: handle the case where a user has been deleted
-		return diag.FromErr(delErr)
+	if !errors.Is(delErr, sdk.ErrNotFound) {
+		diag.FromErr(delErr)
 	}
 
 	return nil

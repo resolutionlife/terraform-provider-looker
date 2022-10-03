@@ -159,7 +159,6 @@ func resourceUserRolesDelete(ctx context.Context, d *schema.ResourceData, c inte
 
 	userID := d.Get("user_id").(string)
 
-	// TODO: Account for the case when the user
 	_, setErr := api.SetUserRoles(userID, diff, "", nil)
 	if setErr != nil {
 		return diag.Errorf("err: %s, userID: %s", setErr.Error(), userID)
@@ -208,17 +207,17 @@ func userRolesDiff(api *sdk.LookerSDK, d *schema.ResourceData) ([]string, error)
 	return slice.Diff(rscRoleIDs, lookerRoleIDs), nil
 }
 
-// getRolesByUser takes a client and a userID and returns a slice the roles allocated to a user with the given userID
+// getRolesByUser takes a client and a userID and returns a slice the roles allocated to a user with the given userID.
 func getRolesByUser(api *sdk.LookerSDK, userID string) ([]string, error) {
 	ur, urErr := api.UserRoles(sdk.RequestUserRoles{
 		UserId:                userID,
 		DirectAssociationOnly: conv.PBool(true),
 	}, nil)
 	if urErr != nil {
-		// TODO: Account for the case when the user is not found
 		return nil, urErr
 	}
 
+	// if no role is set on the user, ur will be an empty slice
 	roleIDs := make([]string, len(ur))
 	for i, role := range ur {
 		if role.Id == nil {

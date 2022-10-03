@@ -2,7 +2,6 @@ data "looker_role" "viewer" {
   name = "Viewer"
 }
 
-# TODO: data source not yet supported
 data "looker_group" "all_users" {
   name = "All Users"
 }
