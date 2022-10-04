@@ -11,6 +11,7 @@ require (
 	github.com/looker-open-source/sdk-codegen/go v0.0.2
 	github.com/pkg/errors v0.9.1
 	gopkg.in/dnaeon/go-vcr.v3 v3.1.1
+
 )
 
 require gopkg.in/yaml.v3 v3.0.1 // indirect

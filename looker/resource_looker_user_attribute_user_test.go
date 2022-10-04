@@ -1,13 +1,15 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 )
 
@@ -67,7 +69,7 @@ func testAccRoleUserAttributeUser(userResource, userAttrUserResource, expectedVa
 	return func(s *terraform.State) error {
 		userRes, ok := s.RootModule().Resources[userResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", userResource)
+			return fmt.Errorf("Not found: %s", userResource)
 		}
 		if userRes.Primary.ID == "" {
 			return errors.New("user ID is not set")
@@ -75,7 +77,7 @@ func testAccRoleUserAttributeUser(userResource, userAttrUserResource, expectedVa
 
 		userAttrUserRes, ok := s.RootModule().Resources[userAttrUserResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", userAttrUserResource)
+			return fmt.Errorf("Not found: %s", userAttrUserResource)
 		}
 		if userAttrUserRes.Primary.ID == "" {
 			return errors.New("user attribute ID is not set")
@@ -90,13 +92,13 @@ func testAccRoleUserAttributeUser(userResource, userAttrUserResource, expectedVa
 			Fields:           conv.P(""),
 		}, nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve user attribute values with id: %v", userRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve user attribute values with id %v: %w", userRes.Primary.ID, err)
 		}
 
 		for _, userAttr := range userAttrs {
 			if *userAttr.UserAttributeId == userAttrUserRes.Primary.Attributes["user_attribute_id"] {
 				if *userAttr.Value != expectedValue {
-					return errors.Errorf("value in user attribute does not match expected: %v actual: %v", expectedValue, *userAttr.Value)
+					return fmt.Errorf("value in user attribute does not match expected: %v actual: %v", expectedValue, *userAttr.Value)
 				}
 			}
 		}

@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -9,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -208,7 +209,7 @@ func getGroupsOnRole(api *sdk.LookerSDK, roleID string) ([]string, error) {
 	lookerGroupIDs := make([]string, len(g))
 	for i, group := range g {
 		if group.Id == nil {
-			return nil, errors.Errorf("the user has a group with a missing id")
+			return nil, errors.New("the user has a group with a missing id")
 		}
 		lookerGroupIDs[i] = *group.Id
 	}

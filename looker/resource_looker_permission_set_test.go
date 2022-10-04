@@ -1,12 +1,14 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -80,7 +82,7 @@ func testAccPermissionSet(permSetResource string, expectedPermSets []string) res
 	return func(s *terraform.State) error {
 		permSetRes, ok := s.RootModule().Resources[permSetResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", permSetResource)
+			return fmt.Errorf("Not found: %s", permSetResource)
 		}
 		if permSetRes.Primary.ID == "" {
 			return errors.New("permission set ID is not set")
@@ -90,11 +92,11 @@ func testAccPermissionSet(permSetResource string, expectedPermSets []string) res
 
 		permSet, err := client.PermissionSet(permSetRes.Primary.ID, "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve permission set with id: %v", permSetRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve permission set with id %v: %w", permSetRes.Primary.ID, err)
 		}
 
 		if !slice.UnorderedEqual(*permSet.Permissions, expectedPermSets) {
-			return errors.Errorf("permissions in permission set do not match expected: %v actual: %v", expectedPermSets, *permSet.Permissions)
+			return fmt.Errorf("permissions in permission set do not match expected: %v actual: %v", expectedPermSets, *permSet.Permissions)
 		}
 
 		return nil

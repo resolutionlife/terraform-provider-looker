@@ -1,12 +1,14 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -80,7 +82,7 @@ func testAccModelSet(modelSetResource string, expectedModelsSets []string) resou
 	return func(s *terraform.State) error {
 		modelSetRes, ok := s.RootModule().Resources[modelSetResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", modelSetResource)
+			return fmt.Errorf("Not found: %s", modelSetResource)
 		}
 		if modelSetRes.Primary.ID == "" {
 			return errors.New("model set ID is not set")
@@ -90,11 +92,11 @@ func testAccModelSet(modelSetResource string, expectedModelsSets []string) resou
 
 		modelSet, err := client.ModelSet(modelSetRes.Primary.ID, "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve model set with id: %v", modelSetRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve model set with id %v: %w", modelSetRes.Primary.ID, err)
 		}
 
 		if !slice.UnorderedEqual(*modelSet.Models, expectedModelsSets) {
-			return errors.Errorf("models in model set do not match expected: %v actual: %v", expectedModelsSets, *modelSet.Models)
+			return fmt.Errorf("models in model set do not match expected: %v actual: %v", expectedModelsSets, *modelSet.Models)
 		}
 
 		return nil

@@ -1,13 +1,14 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
 )
 
 func init() {
@@ -71,7 +72,7 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedVal
 	return func(s *terraform.State) error {
 		userAttrGroupRes, ok := s.RootModule().Resources[userAttrGroupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", userAttrGroupResource)
+			return fmt.Errorf("Not found: %s", userAttrGroupResource)
 		}
 		if userAttrGroupRes.Primary.ID == "" {
 			return errors.New("user attribute group ID is not set")
@@ -79,7 +80,7 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedVal
 
 		groupRes, ok := s.RootModule().Resources[groupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", groupRes)
+			return fmt.Errorf("Not found: %s", groupRes)
 		}
 		if groupRes.Primary.ID == "" {
 			return errors.New("group ID is not set")
@@ -95,13 +96,13 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedVal
 		// id of user attribute is in form <user_attribute_id>_<group_id>_<...>
 		userAttrs, err := client.AllUserAttributeGroupValues(userAttrGroupIds[0], "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve user attribute group value with id: %v", userAttrGroupRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve user attribute group value with id %v: %w", userAttrGroupRes.Primary.ID, err)
 		}
 
 		for _, userAttr := range userAttrs {
 			if *userAttr.GroupId == groupRes.Primary.ID {
 				if *userAttr.Value != expectedValue {
-					return errors.Errorf("value in user attribute group does not match expected: %v actual: %v", expectedValue, *userAttr.Value)
+					return fmt.Errorf("value in user attribute group does not match expected: %v actual: %v", expectedValue, *userAttr.Value)
 				}
 			}
 		}

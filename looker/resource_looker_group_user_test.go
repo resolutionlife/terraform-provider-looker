@@ -1,9 +1,9 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
-
-	"github.com/pkg/errors"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -96,7 +96,7 @@ func testAccGroupUserBinding(userResource, groupResource string) resource.TestCh
 	return func(s *terraform.State) error {
 		userRes, ok := s.RootModule().Resources[userResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", userResource)
+			return fmt.Errorf("Not found: %s", userResource)
 		}
 		if userRes.Primary.ID == "" {
 			return errors.New("user ID is not set")
@@ -104,7 +104,7 @@ func testAccGroupUserBinding(userResource, groupResource string) resource.TestCh
 
 		groupRes, ok := s.RootModule().Resources[groupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", groupResource)
+			return fmt.Errorf("Not found: %s", groupResource)
 		}
 		if groupRes.Primary.ID == "" {
 			return errors.New("group ID is not set")
@@ -114,16 +114,16 @@ func testAccGroupUserBinding(userResource, groupResource string) resource.TestCh
 
 		user, err := client.User(userRes.Primary.ID, "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve user with id: %v", userRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve user with id %v: %w", userRes.Primary.ID, err)
 		}
 
 		group, err := client.Group(groupRes.Primary.ID, "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve group with id: %v", userRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve group with id %v: %w", userRes.Primary.ID, err)
 		}
 
 		if !slice.Contains(*user.GroupIds, *group.Id) {
-			return errors.Errorf("group with ID %v does not contain user %v", *group.Id, *user.Id)
+			return fmt.Errorf("group with ID %v does not contain user %v", *group.Id, *user.Id)
 		}
 
 		return nil
