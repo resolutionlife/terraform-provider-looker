@@ -1,12 +1,14 @@
 package looker
 
 import (
+	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
+
 	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"github.com/resolutionlife/terraform-provider-looker/internal/slice"
 )
@@ -72,7 +74,7 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 	return func(s *terraform.State) error {
 		parentRes, ok := s.RootModule().Resources[parentGroupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", parentGroupResource)
+			return fmt.Errorf("Not found: %s", parentGroupResource)
 		}
 		if parentRes.Primary.ID == "" {
 			return errors.New("parent group ID is not set")
@@ -80,7 +82,7 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 
 		childRes, ok := s.RootModule().Resources[childGroupResource]
 		if !ok {
-			return errors.Errorf("Not found: %s", childGroupResource)
+			return fmt.Errorf("Not found: %s", childGroupResource)
 		}
 		if childRes.Primary.ID == "" {
 			return errors.New("child group ID is not set")
@@ -90,7 +92,7 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 
 		parentSubGroups, err := client.AllGroupGroups(parentRes.Primary.ID, "", nil)
 		if err != nil {
-			return errors.Wrapf(err, "failed to retrieve parent group with id: %v", parentRes.Primary.ID)
+			return fmt.Errorf("failed to retrieve parent group with id: %w", err)
 		}
 
 		groupIds := []string{}
@@ -99,7 +101,7 @@ func testAccGroupGroupBinding(parentGroupResource, childGroupResource string) re
 		}
 
 		if !slice.Contains(groupIds, childRes.Primary.ID) {
-			return errors.Errorf("parent group contains groups with ID %v does not contain group with ID %v", groupIds, childRes.Primary.ID)
+			return fmt.Errorf("parent group contains groups with ID %v does not contain group with ID %v", groupIds, childRes.Primary.ID)
 		}
 
 		return nil

@@ -216,7 +216,7 @@ func getGroupsOnRole(api *sdk.LookerSDK, roleID string) ([]string, error) {
 	lookerGroupIDs := make([]string, len(g))
 	for i, group := range g {
 		if group.Id == nil {
-			return nil, fmt.Errorf("the user has a group with a missing id")
+			return nil, errors.New("the user has a group with a missing id")
 		}
 		lookerGroupIDs[i] = *group.Id
 	}

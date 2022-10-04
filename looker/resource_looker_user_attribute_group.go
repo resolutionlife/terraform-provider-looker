@@ -2,10 +2,10 @@ package looker
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"io"
 	"strings"
-
-	"github.com/pkg/errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -225,7 +225,7 @@ func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceDat
 
 	userAttributes, err := api.UserAttribute(ids[0], "", nil)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to retrieve user_attribute with id %v", ids[0])
+		return nil, fmt.Errorf("failed to retrieve user_attribute with id %v: %w", ids[0], err)
 	}
 
 	if *userAttributes.ValueIsHidden {
