@@ -12,6 +12,7 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
+// TODO: Add a test for this datasource
 func datasourceLookerIdpMetadata() *schema.Resource {
 	return &schema.Resource{
 		Description: "This datasource parsed IdP metadata.",
