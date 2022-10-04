@@ -35,12 +35,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:03 GMT
+                - Tue, 04 Oct 2022 15:44:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -49,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 146.476944ms
+        duration: 160.797038ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -85,7 +85,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:04 GMT
+                - Tue, 04 Oct 2022 15:44:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 129.479739ms
+        duration: 92.063792ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -129,12 +129,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:04 GMT
+                - Tue, 04 Oct 2022 15:44:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -143,7 +143,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 134.680737ms
+        duration: 126.560113ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -179,7 +179,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:04 GMT
+                - Tue, 04 Oct 2022 15:44:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 102.000652ms
+        duration: 89.857836ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -223,12 +223,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -237,7 +237,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 136.687148ms
+        duration: 130.011266ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -273,7 +273,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -282,7 +282,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 99.507868ms
+        duration: 96.156958ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -317,12 +317,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -331,7 +331,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 133.842703ms
+        duration: 116.213891ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -367,7 +367,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -376,7 +376,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 94.852277ms
+        duration: 85.055198ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -411,12 +411,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -425,7 +425,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 120.334415ms
+        duration: 121.466411ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -461,7 +461,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:05 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -470,7 +470,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 91.402351ms
+        duration: 86.619616ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -505,12 +505,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:06 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -519,7 +519,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 122.768703ms
+        duration: 118.774074ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -555,7 +555,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:06 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -564,7 +564,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 88.645684ms
+        duration: 79.711472ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -599,12 +599,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:06 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -613,7 +613,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 115.006439ms
+        duration: 118.051041ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -649,7 +649,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:06 GMT
+                - Tue, 04 Oct 2022 15:44:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -658,7 +658,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 83.253892ms
+        duration: 94.330323ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -693,12 +693,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -707,7 +707,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 128.062175ms
+        duration: 133.87704ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -743,7 +743,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -752,7 +752,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 92.019118ms
+        duration: 112.446482ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -787,12 +787,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -801,7 +801,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 130.995549ms
+        duration: 110.044704ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -837,7 +837,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -846,7 +846,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 94.98913ms
+        duration: 88.041571ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -881,12 +881,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token": "[REDACTED]"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:26 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -895,7 +895,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 121.369732ms
+        duration: 118.59571ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -931,7 +931,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 13:20:07 GMT
+                - Tue, 04 Oct 2022 15:44:26 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -940,4 +940,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 84.906491ms
+        duration: 87.339798ms

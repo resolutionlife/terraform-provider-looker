@@ -7,7 +7,10 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"path"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -15,7 +18,6 @@ import (
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 	"github.com/pkg/errors"
-	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
@@ -70,11 +72,11 @@ func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
 
-func redactBody(body string, filterKeys []string) (*string, error) {
+func redactBody(body *string, filterKeys []string) error {
 	var responseBody map[string]interface{}
-	err := json.Unmarshal([]byte(body), &responseBody)
+	err := json.Unmarshal([]byte(*body), &responseBody)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to unmarshal body")
+		return errors.Wrap(err, "failed to unmarshal body")
 	}
 
 	for _, key := range filterKeys {
@@ -86,24 +88,30 @@ func redactBody(body string, filterKeys []string) (*string, error) {
 
 	b, err := json.Marshal(responseBody)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to marshal body")
+		return errors.Wrap(err, "failed to marshal body")
 	}
 
-	return conv.P(string(b)), nil
+	*body = string(b)
+
+	return nil
 }
 
 func filterCredentials(i *cassette.Interaction) error {
-	redactedRequest, err := redactBody(i.Request.Body, []string{"client_id", "access_token", "client_secret"})
-	if err != nil {
-		return errors.Wrap(err, "failed to request redact body")
+	if strings.Contains(i.Request.Body, "client_id") ||
+		strings.Contains(i.Request.Body, "client_secret") {
+		err := redactBody(&i.Response.Body, []string{"access_token"})
+		if err != nil {
+			return errors.Wrap(err, "failed to redact response body")
+		}
 	}
-	i.Request.Body = *redactedRequest
 
-	redactedResponse, err := redactBody(i.Response.Body, []string{"client_id", "access_token", "client_secret"})
-	if err != nil {
-		return errors.Wrap(err, "failed to response redact body")
+	if strings.Contains(i.Response.Body, "client_id") ||
+		strings.Contains(i.Response.Body, "client_secret") {
+		err := redactBody(&i.Response.Body, []string{"client_id", "client_secret"})
+		if err != nil {
+			return errors.Wrap(err, "failed to redact response body")
+		}
 	}
-	i.Response.Body = *redactedResponse
 
 	_, ok := i.Request.Form["client_id"]
 	if ok {
@@ -112,6 +120,15 @@ func filterCredentials(i *cassette.Interaction) error {
 	_, ok = i.Request.Form["client_secret"]
 	if ok {
 		i.Request.Form.Set("client_secret", "[REDACTED]")
+	}
+
+	requestUrl, err := url.Parse(i.Request.URL)
+	if err != nil {
+		return err
+	}
+
+	if path.Base(requestUrl.Path) == "login" {
+		i.Request.Body = "[REDACTED]"
 	}
 
 	return nil
