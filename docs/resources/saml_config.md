@@ -9,7 +9,7 @@ description: |-
 
 This resource updates the SAML config in a looker instance.
 
-~> **Note:** There can only be one `looker_saml_config` resource per instance. This resource is built asynchronously, meaning the resource may still be being created/updated after the `terraform apply` is successful. This delay in creation leads to the `terraform state` being out of date. The terraform state will be updated on the next `terraform plan` or can be refreshed using `terraform plan --refresh-only`.
+~>There can only be one `looker_saml_config` resource per instance. This resource is built asynchronously, meaning the resource may still be being created/updated after the `terraform apply` is successful. This delay in creation leads to the `terraform state` being out of date. The terraform state will be updated on the next `terraform plan` or can be refreshed using `terraform plan --refresh-only`.
 
 ## Example Usage
 
