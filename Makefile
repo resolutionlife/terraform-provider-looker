@@ -45,7 +45,7 @@ testacc:
 
 .PHONY: rectestacc
 rectestacc:
-	@TF_ACC=1 TF_REC=true go test ${GO_PACKAGES} -v $(TESTARGS) -timeout 120m
+	@TF_ACC=1 TF_REC=1 go test ${GO_PACKAGES} -v $(TESTARGS) -timeout 120m
 
 .PHONY: sweep
 sweep:

@@ -2,21 +2,20 @@ package looker
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
-	"net/url"
-	"path"
-	"strings"
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/kelseyhightower/envconfig"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/resolutionlife/terraform-provider-looker/internal"
+	"github.com/pkg/errors"
+	"github.com/resolutionlife/terraform-provider-looker/internal/conv"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
@@ -27,13 +26,10 @@ var (
 )
 
 func NewTestProvider(cassettePath string) func() error {
-	conf := new(internal.Config)
-	if err := envconfig.Process("tf", conf); err != nil {
-		log.Fatalf("failed to load env config: %v", err)
-	}
+	recMode := os.Getenv("TF_REC")
 
-	rec := recorder.ModeRecordOnce
-	if conf.RecMode {
+	rec := recorder.ModeReplayOnly
+	if recMode != "" {
 		rec = recorder.ModeRecordOnly
 	}
 
@@ -74,23 +70,48 @@ func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
 
-func filterCredentials(i *cassette.Interaction) error {
-	if strings.Contains(i.Request.Body, "client_id") || strings.Contains(i.Request.Body, "client_secret") {
-		form := make(url.Values)
-		form.Add("client_id", "[REDACTED]")
-		form.Add("client_secret", "[REDACTED]")
-
-		i.Request.Form = form
-		i.Response.Body = `{"access_token": "[REDACTED]"}`
-	}
-
-	requestUrl, err := url.Parse(i.Request.URL)
+func redactBody(body string, filterKeys []string) (*string, error) {
+	var responseBody map[string]interface{}
+	err := json.Unmarshal([]byte(body), &responseBody)
 	if err != nil {
-		return err
+		return nil, errors.Wrap(err, "failed to unmarshal body")
 	}
 
-	if path.Base(requestUrl.Path) == "login" {
-		i.Request.Body = "[REDACTED]"
+	for _, key := range filterKeys {
+		_, ok := responseBody[key]
+		if ok {
+			responseBody[key] = "[REDACTED]"
+		}
+	}
+
+	b, err := json.Marshal(responseBody)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to marshal body")
+	}
+
+	return conv.P(string(b)), nil
+}
+
+func filterCredentials(i *cassette.Interaction) error {
+	redactedRequest, err := redactBody(i.Request.Body, []string{"client_id", "access_token", "client_secret"})
+	if err != nil {
+		return errors.Wrap(err, "failed to request redact body")
+	}
+	i.Request.Body = *redactedRequest
+
+	redactedResponse, err := redactBody(i.Response.Body, []string{"client_id", "access_token", "client_secret"})
+	if err != nil {
+		return errors.Wrap(err, "failed to response redact body")
+	}
+	i.Response.Body = *redactedResponse
+
+	_, ok := i.Request.Form["client_id"]
+	if ok {
+		i.Request.Form.Set("client_id", "[REDACTED]")
+	}
+	_, ok = i.Request.Form["client_secret"]
+	if ok {
+		i.Request.Form.Set("client_secret", "[REDACTED]")
 	}
 
 	return nil

@@ -18,6 +18,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -38,7 +40,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:54 GMT
+                - Tue, 04 Oct 2022 13:20:11 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -47,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 116.351434ms
+        duration: 84.354052ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -78,14 +80,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1275","name":"test-acc-group"}'
+        body: '{"id":"1385","name":"test-acc-group"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:54 GMT
+                - Tue, 04 Oct 2022 13:20:11 GMT
             Set-Cookie:
-                - looker.browser=30643226; expires=Sun, 28 Sep 2025 15:03:54 GMT; HttpOnly
+                - looker.browser=84565842; expires=Fri, 03 Oct 2025 13:20:11 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +96,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 91.078621ms
+        duration: 94.70131ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -115,7 +117,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1275?fields=id%2Cname%2Cexternally_managed
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1385?fields=id%2Cname%2Cexternally_managed
         method: GET
       response:
         proto: HTTP/1.1
@@ -125,12 +127,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1275","name":"test-acc-group","externally_managed":false}'
+        body: '{"id":"1385","name":"test-acc-group","externally_managed":false}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:54 GMT
+                - Tue, 04 Oct 2022 13:20:11 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -139,7 +141,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 74.813505ms
+        duration: 76.763474ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -157,6 +159,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -177,7 +181,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:55 GMT
+                - Tue, 04 Oct 2022 13:20:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -186,7 +190,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 146.462361ms
+        duration: 129.565331ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -207,7 +211,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1275?fields=id%2Cname%2Cexternally_managed
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1385?fields=id%2Cname%2Cexternally_managed
         method: GET
       response:
         proto: HTTP/1.1
@@ -217,12 +221,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"1275","name":"test-acc-group","externally_managed":false}'
+        body: '{"id":"1385","name":"test-acc-group","externally_managed":false}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:55 GMT
+                - Tue, 04 Oct 2022 13:20:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -231,7 +235,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 67.816094ms
+        duration: 78.020784ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -249,6 +253,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -269,7 +275,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:55 GMT
+                - Tue, 04 Oct 2022 13:20:13 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -278,7 +284,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 137.440911ms
+        duration: 120.312074ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -299,7 +305,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1275
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/1385
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -314,9 +320,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Thu, 29 Sep 2022 15:03:55 GMT
+                - Tue, 04 Oct 2022 13:20:13 GMT
             Set-Cookie:
-                - looker.browser=77114386; expires=Sun, 28 Sep 2025 15:03:55 GMT; HttpOnly
+                - looker.browser=51364165; expires=Fri, 03 Oct 2025 13:20:13 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -325,4 +331,4 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 120.284952ms
+        duration: 149.891052ms

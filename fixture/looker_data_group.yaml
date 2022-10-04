@@ -18,6 +18,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -38,7 +40,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:47 GMT
+                - Tue, 04 Oct 2022 13:20:03 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -47,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 151.141943ms
+        duration: 146.476944ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -78,12 +80,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:47 GMT
+                - Tue, 04 Oct 2022 13:20:04 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -92,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 84.824445ms
+        duration: 129.479739ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -110,6 +112,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -130,7 +134,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:47 GMT
+                - Tue, 04 Oct 2022 13:20:04 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -139,7 +143,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 127.421122ms
+        duration: 134.680737ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -170,12 +174,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:47 GMT
+                - Tue, 04 Oct 2022 13:20:04 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -184,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 81.63536ms
+        duration: 102.000652ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -202,6 +206,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -222,7 +228,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -231,7 +237,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 129.004816ms
+        duration: 136.687148ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -262,12 +268,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -276,7 +282,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 95.611843ms
+        duration: 99.507868ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -294,6 +300,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -314,7 +322,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -323,7 +331,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 137.768194ms
+        duration: 133.842703ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -354,12 +362,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -368,7 +376,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 86.139579ms
+        duration: 94.852277ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -386,6 +394,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -406,7 +416,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -415,7 +425,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 123.790015ms
+        duration: 120.334415ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -446,12 +456,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:48 GMT
+                - Tue, 04 Oct 2022 13:20:05 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -460,7 +470,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 93.111048ms
+        duration: 91.402351ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -478,6 +488,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -498,7 +510,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:49 GMT
+                - Tue, 04 Oct 2022 13:20:06 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -507,7 +519,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 133.258684ms
+        duration: 122.768703ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -538,12 +550,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:49 GMT
+                - Tue, 04 Oct 2022 13:20:06 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -552,7 +564,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 84.24442ms
+        duration: 88.645684ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -570,6 +582,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -590,7 +604,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:49 GMT
+                - Tue, 04 Oct 2022 13:20:06 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -599,7 +613,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 124.189215ms
+        duration: 115.006439ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -630,12 +644,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:49 GMT
+                - Tue, 04 Oct 2022 13:20:06 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -644,7 +658,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 85.51009ms
+        duration: 83.253892ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -662,6 +676,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -682,7 +698,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -691,7 +707,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 140.502574ms
+        duration: 128.062175ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -722,12 +738,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -736,7 +752,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 79.7259ms
+        duration: 92.019118ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -754,6 +770,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -774,7 +792,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -783,7 +801,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 127.659118ms
+        duration: 130.995549ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -814,12 +832,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -828,7 +846,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 82.908094ms
+        duration: 94.98913ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -846,6 +864,8 @@ interactions:
                 - '[REDACTED]'
             client_secret:
                 - '[REDACTED]'
+            grant_type:
+                - client_credentials
         headers:
             Content-Type:
                 - application/x-www-form-urlencoded
@@ -866,7 +886,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -875,7 +895,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 124.395322ms
+        duration: 121.369732ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -906,12 +926,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":21,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Thu, 29 Sep 2022 15:03:50 GMT
+                - Tue, 04 Oct 2022 13:20:07 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -920,4 +940,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 84.346263ms
+        duration: 84.906491ms
