@@ -17,16 +17,19 @@ func NewProvider() *schema.Provider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
 			"base_url": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_BASE_URL", nil),
 			},
 			"client_id": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_CLIENT_ID", nil),
 			},
 			"client_secret": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("LOOKERSDK_CLIENT_SECRET", nil),
 			},
 			"verify_ssl": {
 				Type:        schema.TypeBool,
