@@ -9,7 +9,7 @@ description: |-
 
 This resource binds a set of roles to a looker user. This is an **additive and non-authorative** resource that grants roles **in addition** to current roles configured in Looker.
 
-~>The `looker_user_role` resource **cannot** be used in conjunction with another `looker_user_role` if they grant privilege to the same user, otherwise they will fight over what roles should be set.
+~>The `looker_user_roles` resource **cannot** be used in conjunction with another `looker_user_roles` resource if they grant privileges to the same user, otherwise they will fight over what roles should be set.
 
 ## Example Usage
 
