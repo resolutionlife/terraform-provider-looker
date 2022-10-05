@@ -8,6 +8,9 @@ import (
 
 // TODO: Check output of model_sets and permission_sets tied to the looker_role
 func TestAccDatasourceLookerRoleWithId(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_data_role")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
@@ -31,6 +34,9 @@ func TestAccDatasourceLookerRoleWithId(t *testing.T) {
 }
 
 func TestAccDatasourceLookerRoleWithName(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_group_group")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

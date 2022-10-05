@@ -7,6 +7,9 @@ import (
 )
 
 func TestAccDatasourceLookerModelSetWithName(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_data_model_set")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
@@ -30,6 +33,9 @@ func TestAccDatasourceLookerModelSetWithName(t *testing.T) {
 }
 
 func TestAccDatasourceLookerModelSetWithId(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_group_group")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

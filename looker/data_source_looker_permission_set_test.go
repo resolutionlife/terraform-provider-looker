@@ -7,6 +7,9 @@ import (
 )
 
 func TestAccDatasourceLookerPermissionSetWithName(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_data_permission_set")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
@@ -29,6 +32,9 @@ func TestAccDatasourceLookerPermissionSetWithName(t *testing.T) {
 	})
 }
 func TestAccDatasourceLookerPermissionSetWithId(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_group_group")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
