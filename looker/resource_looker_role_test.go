@@ -68,6 +68,9 @@ func init() {
 }
 
 func TestAccLookerRole(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_roles")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

@@ -42,6 +42,9 @@ func init() {
 }
 
 func TestAccLookerModelSet(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_model_set")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

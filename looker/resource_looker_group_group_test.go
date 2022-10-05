@@ -42,6 +42,9 @@ func init() {
 }
 
 func TestAccLookerGroupGroup(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_group_group")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{

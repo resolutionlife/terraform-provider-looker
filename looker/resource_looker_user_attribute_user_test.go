@@ -25,6 +25,9 @@ func init() {
 }
 
 func TestAccLookerUserAttributeUser(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_user_attribute_user")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
