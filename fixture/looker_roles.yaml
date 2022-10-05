@@ -35,12 +35,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:34 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -49,55 +49,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 90.868793ms
+        duration: 104.279763ms
     - id: 1
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 101
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: '{"name":"test-acc-permission-set","permissions":["access_data","see_lookml_dashboards","see_lookml"]}'
-        form: {}
-        headers:
-            Accept:
-                - application/json
-            Content-Type:
-                - application/json
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets
-        method: POST
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}}'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
-            Set-Cookie:
-                - looker.browser=59814103; expires=Fri, 03 Oct 2025 15:44:49 GMT; HttpOnly
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 71.4312ms
-    - id: 2
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -127,14 +80,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}}'
+        body: '{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:34 GMT
             Set-Cookie:
-                - looker.browser=47499830; expires=Fri, 03 Oct 2025 15:44:49 GMT; HttpOnly
+                - looker.browser=95127542; expires=Sat, 04 Oct 2025 09:43:34 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -143,7 +96,54 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 109.621606ms
+        duration: 80.470811ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 101
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: '{"name":"test-acc-permission-set","permissions":["access_data","see_lookml_dashboards","see_lookml"]}'
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Content-Type:
+                - application/json
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets
+        method: POST
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"}'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 09:43:34 GMT
+            Set-Cookie:
+                - looker.browser=82258872; expires=Sat, 04 Oct 2025 09:43:34 GMT; HttpOnly
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 111.549096ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -164,7 +164,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521?fields=id%2Cname%2Cpermissions
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554?fields=id%2Cname%2Cmodels
         method: GET
       response:
         proto: HTTP/1.1
@@ -174,12 +174,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"521","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
+        body: '{"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 80.836471ms
+        duration: 75.853891ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -209,7 +209,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533?fields=id%2Cname%2Cmodels
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542?fields=id%2Cname%2Cpermissions
         method: GET
       response:
         proto: HTTP/1.1
@@ -219,12 +219,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"533","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
+        body: '{"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -233,7 +233,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 81.34098ms
+        duration: 71.200464ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -245,7 +245,7 @@ interactions:
         host: atoscerebro.cloud.looker.com:443
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"test-acc-role","permission_set_id":"521","model_set_id":"533"}'
+        body: '{"model_set_id":"554","name":"test-acc-role","permission_set_id":"542"}'
         form: {}
         headers:
             Accept:
@@ -264,14 +264,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Set-Cookie:
-                - looker.browser=40660593; expires=Fri, 03 Oct 2025 15:44:49 GMT; HttpOnly
+                - looker.browser=49580057; expires=Sat, 04 Oct 2025 09:43:35 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -280,7 +280,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 128.466444ms
+        duration: 138.730557ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -301,7 +301,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -311,12 +311,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -325,7 +325,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 72.439833ms
+        duration: 84.790308ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -346,7 +346,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -356,12 +356,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:49 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -370,7 +370,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 70.569508ms
+        duration: 88.012784ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -405,12 +405,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -419,7 +419,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 123.710403ms
+        duration: 120.02677ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -440,7 +440,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533?fields=id%2Cname%2Cmodels
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554?fields=id%2Cname%2Cmodels
         method: GET
       response:
         proto: HTTP/1.1
@@ -450,12 +450,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"533","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
+        body: '{"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -464,7 +464,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 79.432334ms
+        duration: 74.052678ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -485,7 +485,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521?fields=id%2Cname%2Cpermissions
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542?fields=id%2Cname%2Cpermissions
         method: GET
       response:
         proto: HTTP/1.1
@@ -495,12 +495,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"521","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
+        body: '{"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:35 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -509,7 +509,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 83.898394ms
+        duration: 85.290723ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -530,7 +530,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -540,12 +540,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:36 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -554,7 +554,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 74.480517ms
+        duration: 86.730189ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -594,7 +594,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:36 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -603,7 +603,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 114.064389ms
+        duration: 129.708024ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -624,7 +624,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521?fields=id%2Cname%2Cpermissions
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542?fields=id%2Cname%2Cpermissions
         method: GET
       response:
         proto: HTTP/1.1
@@ -634,12 +634,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"521","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
+        body: '{"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"]}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:36 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -648,7 +648,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 66.209667ms
+        duration: 73.049351ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -669,7 +669,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533?fields=id%2Cname%2Cmodels
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554?fields=id%2Cname%2Cmodels
         method: GET
       response:
         proto: HTTP/1.1
@@ -679,12 +679,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"533","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
+        body: '{"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:36 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -693,7 +693,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 87.237994ms
+        duration: 104.894484ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -714,7 +714,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -724,12 +724,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1","test_dataset_2"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["access_data","see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:50 GMT
+                - Wed, 05 Oct 2022 09:43:36 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -738,7 +738,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 77.274442ms
+        duration: 85.11194ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -778,7 +778,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -787,55 +787,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 115.909166ms
+        duration: 119.559754ms
     - id: 17
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 87
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: '{"name":"test-acc-permission-set","permissions":["see_lookml_dashboards","see_lookml"]}'
-        form: {}
-        headers:
-            Accept:
-                - application/json
-            Content-Type:
-                - application/json
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521
-        method: PATCH
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}}'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
-            Set-Cookie:
-                - looker.browser=21905181; expires=Fri, 03 Oct 2025 15:44:51 GMT; HttpOnly
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 118.576205ms
-    - id: 18
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -855,7 +808,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554
         method: PATCH
       response:
         proto: HTTP/1.1
@@ -865,14 +818,14 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}}'
+        body: '{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Set-Cookie:
-                - looker.browser=29940182; expires=Fri, 03 Oct 2025 15:44:51 GMT; HttpOnly
+                - looker.browser=5543874; expires=Sat, 04 Oct 2025 09:43:37 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -881,7 +834,54 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 125.5067ms
+        duration: 107.674122ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 87
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: '{"name":"test-acc-permission-set","permissions":["see_lookml_dashboards","see_lookml"]}'
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Content-Type:
+                - application/json
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542
+        method: PATCH
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"}'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 09:43:37 GMT
+            Set-Cookie:
+                - looker.browser=1436539; expires=Sat, 04 Oct 2025 09:43:37 GMT; HttpOnly
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 128.80648ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -902,7 +902,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521?fields=id%2Cname%2Cpermissions
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554?fields=id%2Cname%2Cmodels
         method: GET
       response:
         proto: HTTP/1.1
@@ -912,12 +912,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"521","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"]}'
+        body: '{"id":"554","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -926,7 +926,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 74.761621ms
+        duration: 73.952455ms
     - id: 20
       request:
         proto: HTTP/1.1
@@ -947,7 +947,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533?fields=id%2Cname%2Cmodels
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542?fields=id%2Cname%2Cpermissions
         method: GET
       response:
         proto: HTTP/1.1
@@ -957,12 +957,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"533","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set"}'
+        body: '{"id":"542","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"]}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -971,7 +971,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 80.764368ms
+        duration: 83.445688ms
     - id: 21
       request:
         proto: HTTP/1.1
@@ -992,7 +992,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -1002,12 +1002,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:51 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1016,7 +1016,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 81.461745ms
+        duration: 81.12271ms
     - id: 22
       request:
         proto: HTTP/1.1
@@ -1056,7 +1056,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:37 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1065,7 +1065,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 107.205328ms
+        duration: 105.995062ms
     - id: 23
       request:
         proto: HTTP/1.1
@@ -1086,7 +1086,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521?fields=id%2Cname%2Cpermissions
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542?fields=id%2Cname%2Cpermissions
         method: GET
       response:
         proto: HTTP/1.1
@@ -1096,12 +1096,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"521","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"]}'
+        body: '{"id":"542","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"]}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1110,7 +1110,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 77.854707ms
+        duration: 63.961239ms
     - id: 24
       request:
         proto: HTTP/1.1
@@ -1131,7 +1131,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533?fields=id%2Cname%2Cmodels
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554?fields=id%2Cname%2Cmodels
         method: GET
       response:
         proto: HTTP/1.1
@@ -1141,12 +1141,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"533","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set"}'
+        body: '{"id":"554","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1155,7 +1155,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 77.902561ms
+        duration: 70.21409ms
     - id: 25
       request:
         proto: HTTP/1.1
@@ -1176,7 +1176,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: GET
       response:
         proto: HTTP/1.1
@@ -1186,12 +1186,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"343","name":"test-acc-role","permission_set":{"built_in":false,"id":"521","all_access":false,"name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/521","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":false,"id":"533","all_access":false,"models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/533","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/343","users_url":"https://localhost:19999/api/4.0/roles/343/users","can":{"show":true,"index":true,"update":true}}'
+        body: '{"can":{"index":true,"show":true,"update":true},"id":"357","model_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"554","models":["test_both_datasets","test_dataset_1"],"name":"test-acc-model-set","url":"https://localhost:19999/api/4.0/model_sets/554"},"name":"test-acc-role","permission_set":{"all_access":false,"built_in":false,"can":{"index":true,"show":true,"update":true},"id":"542","name":"test-acc-permission-set","permissions":["see_lookml","see_lookml_dashboards"],"url":"https://localhost:19999/api/4.0/permission_sets/542"},"url":"https://localhost:19999/api/4.0/roles/357","users_url":"https://localhost:19999/api/4.0/roles/357/users"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1200,7 +1200,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 72.780069ms
+        duration: 86.687939ms
     - id: 26
       request:
         proto: HTTP/1.1
@@ -1240,7 +1240,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1249,7 +1249,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 116.115035ms
+        duration: 128.80923ms
     - id: 27
       request:
         proto: HTTP/1.1
@@ -1270,7 +1270,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/343
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/357
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -1285,9 +1285,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Set-Cookie:
-                - looker.browser=30439124; expires=Fri, 03 Oct 2025 15:44:52 GMT; HttpOnly
+                - looker.browser=26711553; expires=Sat, 04 Oct 2025 09:43:38 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1296,7 +1296,7 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 98.854171ms
+        duration: 110.568103ms
     - id: 28
       request:
         proto: HTTP/1.1
@@ -1317,7 +1317,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/521
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/554
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -1332,9 +1332,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Set-Cookie:
-                - looker.browser=63194005; expires=Fri, 03 Oct 2025 15:44:52 GMT; HttpOnly
+                - looker.browser=83291163; expires=Sat, 04 Oct 2025 09:43:38 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1343,7 +1343,7 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 65.341203ms
+        duration: 70.995836ms
     - id: 29
       request:
         proto: HTTP/1.1
@@ -1364,7 +1364,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/533
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/permission_sets/542
         method: DELETE
       response:
         proto: HTTP/1.1
@@ -1379,9 +1379,9 @@ interactions:
             Connection:
                 - keep-alive
             Date:
-                - Tue, 04 Oct 2022 15:44:52 GMT
+                - Wed, 05 Oct 2022 09:43:38 GMT
             Set-Cookie:
-                - looker.browser=98908070; expires=Fri, 03 Oct 2025 15:44:52 GMT; HttpOnly
+                - looker.browser=58343082; expires=Sat, 04 Oct 2025 09:43:38 GMT; HttpOnly
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -1390,4 +1390,4 @@ interactions:
                 - nosniff
         status: 204 No Content
         code: 204
-        duration: 99.064082ms
+        duration: 119.15031ms

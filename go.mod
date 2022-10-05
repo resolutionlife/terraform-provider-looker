@@ -9,7 +9,6 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.4.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.17.0
 	github.com/looker-open-source/sdk-codegen/go v0.0.2
-	github.com/pkg/errors v0.9.1
 	gopkg.in/dnaeon/go-vcr.v3 v3.1.1
 
 )

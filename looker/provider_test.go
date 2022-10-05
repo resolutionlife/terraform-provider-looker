@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -17,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/looker-open-source/sdk-codegen/go/rtl"
 	client "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
-	"github.com/pkg/errors"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
@@ -31,7 +31,7 @@ func NewTestProvider(cassettePath string) func() error {
 	recMode := os.Getenv("TF_REC")
 
 	rec := recorder.ModeReplayOnly
-	if recMode != "" {
+	if recMode == "1" {
 		rec = recorder.ModeRecordOnly
 	}
 
@@ -72,11 +72,11 @@ func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
 
-func redactBody(body *string, filterKeys []string) error {
+func redactJson(body *string, filterKeys []string) error {
 	var responseBody map[string]interface{}
 	err := json.Unmarshal([]byte(*body), &responseBody)
 	if err != nil {
-		return errors.Wrap(err, "failed to unmarshal body")
+		return fmt.Errorf("failed to unmarshal body: %w", err)
 	}
 
 	for _, key := range filterKeys {
@@ -88,7 +88,7 @@ func redactBody(body *string, filterKeys []string) error {
 
 	b, err := json.Marshal(responseBody)
 	if err != nil {
-		return errors.Wrap(err, "failed to marshal body")
+		return fmt.Errorf("failed to marshal body: %w", err)
 	}
 
 	*body = string(b)
@@ -97,20 +97,12 @@ func redactBody(body *string, filterKeys []string) error {
 }
 
 func filterCredentials(i *cassette.Interaction) error {
-	if strings.Contains(i.Request.Body, "client_id") ||
-		strings.Contains(i.Request.Body, "client_secret") {
-		err := redactBody(&i.Response.Body, []string{"access_token"})
-		if err != nil {
-			return errors.Wrap(err, "failed to redact response body")
-		}
+	if strings.Contains(i.Request.Headers.Get("Content-Type"), "application/json") {
+		redactJson(&i.Request.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
 	}
 
-	if strings.Contains(i.Response.Body, "client_id") ||
-		strings.Contains(i.Response.Body, "client_secret") {
-		err := redactBody(&i.Response.Body, []string{"client_id", "client_secret"})
-		if err != nil {
-			return errors.Wrap(err, "failed to redact response body")
-		}
+	if strings.Contains(i.Response.Headers.Get("Content-Type"), "application/json") {
+		redactJson(&i.Response.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
 	}
 
 	_, ok := i.Request.Form["client_id"]
@@ -140,12 +132,12 @@ func filterAuthHeaders(i *cassette.Interaction) error {
 }
 
 func customBodyMatcher(r *http.Request, i cassette.Request) bool {
-	if i.Body == "[REDACTED]" {
-		return true
+	if !cassette.DefaultMatcher(r, i) {
+		return false
 	}
 
-	if r.Body == nil || r.Body == http.NoBody {
-		return cassette.DefaultMatcher(r, i)
+	if r.Body == nil || r.Body == http.NoBody || i.Body == "[REDACTED]" {
+		return true
 	}
 
 	var reqBody []byte
@@ -154,8 +146,24 @@ func customBodyMatcher(r *http.Request, i cassette.Request) bool {
 	if err != nil {
 		log.Fatal("failed to read request body")
 	}
+
 	r.Body.Close()
 	r.Body = io.NopCloser(bytes.NewBuffer(reqBody))
 
-	return r.Method == i.Method && r.URL.String() == i.URL && string(reqBody) == i.Body
+	if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
+		var req, cassette interface{}
+		err := json.Unmarshal([]byte(reqBody), &req)
+		if err != nil {
+			return false
+		}
+
+		err = json.Unmarshal([]byte(i.Body), &cassette)
+		if err != nil {
+			return false
+		}
+
+		return reflect.DeepEqual(req, cassette)
+	}
+
+	return string(reqBody) == i.Body
 }
