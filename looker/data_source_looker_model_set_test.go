@@ -28,26 +28,15 @@ func TestAccDatasourceLookerModelSetWithName(t *testing.T) {
 					resource.TestCheckOutput("looker_model_set_id", "1"),
 				),
 			},
-		},
-	})
-}
-
-func TestAccDatasourceLookerModelSetWithId(t *testing.T) {
-	stop := NewTestProvider("../fixture/looker_group_group")
-	defer stop() //nolint:errcheck
-
-	resource.Test(t, resource.TestCase{
-		ProviderFactories: testAccProviders,
-		Steps: []resource.TestStep{
 			{
 				ResourceName: "looker_model_set",
 				Config: `
-				data "looker_model_set" "all" {
+				data "looker_model_set" "all_id" {
 					id = "1"
 				}
 
 				output "looker_model_set_name" {
-					value = data.looker_model_set.all.name
+					value = data.looker_model_set.all_id.name
 				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(

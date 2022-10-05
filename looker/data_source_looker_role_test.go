@@ -29,26 +29,15 @@ func TestAccDatasourceLookerRoleWithId(t *testing.T) {
 					resource.TestCheckOutput("looker_role_id", "2"),
 				),
 			},
-		},
-	})
-}
-
-func TestAccDatasourceLookerRoleWithName(t *testing.T) {
-	stop := NewTestProvider("../fixture/looker_group_group")
-	defer stop() //nolint:errcheck
-
-	resource.Test(t, resource.TestCase{
-		ProviderFactories: testAccProviders,
-		Steps: []resource.TestStep{
 			{
 				ResourceName: "looker_role",
 				Config: `
-				data "looker_role" "admin" {
+				data "looker_role" "admin_id" {
 					id = "2"
 				}
 
 				output "looker_role_name" {
-					value = data.looker_role.admin.name
+					value = data.looker_role.admin_id.name
 				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(

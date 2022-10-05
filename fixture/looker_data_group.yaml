@@ -35,12 +35,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:45 GMT
+                - Wed, 05 Oct 2022 11:32:52 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -49,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 197.818458ms
+        duration: 222.793ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -85,7 +85,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:45 GMT
+                - Wed, 05 Oct 2022 11:32:52 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,102 +94,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 151.447625ms
+        duration: 184.899208ms
     - id: 2
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 99
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: '[REDACTED]'
-        form:
-            client_id:
-                - '[REDACTED]'
-            client_secret:
-                - '[REDACTED]'
-            grant_type:
-                - client_credentials
-        headers:
-            Content-Type:
-                - application/x-www-form-urlencoded
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
-        method: POST
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Wed, 05 Oct 2022 11:21:46 GMT
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 168.61975ms
-    - id: 3
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            Accept:
-                - application/json
-            Content-Type:
-                - application/json
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/search?name=All+Users
-        method: GET
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Wed, 05 Oct 2022 11:21:46 GMT
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 168.976833ms
-    - id: 4
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -228,7 +134,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:46 GMT
+                - Wed, 05 Oct 2022 11:32:52 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -237,8 +143,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 188.825ms
-    - id: 5
+        duration: 180.445917ms
+    - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -273,7 +179,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:46 GMT
+                - Wed, 05 Oct 2022 11:32:53 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -282,8 +188,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 146.220833ms
-    - id: 6
+        duration: 152.709459ms
+    - id: 4
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -322,7 +228,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:47 GMT
+                - Wed, 05 Oct 2022 11:32:53 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -331,7 +237,101 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 180.884166ms
+        duration: 198.482083ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Content-Type:
+                - application/json
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/search?name=All+Users
+        method: GET
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 11:32:53 GMT
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 152.312375ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 99
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: '[REDACTED]'
+        form:
+            client_id:
+                - '[REDACTED]'
+            client_secret:
+                - '[REDACTED]'
+            grant_type:
+                - client_credentials
+        headers:
+            Content-Type:
+                - application/x-www-form-urlencoded
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        method: POST
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 11:32:53 GMT
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 185.748959ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -367,7 +367,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:47 GMT
+                - Wed, 05 Oct 2022 11:32:53 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -376,7 +376,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 152.571834ms
+        duration: 155.203833ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -416,7 +416,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:47 GMT
+                - Wed, 05 Oct 2022 11:32:54 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -425,7 +425,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 166.647042ms
+        duration: 183.577333ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -461,7 +461,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:47 GMT
+                - Wed, 05 Oct 2022 11:32:54 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -470,7 +470,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 161.801291ms
+        duration: 146.88375ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -510,7 +510,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:47 GMT
+                - Wed, 05 Oct 2022 11:32:54 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -519,7 +519,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 179.598708ms
+        duration: 160.347458ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -555,7 +555,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:48 GMT
+                - Wed, 05 Oct 2022 11:32:54 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -564,7 +564,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 131.639084ms
+        duration: 157.415375ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -599,12 +599,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:48 GMT
+                - Wed, 05 Oct 2022 11:32:54 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -613,7 +613,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 174.331ms
+        duration: 189.047541ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -649,7 +649,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:48 GMT
+                - Wed, 05 Oct 2022 11:32:55 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -658,102 +658,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 157.926708ms
+        duration: 155.379042ms
     - id: 14
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 99
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: '[REDACTED]'
-        form:
-            client_id:
-                - '[REDACTED]'
-            client_secret:
-                - '[REDACTED]'
-            grant_type:
-                - client_credentials
-        headers:
-            Content-Type:
-                - application/x-www-form-urlencoded
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
-        method: POST
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Wed, 05 Oct 2022 11:21:48 GMT
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 180.928ms
-    - id: 15
-      request:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        content_length: 0
-        transfer_encoding: []
-        trailer: {}
-        host: atoscerebro.cloud.looker.com:443
-        remote_addr: ""
-        request_uri: ""
-        body: ""
-        form: {}
-        headers:
-            Accept:
-                - application/json
-            Content-Type:
-                - application/json
-            X-Looker-Appid:
-                - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/search?id=1
-        method: GET
-      response:
-        proto: HTTP/1.1
-        proto_major: 1
-        proto_minor: 1
-        transfer_encoding: []
-        trailer: {}
-        content_length: -1
-        uncompressed: true
-        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
-        headers:
-            Content-Type:
-                - application/json
-            Date:
-                - Wed, 05 Oct 2022 11:21:48 GMT
-            Strict-Transport-Security:
-                - max-age=15724800; includeSubDomains
-            Vary:
-                - Accept-Encoding, Origin
-            X-Content-Type-Options:
-                - nosniff
-        status: 200 OK
-        code: 200
-        duration: 155.304208ms
-    - id: 16
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -792,7 +698,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:49 GMT
+                - Wed, 05 Oct 2022 11:32:55 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -801,8 +707,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 201.932125ms
-    - id: 17
+        duration: 193.557208ms
+    - id: 15
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -837,7 +743,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:49 GMT
+                - Wed, 05 Oct 2022 11:32:55 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -846,8 +752,8 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 159.075584ms
-    - id: 18
+        duration: 162.226792ms
+    - id: 16
       request:
         proto: HTTP/1.1
         proto_major: 1
@@ -886,7 +792,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:49 GMT
+                - Wed, 05 Oct 2022 11:32:55 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -895,7 +801,101 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 179.047375ms
+        duration: 183.580542ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Accept:
+                - application/json
+            Content-Type:
+                - application/json
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/groups/search?id=1
+        method: GET
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '[{"can_add_to_content_metadata":true,"external_group_id":null,"id":"1","name":"All Users","user_count":22,"externally_managed":true,"include_by_default":true,"contains_current_user":true,"can":{"show":true,"create":true,"index":true,"update":false,"delete":false,"edit_in_ui":false,"add_to_content_metadata":true}}]'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 11:32:56 GMT
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 139.313916ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 99
+        transfer_encoding: []
+        trailer: {}
+        host: atoscerebro.cloud.looker.com:443
+        remote_addr: ""
+        request_uri: ""
+        body: '[REDACTED]'
+        form:
+            client_id:
+                - '[REDACTED]'
+            client_secret:
+                - '[REDACTED]'
+            grant_type:
+                - client_credentials
+        headers:
+            Content-Type:
+                - application/x-www-form-urlencoded
+            X-Looker-Appid:
+                - go-sdk
+        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        method: POST
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        headers:
+            Content-Type:
+                - application/json
+            Date:
+                - Wed, 05 Oct 2022 11:32:56 GMT
+            Strict-Transport-Security:
+                - max-age=15724800; includeSubDomains
+            Vary:
+                - Accept-Encoding, Origin
+            X-Content-Type-Options:
+                - nosniff
+        status: 200 OK
+        code: 200
+        duration: 203.07575ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -931,7 +931,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:21:49 GMT
+                - Wed, 05 Oct 2022 11:32:56 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -940,4 +940,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 149.539708ms
+        duration: 168.02775ms

@@ -28,25 +28,15 @@ func TestAccDatasourceLookerPermissionSetWithName(t *testing.T) {
 					resource.TestCheckOutput("looker_permission_set_id", "1"),
 				),
 			},
-		},
-	})
-}
-func TestAccDatasourceLookerPermissionSetWithId(t *testing.T) {
-	stop := NewTestProvider("../fixture/looker_group_group")
-	defer stop() //nolint:errcheck
-
-	resource.Test(t, resource.TestCase{
-		ProviderFactories: testAccProviders,
-		Steps: []resource.TestStep{
 			{
 				ResourceName: "looker_permission_set",
 				Config: `
-				data "looker_permission_set" "admin" {
+				data "looker_permission_set" "admin_id" {
 					id = "1"
 				}
 
 				output "looker_permission_set_name" {
-					value = data.looker_permission_set.admin.name
+					value = data.looker_permission_set.admin_id.name
 				}
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
