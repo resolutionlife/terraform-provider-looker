@@ -84,6 +84,9 @@ func init() {
 }
 
 func TestAccLookerRoleGroups(t *testing.T) {
+	stop := NewTestProvider("../fixture/looker_role_groups")
+	defer stop() //nolint:errcheck
+
 	resource.Test(t, resource.TestCase{
 		ProviderFactories: testAccProviders,
 		Steps: []resource.TestStep{
@@ -101,7 +104,7 @@ func TestAccLookerRoleGroups(t *testing.T) {
 
 				resource "looker_role" "test_acc" {
 					name              = "test-acc-role"
-					model_set_id      = looker_model_set.test_acc.id
+					model_set_id      = looker_model_set.test_acc.id 
 					permission_set_id = looker_permission_set.test_acc.id
 				}
 

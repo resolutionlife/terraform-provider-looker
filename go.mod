@@ -9,7 +9,11 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.4.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.17.0
 	github.com/looker-open-source/sdk-codegen/go v0.0.2
+	gopkg.in/dnaeon/go-vcr.v3 v3.1.1
+
 )
+
+require gopkg.in/yaml.v3 v3.0.1 // indirect
 
 require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
