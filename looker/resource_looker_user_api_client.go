@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -71,19 +72,22 @@ func resourceUserAPIClientCreate(ctx context.Context, d *schema.ResourceData, c 
 func resourceUserAPIClientRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	// TODO: handle case when API credentials are not found.
 	_, err := api.UserCredentialsApi3(d.Get("user_id").(string), d.Id(), "", nil)
+	if errors.Is(err, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
+
 	return diag.FromErr(err)
 }
 
 func resourceUserAPIClientDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	// TODO: handle case when API credentials are not found.
-	if _, err := api.DeleteUserCredentialsApi3(d.Get("user_id").(string), d.Id(), nil); err != nil {
+	_, err := api.DeleteUserCredentialsApi3(d.Get("user_id").(string), d.Id(), nil)
+	if !errors.Is(err, sdk.ErrNotFound) {
 		return diag.FromErr(err)
 	}
 
-	d.SetId("")
 	return nil
 }

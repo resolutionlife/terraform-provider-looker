@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -84,6 +85,10 @@ func resourcePermissionSetRead(ctx context.Context, d *schema.ResourceData, c in
 	api := c.(*sdk.LookerSDK)
 
 	permissionSet, err := api.PermissionSet(d.Id(), "id,name,permissions", nil)
+	if errors.Is(err, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -129,7 +134,7 @@ func resourcePermissionSetDelete(ctx context.Context, d *schema.ResourceData, c 
 	api := c.(*sdk.LookerSDK)
 
 	_, err := api.DeletePermissionSet(d.Id(), nil)
-	if err != nil {
+	if !errors.Is(err, sdk.ErrNotFound) {
 		return diag.FromErr(err)
 	}
 

@@ -39,6 +39,7 @@ func LeftDiff(s, t []string) []string {
 	return diff
 }
 
+// Delete removes the elements in toDelete from slice s.
 func Delete(s []string, toDelete []string) (str []string) {
 	for i := range s {
 		if !Contains(toDelete, s[i]) {
@@ -48,6 +49,7 @@ func Delete(s []string, toDelete []string) (str []string) {
 	return
 }
 
+// Contains returns true is the element v is contained in the slice s.
 func Contains[T comparable](s []T, v T) bool {
 	for i := range s {
 		if s[i] == v {

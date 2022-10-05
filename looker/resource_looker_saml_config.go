@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -242,6 +243,10 @@ func resourceSamlConfigRead(ctx context.Context, d *schema.ResourceData, c inter
 	api := c.(*sdk.LookerSDK)
 
 	cfg, err := api.SamlConfig(nil)
+	if errors.Is(err, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -365,6 +370,10 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 	}
 
 	if _, err := api.UpdateSamlConfig(cfg, nil); err != nil {
+		if errors.Is(err, sdk.ErrNotFound) {
+			d.SetId("")
+			return nil
+		}
 		return diag.FromErr(err)
 	}
 
@@ -401,7 +410,7 @@ func resourceSamlConfigDelete(ctx context.Context, d *schema.ResourceData, c int
 		GroupsMemberValue:          conv.P(""),
 		SetRolesFromGroups:         conv.P(false),
 		UserAttributesWithIds:      conv.P([]sdk.SamlUserAttributeWrite{}),
-	}, nil); err != nil {
+	}, nil); !errors.Is(err, sdk.ErrNotFound) {
 		return diag.FromErr(err)
 	}
 

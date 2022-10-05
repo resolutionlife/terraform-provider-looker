@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -78,6 +79,10 @@ func resourceModelSetRead(ctx context.Context, d *schema.ResourceData, c interfa
 	api := c.(*sdk.LookerSDK)
 
 	modelSet, err := api.ModelSet(d.Id(), "id,name,models", nil)
+	if errors.Is(err, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -123,7 +128,7 @@ func resourceModelSetDelete(ctx context.Context, d *schema.ResourceData, c inter
 	api := c.(*sdk.LookerSDK)
 
 	_, err := api.DeleteModelSet(d.Id(), nil)
-	if err != nil {
+	if !errors.Is(err, sdk.ErrNotFound) {
 		return diag.FromErr(err)
 	}
 

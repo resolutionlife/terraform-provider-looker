@@ -45,7 +45,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 				ForceNew:    true,
 			},
 			groupValuesKey: {
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -70,7 +70,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get(groupValuesKey).([]interface{})
+	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
 
 	var userAttrGroupVaules []sdk.UserAttributeGroupValue
 	for _, groupValue := range groupValues {
@@ -116,6 +116,9 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 		"",
 		nil,
 	)
+	if errors.Is(err, sdk.ErrNotFound) {
+		return diag.Errorf("user attribute with id %s cannot be found", d.Get(userAttrIdKey).(string))
+	}
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -138,7 +141,7 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get(groupValuesKey).([]interface{})
+	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
 	for _, groupValue := range groupValues {
 		groupValueMap := groupValue.(map[string]interface{})
 		usrAttrGrp, err := api.UpdateUserAttributeGroupValue(
@@ -168,7 +171,7 @@ func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceDat
 func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	groupValues := d.Get(groupValuesKey).([]interface{})
+	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
 	for _, groupValue := range groupValues {
 		groupValueMap := groupValue.(map[string]interface{})
 		err := api.DeleteUserAttributeGroupValue(
@@ -176,7 +179,8 @@ func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceDat
 			d.Get(userAttrIdKey).(string),
 			nil,
 		)
-		if err != nil && !errors.Is(err, io.EOF) {
+		// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
+		if err != nil && !errors.Is(err, io.EOF) && !errors.Is(err, sdk.ErrNotFound) {
 			return diag.FromErr(err)
 		}
 	}
@@ -187,7 +191,7 @@ func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceDat
 func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGroups []sdk.UserAttributeGroupValue) []map[string]interface{} {
 	var groupValuesMap []map[string]interface{}
 
-	groupValues := d.Get(groupValuesKey).([]interface{})
+	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
 	for i, userAttrGroup := range userAttrGroups {
 		groupId := *userAttrGroup.GroupId
 		value := *userAttrGroup.Value

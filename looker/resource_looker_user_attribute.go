@@ -103,6 +103,10 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 	api := c.(*sdk.LookerSDK)
 
 	userAttributes, err := api.UserAttribute(d.Id(), "", nil)
+	if errors.Is(err, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -168,7 +172,7 @@ func resourceUserAttributeDelete(ctx context.Context, d *schema.ResourceData, c 
 	api := c.(*sdk.LookerSDK)
 
 	_, err := api.DeleteUserAttribute(d.Id(), nil)
-	if err != nil {
+	if !errors.Is(err, sdk.ErrNotFound) {
 		return diag.FromErr(err)
 	}
 

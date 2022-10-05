@@ -61,7 +61,6 @@ require (
 	github.com/posener/complete v1.2.3 // indirect
 	github.com/russross/blackfriday v1.6.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
-	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
@@ -80,4 +79,4 @@ require (
 	gopkg.in/ini.v1 v1.61.0 // indirect
 )
 
-replace github.com/looker-open-source/sdk-codegen/go => github.com/resolutionlife/looker-sdk-codegen/go v0.0.0-20220923092236-8ec73633c5e0
+replace github.com/looker-open-source/sdk-codegen/go => github.com/resolutionlife/looker-sdk-codegen/go v0.0.0-20220930133853-1df0d14550ba

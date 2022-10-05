@@ -2,6 +2,7 @@ package looker
 
 import (
 	"context"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -69,8 +70,11 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}
 	api := c.(*sdk.LookerSDK)
 
 	role, roleErr := api.Role(d.Id(), nil)
+	if errors.Is(roleErr, sdk.ErrNotFound) {
+		d.SetId("")
+		return nil
+	}
 	if roleErr != nil {
-		// TODO: handle case when role is not found
 		return diag.FromErr(roleErr)
 	}
 
@@ -104,8 +108,7 @@ func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, c interface
 	api := c.(*sdk.LookerSDK)
 
 	_, delErr := api.DeleteRole(d.Id(), nil)
-	if delErr != nil {
-		// TODO: handle case where role is not found
+	if !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 

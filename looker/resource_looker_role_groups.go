@@ -72,6 +72,9 @@ func resourceRoleGroupsCreate(ctx context.Context, d *schema.ResourceData, c int
 		append(lookerGroupIDs, slice.Diff(lookerGroupIDs, groupIDs)...), // append diff to the list of groups already set in looker
 		nil,
 	)
+	if errors.Is(setErr, sdk.ErrNotFound) {
+		return diag.Errorf("role with id %s cannot be found", roleID)
+	}
 	if setErr != nil {
 		return diag.FromErr(setErr)
 	}
@@ -144,6 +147,9 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 	// diff between what was has changed in the state and what is in looker
 	diff := slice.LeftDiff(oldIDs, lookerGroupIDs)
 	_, setErr := api.SetRoleGroups(roleID, append(diff, newIDs...), nil)
+	if errors.Is(setErr, sdk.ErrNotFound) {
+		return diag.Errorf("role with id %s cannot be found", roleID)
+	}
 	if setErr != nil {
 		return diag.FromErr(setErr)
 	}
@@ -156,7 +162,6 @@ func resourceRoleGroupsUpdate(ctx context.Context, d *schema.ResourceData, c int
 func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	// groups
 	gIDs, ok := d.Get("group_ids").(*schema.Set)
 	if !ok {
 		return diag.Errorf("attribute role_id is not of type *schema.Set")
@@ -172,9 +177,8 @@ func resourceRoleGroupsDelete(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(groupsErr)
 	}
 
-	_, setErr := api.SetRoleGroups(
-		roleID, slice.Diff(lookerGroupIDs, groupIDs), nil)
-	if setErr != nil {
+	_, setErr := api.SetRoleGroups(roleID, slice.Diff(lookerGroupIDs, groupIDs), nil)
+	if !errors.Is(setErr, sdk.ErrNotFound) {
 		return diag.FromErr(setErr)
 	}
 
@@ -201,11 +205,14 @@ func resourceRoleGroupImport(ctx context.Context, d *schema.ResourceData, m inte
 
 func getGroupsOnRole(api *sdk.LookerSDK, roleID string) ([]string, error) {
 	g, gErr := api.RoleGroups(roleID, "id", nil)
+	if errors.Is(gErr, sdk.ErrNotFound) {
+		return nil, fmt.Errorf("role with id %s cannot be found", roleID)
+	}
 	if gErr != nil {
-		// TODO: Account for when roleID is not found
 		return nil, gErr
 	}
 
+	// g will be empty if there are no groups with the given role
 	lookerGroupIDs := make([]string, len(g))
 	for i, group := range g {
 		if group.Id == nil {
