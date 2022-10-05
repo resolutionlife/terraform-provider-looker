@@ -4,17 +4,32 @@ This terraform provider interacts with the Looker API to configure Looker resour
 
 ## Documentation 
 
-This provider is not yet published to the terraform registry. Documentation for each resource and datasource supported can be found below.
-
-- [Resources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/resources) 
-- [Data sources](https://github.com/resolutionlife/terraform-provider-looker/tree/main/docs/data-sources)
+Documentation for each resource and datasource supported can be found [here](https://registry.terraform.io/providers/resolutionlife/looker/latest/docs).
 
 ## Installation
 
-Terraform uses the Terraform Registry to download and install providers. This provider is not currently published on the terraform registry a binary of the provider must be built and stored locally.
+Terraform uses the Terraform Registry to download and install providers. To install this provider, copy and paste the following code into your Terraform configuration. Then, run terraform init.
 
+```terraform
+terraform {
+  required_providers {
+    auth0 = {
+      source  = "resolutionlife/looker"
+      version = ">= 0.1.0" # See docs for latest version`
+    }
+  }
+}
+
+provider "looker" {}
+
+```
+
+```sh
+$ terraform init
+```
 ### Running the provider locally
-To run the terraform provider, run `make install` to build the binary locally. Then, run `terraform init` using the below configuration.
+
+To run the terraform provider locally, run `make install`. This command builds a binary of the provider and store it locally. Then, run `terraform init` using the below configuration.
 
 _Note: To configure the provider, an API key and secret is required for your looker instance. [See documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys). You must be an admin to create an API key._
 

@@ -13,8 +13,6 @@ require (
 
 )
 
-require gopkg.in/yaml.v3 v3.0.1 // indirect
-
 require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
@@ -77,6 +75,7 @@ require (
 	google.golang.org/grpc v1.46.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/ini.v1 v1.61.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 replace github.com/looker-open-source/sdk-codegen/go => github.com/resolutionlife/looker-sdk-codegen/go v0.0.0-20220930133853-1df0d14550ba

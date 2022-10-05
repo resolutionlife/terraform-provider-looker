@@ -48,7 +48,7 @@ resource "looker_user_attribute_group" "test_group_1" {
 
 ### Required
 
-- `group_values` (Block List, Min: 1) (see [below for nested schema](#nestedblock--group_values))
+- `group_values` (Block Set, Min: 1) (see [below for nested schema](#nestedblock--group_values))
 - `user_attribute_id` (String) The id of the user attribute to assign
 
 ### Read-Only
