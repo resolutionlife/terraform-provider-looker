@@ -79,7 +79,7 @@ func resourceUserAttributeGroupsCreate(ctx context.Context, d *schema.ResourceDa
 		})
 	}
 
-	gr, err := api.SetUserAttributeGroupValues(
+	_, err := api.SetUserAttributeGroupValues(
 		d.Get(userAttrIdKey).(string),
 		userAttrGroupVaules,
 		nil,
@@ -88,11 +88,7 @@ func resourceUserAttributeGroupsCreate(ctx context.Context, d *schema.ResourceDa
 		return diag.FromErr(err)
 	}
 
-	if len(gr) < 1 {
-		return diag.Errorf("unable to set group values to user attribute %s", d.Get(userAttrIdKey).(string))
-	}
-
-	d.SetId(*gr[0].UserAttributeId)
+	d.SetId(d.Get(userAttrIdKey).(string))
 
 	return resourceUserAttributeGroupsRead(ctx, d, c)
 }
