@@ -45,8 +45,8 @@ func resourceUserAttribute() *schema.Resource {
 			"data_type": {
 				Type:             schema.TypeString,
 				Required:         true,
-				Description:      "Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode', 'advanced_filter_number', 'advanced_filter_datetime', 'advanced_filter_string')",
-				ValidateDiagFunc: validateOneOf([]string{"string", "number", "datetime", "yesno", "zipcode", "advanced_filter_number", "advanced_filter_datetime", "advanced_filter_string"}),
+				Description:      "Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode', 'advanced_filter_number', 'advanced_filter_datetime', 'advanced_filter_string', 'relative_url')",
+				ValidateDiagFunc: validateOneOf([]string{"string", "number", "datetime", "yesno", "zipcode", "advanced_filter_number", "advanced_filter_datetime", "advanced_filter_string", "relative_url"}),
 			},
 			"hidden": {
 				Type:        schema.TypeBool,
@@ -118,13 +118,11 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 	}
 
 	var userAccess string
-	if *userAttributes.UserCanView && !*userAttributes.UserCanEdit {
+	if *userAttributes.UserCanView {
 		userAccess = "View"
-	}
-	if !*userAttributes.UserCanView && *userAttributes.UserCanEdit {
+	} else if *userAttributes.UserCanEdit {
 		userAccess = "Edit"
-	}
-	if !*userAttributes.UserCanView && !*userAttributes.UserCanEdit {
+	} else {
 		userAccess = "None"
 	}
 
