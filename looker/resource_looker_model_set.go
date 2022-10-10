@@ -18,6 +18,10 @@ func resourceModelSet() *schema.Resource {
 		ReadContext:   resourceModelSetRead,
 		UpdateContext: resourceModelSetUpdate,
 		DeleteContext: resourceModelSetDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"id": {
 				Type:        schema.TypeString,
