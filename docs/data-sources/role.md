@@ -3,12 +3,12 @@
 page_title: "looker_role Data Source - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This datasource reads a looker role from a Looker instance.
+  This data source reads a looker role from a Looker instance.
 ---
 
 # looker_role (Data Source)
 
-This datasource reads a looker role from a Looker instance.
+This data source reads a looker role from a Looker instance.
 
 ## Example Usage
 

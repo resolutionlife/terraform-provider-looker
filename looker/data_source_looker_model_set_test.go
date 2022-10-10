@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func TestAccDatasourceLookerModelSetWithName(t *testing.T) {
+func TestAccDataSourceLookerModelSetWithName(t *testing.T) {
 	stop := NewTestProvider("../fixture/looker_data_model_set")
 	defer stop() //nolint:errcheck
 

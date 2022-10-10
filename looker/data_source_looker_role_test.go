@@ -7,7 +7,7 @@ import (
 )
 
 // TODO: Check output of model_sets and permission_sets tied to the looker_role
-func TestAccDatasourceLookerRoleWithId(t *testing.T) {
+func TestAccDataSourceLookerRoleWithId(t *testing.T) {
 	stop := NewTestProvider("../fixture/looker_data_role")
 	defer stop() //nolint:errcheck
 

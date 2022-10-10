@@ -10,11 +10,11 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-func datasourceGroup() *schema.Resource {
+func dataSourceGroup() *schema.Resource {
 	return &schema.Resource{
-		Description: "This datasource reads a looker group from a Looker instance.",
+		Description: "This data source reads a looker group from a Looker instance.",
 
-		ReadContext: datasourceGroupRead,
+		ReadContext: dataSourceGroupRead,
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:         schema.TypeString,
@@ -32,7 +32,7 @@ func datasourceGroup() *schema.Resource {
 	}
 }
 
-func datasourceGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	// exactly one of these variables will be nil - this is enforced by the data source schema

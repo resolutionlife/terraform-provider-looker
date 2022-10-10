@@ -13,11 +13,11 @@ import (
 )
 
 // TODO: Add a test for this datasource
-func datasourceLookerIdpMetadata() *schema.Resource {
+func dataSourceLookerIdpMetadata() *schema.Resource {
 	return &schema.Resource{
 		Description: "This datasource parsed IdP metadata.",
 
-		ReadContext: datasourceIdpMetadataRead,
+		ReadContext: dataSourceIdpMetadataRead,
 		Schema: map[string]*schema.Schema{
 			"idp_metadata_url": {
 				Type:         schema.TypeString,
@@ -50,7 +50,7 @@ func datasourceLookerIdpMetadata() *schema.Resource {
 	}
 }
 
-func datasourceIdpMetadataRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func dataSourceIdpMetadataRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	// exactly one of these variables will be nil - this is enforced by the data source schema

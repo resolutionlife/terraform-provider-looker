@@ -68,11 +68,11 @@ func NewProvider(opts ...ProviderOptions) *schema.Provider {
 			"looker_saml_config":          resourceSamlConfig(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"looker_role":           datasourceRole(),
-			"looker_group":          datasourceGroup(),
-			"looker_model_set":      datasourceModelSet(),
+			"looker_role":           dataSourceRole(),
+			"looker_group":          dataSourceGroup(),
+			"looker_model_set":      dataSourceModelSet(),
 			"looker_permission_set": dataSourcePermissionSet(),
-			"looker_idp_metadata":   datasourceLookerIdpMetadata(),
+			"looker_idp_metadata":   dataSourceLookerIdpMetadata(),
 		},
 		ConfigureContextFunc: configWrapper(nil),
 	}
