@@ -11,9 +11,9 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-func datasourceModelSet() *schema.Resource {
+func dataSourceModelSet() *schema.Resource {
 	return &schema.Resource{
-		Description: "This datasource reads a model set from a Looker instance.",
+		Description: "This data source reads a model set from a Looker instance.",
 
 		ReadContext: dataSourceModelSetRead,
 		Schema: map[string]*schema.Schema{

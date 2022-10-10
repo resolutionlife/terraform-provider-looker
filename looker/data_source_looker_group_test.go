@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func TestAccDatasourceLookerGroup(t *testing.T) {
+func TestAccDataSourceLookerGroup(t *testing.T) {
 	stop := NewTestProvider("../fixture/looker_data_group")
 	//nolint:errcheck
 	defer stop()

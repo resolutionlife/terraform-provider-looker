@@ -4,7 +4,7 @@ This terraform provider interacts with the Looker API to configure Looker resour
 
 ## Documentation 
 
-Documentation for each resource and datasource supported can be found [here](https://registry.terraform.io/providers/resolutionlife/looker/latest/docs).
+Documentation for each resource and data source supported can be found [here](https://registry.terraform.io/providers/resolutionlife/looker/latest/docs).
 
 ## Installation
 
@@ -13,7 +13,7 @@ Terraform uses the Terraform Registry to download and install providers. To inst
 ```terraform
 terraform {
   required_providers {
-    auth0 = {
+    looker = {
       source  = "resolutionlife/looker"
       version = ">= 0.1.0" # See docs for latest version`
     }

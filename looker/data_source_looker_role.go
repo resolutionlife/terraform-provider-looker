@@ -11,11 +11,11 @@ import (
 	sdk "github.com/looker-open-source/sdk-codegen/go/sdk/v4"
 )
 
-func datasourceRole() *schema.Resource {
+func dataSourceRole() *schema.Resource {
 	return &schema.Resource{
-		Description: "This datasource reads a looker role from a Looker instance.",
+		Description: "This data source reads a looker role from a Looker instance.",
 
-		ReadContext: datasourceRoleRead,
+		ReadContext: dataSourceRoleRead,
 		Schema: map[string]*schema.Schema{
 			"name": {
 				Type:         schema.TypeString,
@@ -87,7 +87,7 @@ func datasourceRole() *schema.Resource {
 	}
 }
 
-func datasourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func dataSourceRoleRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	// exactly one of these variables will be nil - this is enforced by the data source schema

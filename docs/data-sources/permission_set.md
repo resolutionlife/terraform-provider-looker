@@ -3,12 +3,12 @@
 page_title: "looker_permission_set Data Source - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This datasource reads a permission set from a Looker instance.
+  This data source reads a permission set from a Looker instance.
 ---
 
 # looker_permission_set (Data Source)
 
-This datasource reads a permission set from a Looker instance.
+This data source reads a permission set from a Looker instance.
 
 ## Example Usage
 
