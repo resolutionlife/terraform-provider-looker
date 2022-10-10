@@ -43,10 +43,9 @@ func resourceUserAttribute() *schema.Resource {
 				Description: "The user-friendly name displayed in the app for lists and filters",
 			},
 			"data_type": {
-				Type:             schema.TypeString,
-				Required:         true,
-				Description:      "Type of user attribute ('string', 'number', 'datetime', 'yesno', 'zipcode', 'advanced_filter_number', 'advanced_filter_datetime', 'advanced_filter_string')",
-				ValidateDiagFunc: validateOneOf([]string{"string", "number", "datetime", "yesno", "zipcode", "advanced_filter_number", "advanced_filter_datetime", "advanced_filter_string"}),
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "Type of user attribute.",
 			},
 			"hidden": {
 				Type:        schema.TypeBool,
