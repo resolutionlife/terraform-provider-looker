@@ -118,10 +118,10 @@ func resourceUserAttributeRead(ctx context.Context, d *schema.ResourceData, c in
 	}
 
 	var userAccess string
-	if *userAttributes.UserCanView {
-		userAccess = "View"
-	} else if *userAttributes.UserCanEdit {
+	if *userAttributes.UserCanEdit {
 		userAccess = "Edit"
+	} else if *userAttributes.UserCanView {
+		userAccess = "View"
 	} else {
 		userAccess = "None"
 	}
