@@ -3,7 +3,6 @@ package looker
 import (
 	"errors"
 	"fmt"
-	"strings"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
@@ -13,9 +12,9 @@ import (
 
 func init() {
 	// Add a sweeper to remove user attributes and groups that have names starting with `test_acc`.
-	resource.AddTestSweepers("looker_user_attribute_group", &resource.Sweeper{
+	resource.AddTestSweepers("looker_user_attribute_groups", &resource.Sweeper{
 		Dependencies: []string{"looker_user_attribute", "looker_group"},
-		Name:         "looker_user_attribute_group",
+		Name:         "looker_user_attribute_groups",
 		F: func(r string) error {
 			return nil
 		},
@@ -23,7 +22,7 @@ func init() {
 }
 
 func TestAccLookerUserAttributeGroup(t *testing.T) {
-	stop := NewTestProvider("../fixture/looker_user_attribute_group")
+	stop := NewTestProvider("../fixture/looker_user_attribute_groups")
 	defer stop() //nolint:errcheck
 
 	resource.Test(t, resource.TestCase{
@@ -44,7 +43,7 @@ func TestAccLookerUserAttributeGroup(t *testing.T) {
 					user_access      = "View"
 				}
 
-				resource "looker_user_attribute_group" "test_acc" {
+				resource "looker_user_attribute_groups" "test_acc" {
 					user_attribute_id = looker_user_attribute.test_acc.id
 					group_values {
 					  group_id = looker_group.test_acc.id
@@ -53,15 +52,15 @@ func TestAccLookerUserAttributeGroup(t *testing.T) {
 				  }
 				`,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttrSet("looker_user_attribute_group.test_acc", "user_attribute_id"),
+					resource.TestCheckResourceAttrSet("looker_user_attribute_groups.test_acc", "user_attribute_id"),
 					resource.TestCheckTypeSetElemNestedAttrs(
-						"looker_user_attribute_group.test_acc",
+						"looker_user_attribute_groups.test_acc",
 						"group_values.*",
 						map[string]string{
 							"value": "25",
 						},
 					),
-					testAccUserAttributeGroup("looker_user_attribute_group.test_acc", "looker_group.test_acc", "25"),
+					testAccUserAttributeGroup("looker_user_attribute_groups.test_acc", "looker_group.test_acc", "25"),
 				),
 			},
 		},
@@ -88,13 +87,8 @@ func testAccUserAttributeGroup(userAttrGroupResource, groupResource, expectedVal
 
 		client := testAccProvider.Meta().(*sdk.LookerSDK)
 
-		userAttrGroupIds := strings.Split(userAttrGroupRes.Primary.ID, "_")
-		if len(userAttrGroupIds) < 2 {
-			return errors.New("invalid id, should be of the form <user_attribute_id>_<group_id>_<...>")
-		}
-
 		// id of user attribute is in form <user_attribute_id>_<group_id>_<...>
-		userAttrs, err := client.AllUserAttributeGroupValues(userAttrGroupIds[0], "", nil)
+		userAttrs, err := client.AllUserAttributeGroupValues(userAttrGroupRes.Primary.ID, "", nil)
 		if err != nil {
 			return fmt.Errorf("failed to retrieve user attribute group value with id %v: %w", userAttrGroupRes.Primary.ID, err)
 		}

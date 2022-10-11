@@ -3,9 +3,7 @@ package looker
 import (
 	"context"
 	"errors"
-	"fmt"
 	"io"
-	"strings"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -22,15 +20,15 @@ const (
 	valueKey       = "value"
 )
 
-func resourceUserAttributeGroup() *schema.Resource {
+func resourceUserAttributeGroups() *schema.Resource {
 	return &schema.Resource{
 		Description:   "Manages Looker User Attribute Groups",
-		CreateContext: resourceUserAttributeGroupCreate,
-		ReadContext:   resourceUserAttributeGroupRead,
-		UpdateContext: resourceUserAttributeGroupUpdate,
-		DeleteContext: resourceUserAttributeGroupDelete,
+		CreateContext: resourceUserAttributeGroupsCreate,
+		ReadContext:   resourceUserAttributeGroupsRead,
+		UpdateContext: resourceUserAttributeGroupsUpdate,
+		DeleteContext: resourceUserAttributeGroupsDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: resourceUserAttributeGroupImport,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: map[string]*schema.Schema{
 			"id": {
@@ -67,7 +65,7 @@ func resourceUserAttributeGroup() *schema.Resource {
 	}
 }
 
-func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceUserAttributeGroupsCreate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
@@ -81,7 +79,7 @@ func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceDat
 		})
 	}
 
-	userAttrGroups, err := api.SetUserAttributeGroupValues(
+	_, err := api.SetUserAttributeGroupValues(
 		d.Get(userAttrIdKey).(string),
 		userAttrGroupVaules,
 		nil,
@@ -90,29 +88,16 @@ func resourceUserAttributeGroupCreate(ctx context.Context, d *schema.ResourceDat
 		return diag.FromErr(err)
 	}
 
-	userAttrGroupId := *userAttrGroups[0].UserAttributeId
-	for _, userAttrGroup := range userAttrGroups {
-		if userAttrGroup.Id == nil {
-			return diag.Errorf("user attribute group has missing id")
-		}
-		userAttrGroupId += "_" + *userAttrGroup.GroupId
+	d.SetId(d.Get(userAttrIdKey).(string))
 
-		tflog.Info(ctx, "CREATE", map[string]interface{}{
-			"groupId": *userAttrGroup.GroupId,
-			"attrId":  *userAttrGroup.UserAttributeId,
-			"value":   *userAttrGroup.Value,
-		})
-	}
-	d.SetId(userAttrGroupId)
-
-	return resourceUserAttributeGroupRead(ctx, d, c)
+	return resourceUserAttributeGroupsRead(ctx, d, c)
 }
 
-func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceUserAttributeGroupsRead(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	userAttrGroups, err := api.AllUserAttributeGroupValues(
-		d.Get(userAttrIdKey).(string),
+		d.Id(),
 		"",
 		nil,
 	)
@@ -138,7 +123,7 @@ func resourceUserAttributeGroupRead(ctx context.Context, d *schema.ResourceData,
 	return diag.FromErr(result.(*multierror.Error).ErrorOrNil())
 }
 
-func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceUserAttributeGroupsUpdate(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
@@ -165,10 +150,10 @@ func resourceUserAttributeGroupUpdate(ctx context.Context, d *schema.ResourceDat
 		})
 	}
 
-	return resourceUserAttributeGroupRead(ctx, d, c)
+	return resourceUserAttributeGroupsRead(ctx, d, c)
 }
 
-func resourceUserAttributeGroupDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
+func resourceUserAttributeGroupsDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
 	groupValues := d.Get(groupValuesKey).(*schema.Set).List()
@@ -213,40 +198,4 @@ func buildGroupValuesMap(ctx context.Context, d *schema.ResourceData, userAttrGr
 	}
 
 	return groupValuesMap
-}
-
-func resourceUserAttributeGroupImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
-	api := c.(*sdk.LookerSDK)
-
-	ids := strings.Split(d.Id(), "_")
-	if len(ids) < 2 {
-		diag.Errorf("invalid id, should be of the form <user_attribute_id>_<group_id>_<...>")
-	}
-
-	userAttributes, err := api.UserAttribute(ids[0], "", nil)
-	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve user_attribute with id %v: %w", ids[0], err)
-	}
-
-	if *userAttributes.ValueIsHidden {
-		return nil, errors.New("value for current user attribute is hidden, import is not supported for hidden values")
-	}
-
-	var result error
-	result = multierror.Append(d.Set(userAttrIdKey, ids[0]))
-	var groupIds []map[string]interface{}
-	for _, id := range ids[1:] {
-		groupIds = append(groupIds, map[string]interface{}{
-			groupIdKey: id,
-		})
-	}
-
-	result = multierror.Append(result, d.Set(groupValuesKey, groupIds))
-
-	resErr := result.(*multierror.Error).ErrorOrNil()
-	if resErr != nil {
-		return nil, resErr
-	}
-
-	return []*schema.ResourceData{d}, nil
 }

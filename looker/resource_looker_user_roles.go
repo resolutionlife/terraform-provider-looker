@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -24,7 +23,7 @@ func resourceUserRoles() *schema.Resource {
 		UpdateContext: resourceUserRolesUpdate,
 		DeleteContext: resourceUserRolesDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: resourceUserRolesImport,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -66,8 +65,7 @@ func resourceUserRolesCreate(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.FromErr(fmt.Errorf("create set err: %s, userID: %s", setErr.Error(), userID))
 	}
 
-	// the state has the role_ids provisioned in tf already, the id is a concat of the user_id and role_ids
-	d.SetId(fmt.Sprintf("%s_%s", userID, strings.Join(rscRoleIDs, "_")))
+	d.SetId(userID)
 
 	return resourceUserRolesRead(ctx, d, c)
 }
@@ -78,19 +76,16 @@ func resourceUserRolesRead(ctx context.Context, d *schema.ResourceData, c interf
 
 	diff, diffErr := userRolesDiff(api, d)
 	if diffErr != nil {
-		// TODO: handle when user is not found
 		return diag.FromErr(diffErr)
 	}
 
-	userID := d.Get("user_id").(string)
-	rscRoleIDs, rolesErr := getRolesByUser(api, userID)
+	rscRoleIDs, rolesErr := getRolesByUser(api, d.Id())
 	if rolesErr != nil {
-		// TODO: handle when user is not found
 		return diag.FromErr(rolesErr)
 	}
 
 	result := multierror.Append(
-		d.Set("user_id", userID),
+		d.Set("user_id", d.Id()),
 		d.Set("role_ids", slice.Delete(rscRoleIDs, diff)), // delete any role ids that are not in the terraform state
 	)
 	return diag.FromErr(result.ErrorOrNil())
@@ -143,9 +138,6 @@ func resourceUserRolesUpdate(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.Errorf(setErr.Error())
 	}
 
-	// reset the resource id to represent update
-	d.SetId(fmt.Sprintf("%s_%s", userID, strings.Join(newIDs, "_")))
-
 	return resourceUserRolesRead(ctx, d, c)
 }
 
@@ -157,32 +149,12 @@ func resourceUserRolesDelete(ctx context.Context, d *schema.ResourceData, c inte
 		return diag.FromErr(diffErr)
 	}
 
-	userID := d.Get("user_id").(string)
-
-	_, setErr := api.SetUserRoles(userID, diff, "", nil)
+	_, setErr := api.SetUserRoles(d.Id(), diff, "", nil)
 	if setErr != nil {
-		return diag.Errorf("err: %s, userID: %s", setErr.Error(), userID)
+		return diag.Errorf("err: %s, userID: %s", setErr.Error(), d.Id())
 	}
 
 	return nil
-}
-
-func resourceUserRolesImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
-	// id is delimited using `_`, eg. <user_id>_<role_ids>
-	s := strings.Split(d.Id(), "_")
-	if len(s) < 2 {
-		diag.Errorf("invalid id, should be of the form <user_id>_<role_ids>")
-	}
-
-	resErr := multierror.Append(
-		d.Set("user_id", s[0]),
-		d.Set("role_ids", s[1:]),
-	).ErrorOrNil()
-	if resErr != nil {
-		return nil, resErr
-	}
-
-	return []*schema.ResourceData{d}, nil
 }
 
 // userRolesDiff returns the diff between the looker remote roles and roles in the state.

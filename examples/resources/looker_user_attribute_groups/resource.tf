@@ -15,7 +15,7 @@ resource "looker_user_attribute" "test_attr" {
   user_access   = "View"
 }
 
-resource "looker_user_attribute_group" "test_group_1" {
+resource "looker_user_attribute_groups" "test_group_1" {
   user_attribute_id = looker_user_attribute.test_attr.id
   group_values {
     group_id = looker_group.test_group_1.id
