@@ -3,12 +3,12 @@
 page_title: "looker_model_set Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource creates a model set given a list Looker models.
+  This resource creates a model set given a list of Looker models.
 ---
 
 # looker_model_set (Resource)
 
-This resource creates a model set given a list Looker models.
+This resource creates a model set given a list of Looker models.
 
 ## Example Usage
 

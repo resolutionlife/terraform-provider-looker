@@ -3,12 +3,12 @@
 page_title: "looker_user_attribute Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource creates a user attributes in a Looker instance.
+  This resource creates a user attribute in a Looker instance.
 ---
 
 # looker_user_attribute (Resource)
 
-This resource creates a user attributes in a Looker instance.
+This resource creates a user attribute in a Looker instance.
 
 ## Example Usage
 

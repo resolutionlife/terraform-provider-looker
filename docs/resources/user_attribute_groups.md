@@ -7,7 +7,8 @@ description: |-
 
 # looker_user_attribute_groups (Resource)
 
-Manages Looker User Attribute Groups.
+This resource assigns a user attribute to a list of groups in a Looker instance. There can only be one `looker_user_attribute_group` resource type per user attribute.
+
 
 ## Example Usage
 

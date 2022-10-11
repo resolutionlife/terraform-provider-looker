@@ -13,7 +13,7 @@ resource "looker_user_attribute" "employee_number" {
   user_access   = "View"
 }
 
-resource "looker_user_attribute_user" "tina_employee_no" {
+resource "looker_user_attribute_user" "tina_employee_number" {
   user_attribute_id = looker_user_attribute.employee_number.id
   user_id           = looker_user.tina.id
   value             = "23"

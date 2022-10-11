@@ -3,12 +3,12 @@
 page_title: "looker_permission_set Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource creates a set a permission set in a Looker instance.
+  This resource creates a permission set in a Looker instance.
 ---
 
 # looker_permission_set (Resource)
 
-This resource creates a set a permission set in a Looker instance.
+This resource creates a permission set in a Looker instance.
 
 ## Example Usage
 

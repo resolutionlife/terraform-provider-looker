@@ -8,7 +8,7 @@ description: |-
 
 # looker_role_groups (Resource)
 
-This resource binds a set of groups to a looker role.  This is an **additive and non-authorative** resource that grants groups to a role **in addition** to current groups configured in Looker.
+This resource binds a set of groups to a Looker role. There can only be one `looker_role_groups` resource per role. This is an **additive and non-authorative** resource that grants groups to a role **in addition** to current groups configured in Looker.
 
 ~>The `looker_role_groups` resource **cannot** be used in conjunction with another `looker_role_groups` resource if they grant privileges to the same role, otherwise they will fight over what groups should be set.
 

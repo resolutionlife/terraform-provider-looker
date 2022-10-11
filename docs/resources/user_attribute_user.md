@@ -29,7 +29,7 @@ resource "looker_user_attribute" "employee_number" {
   user_access   = "View"
 }
 
-resource "looker_user_attribute_user" "tina_employee_no" {
+resource "looker_user_attribute_user" "tina_employee_number" {
   user_attribute_id = looker_user_attribute.employee_number.id
   user_id           = looker_user.tina.id
   value             = "23"
@@ -53,8 +53,10 @@ resource "looker_user_attribute_user" "tina_employee_no" {
 
 Import is supported using the following syntax:
 
+~> Imports are not supported for a `user_attribute` with `hidden = true` as the API does not have the permissions to read the hidden values. One method to import would be to reapply the changes after the import is successful. 
+
 ```shell
 # A `looker_user_attribute_user` resource can be imported by delimiting the `user_attribute_id` and `user_id` with an underscore. E.g `{{user_attribute_id}}_{{user_id}}`. 
 # See the below syntax. 
-terraform import looker_user_attribute_user.tina_employee_no {{user_attribute_id}}_{{user_id}}
+terraform import looker_user_attribute_user.tina_employee_number {{user_attribute_id}}_{{user_id}}
 ```

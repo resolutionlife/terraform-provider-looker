@@ -18,7 +18,7 @@ import (
 
 func resourceUserAttribute() *schema.Resource {
 	return &schema.Resource{
-		Description:   "This resource creates a user attributes in a Looker instance.",
+		Description:   "This resource creates a user attribute in a Looker instance.",
 		CreateContext: resourceUserAttributeCreate,
 		ReadContext:   resourceUserAttributeRead,
 		UpdateContext: resourceUserAttributeUpdate,

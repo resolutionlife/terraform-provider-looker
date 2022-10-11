@@ -13,7 +13,7 @@ import (
 
 func resourceModelSet() *schema.Resource {
 	return &schema.Resource{
-		Description:   "This resource creates a model set given a list Looker models.",
+		Description:   "This resource creates a model set given a list of Looker models.",
 		CreateContext: resourceModelSetCreate,
 		ReadContext:   resourceModelSetRead,
 		UpdateContext: resourceModelSetUpdate,

@@ -27,6 +27,8 @@ This resource sets a value onto a user for the given user attribute. If a defaul
 
 Import is supported using the following syntax:
 
+~> Imports are not supported for a `user_attribute` with `hidden = true` as the API does not have the permissions to read the hidden values. One method to import would be to reapply the changes after the import is successful. 
+
 {{ codefile  "shell" .ImportFile }}
 
 {{- end }}
