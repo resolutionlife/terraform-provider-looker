@@ -8,8 +8,8 @@ resource "looker_model_set" "test" {
   models = ["test_dataset_1", "test_both_datasets"]
 }
 
-resource "looker_roles" "test" {
-  name              = "Test Role"
+resource "looker_roles" "writer" {
+  name              = "Writer"
   model_set_id      = looker_model_set.test.id
   permission_set_id = looker_permission_set.test.id
 }

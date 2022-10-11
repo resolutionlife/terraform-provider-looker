@@ -12,7 +12,7 @@ import (
 
 func dataSourceGroup() *schema.Resource {
 	return &schema.Resource{
-		Description: "This data source reads a looker group from a Looker instance.",
+		Description: "This data source reads a Looker group from a Looker instance.",
 
 		ReadContext: dataSourceGroupRead,
 		Schema: map[string]*schema.Schema{

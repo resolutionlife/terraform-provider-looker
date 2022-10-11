@@ -3,18 +3,18 @@
 page_title: "looker_group Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource creates a user group in a looker instance. To add users to this group, use the lookergroupuser https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md resource.
+  This resource creates a user group in a Looker instance. To add users to this group, use the lookergroupuser https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md resource.
 ---
 
 # looker_group (Resource)
 
-This resource creates a user group in a looker instance. To add users to this group, use the [looker_group_user](https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md) resource.
+This resource creates a user group in a Looker instance. To add users to this group, use the [looker_group_user](https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md) resource.
 
 ## Example Usage
 
 ```terraform
-resource "looker_group" "test" {
-  name = "Test"
+resource "looker_group" "interns" {
+  name = "Interns"
 }
 ```
 
@@ -30,4 +30,12 @@ resource "looker_group" "test" {
 - `externally_managed` (Boolean) Whether membership to this group is managed outside of looker
 - `id` (String) The id of the group
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_group` resource can be imported using the following syntax:
+
+terraform import looker_group.interns {{group_id}}
+```

@@ -22,7 +22,7 @@ const (
 
 func resourceUserAttributeGroups() *schema.Resource {
 	return &schema.Resource{
-		Description:   "Manages Looker User Attribute Groups",
+		Description:   "This resource assigns a user attribute to a list of groups in a Looker instance. There can only be one `looker_user_attribute_group` resource type per user attribute.",
 		CreateContext: resourceUserAttributeGroupsCreate,
 		ReadContext:   resourceUserAttributeGroupsRead,
 		UpdateContext: resourceUserAttributeGroupsUpdate,

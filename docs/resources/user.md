@@ -3,20 +3,20 @@
 page_title: "looker_user Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages users of a Looker instance
+  This resource creates a user in a Looker instance.
 ---
 
 # looker_user (Resource)
 
-Manages users of a Looker instance
+This resource creates a user in a Looker instance.
 
 ## Example Usage
 
 ```terraform
-resource "looker_user" "my_user" {
-  email      = "test@example.com"
-  first_name = "FirstName"
-  last_name  = "LastName"
+resource "looker_user" "tina" {
+  first_name = "tina"
+  last_name  = "fey"
+  email      = "tina@orange.com"
 }
 ```
 
@@ -33,4 +33,12 @@ resource "looker_user" "my_user" {
 
 - `id` (String) The ID of this resource.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_user` resource can be imported using the following syntax:
+
+terraform import looker_user.tina {{user_id}}
+```

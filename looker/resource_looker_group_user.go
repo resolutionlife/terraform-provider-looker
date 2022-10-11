@@ -18,7 +18,7 @@ import (
 
 func resourceGroupUser() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource adds a looker user to a user group.",
+		Description: "This resource adds a Looker user to a user group.",
 
 		CreateContext: resourceGroupUserCreate,
 		ReadContext:   resourceGroupUserRead,

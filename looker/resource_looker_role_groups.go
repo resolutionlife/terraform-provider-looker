@@ -17,7 +17,7 @@ import (
 
 func resourceRoleGroups() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource binds a set of groups to a looker role. This is an additive and non-authorative resource that grants groups to a role in addition to current groups configured in Looker.",
+		Description: "This resource binds a set of groups to a Looker role. There can only be one `looker_role_groups` resource per role. This is an additive and non-authorative resource that grants groups to a role in addition to current groups configured in Looker.",
 
 		CreateContext: resourceRoleGroupsCreate,
 		ReadContext:   resourceRoleGroupsRead,

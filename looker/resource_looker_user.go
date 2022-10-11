@@ -14,7 +14,7 @@ import (
 
 func resourceUser() *schema.Resource {
 	return &schema.Resource{
-		Description: "Manages users of a Looker instance",
+		Description: "This resource creates a user in a Looker instance.",
 
 		CreateContext: resourceUserCreate,
 		ReadContext:   resourceUserRead,

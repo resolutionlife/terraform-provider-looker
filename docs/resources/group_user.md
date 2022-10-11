@@ -3,12 +3,12 @@
 page_title: "looker_group_user Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource adds a looker user to a user group.
+  This resource adds a Looker user to a user group.
 ---
 
 # looker_group_user (Resource)
 
-This resource adds a looker user to a user group.
+This resource adds a Looker user to a user group.
 
 ## Example Usage
 

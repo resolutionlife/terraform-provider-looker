@@ -20,17 +20,17 @@ resource "looker_user" "tina" {
   email      = "tina@orange.com"
 }
 
-resource "looker_user_attribute" "secret_id" {
-  name          = "id"
-  label         = "secret_id"
+resource "looker_user_attribute" "employee_number" {
+  name          = "employee_number"
+  label         = "Employee Number"
   data_type     = "number"
   hidden        = false
-  default_value = "24"
+  default_value = "0"
   user_access   = "View"
 }
 
-resource "looker_user_attribute_user" "tina_secret_id" {
-  user_attribute_id = looker_user_attribute.secret_id.id
+resource "looker_user_attribute_user" "tina_employee_no" {
+  user_attribute_id = looker_user_attribute.employee_number.id
   user_id           = looker_user.tina.id
   value             = "23"
 }
@@ -56,5 +56,5 @@ Import is supported using the following syntax:
 ```shell
 # A `looker_user_attribute_user` resource can be imported by delimiting the `user_attribute_id` and `user_id` with an underscore. E.g `{{user_attribute_id}}_{{user_id}}`. 
 # See the below syntax. 
-terraform import looker_user_attribute_user.tina_secret_id {{secret_id}}_{{tina_user_id}}
+terraform import looker_user_attribute_user.tina_employee_no {{user_attribute_id}}_{{user_id}}
 ```

@@ -3,7 +3,7 @@
 page_title: "looker_role_groups Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource binds a set of groups to a looker role. This is an additive and non-authorative resource that grants groups to a role in addition to current groups configured in Looker.
+  This resource binds a set of groups to a Looker role. There can only be one looker_role_groups resource per role. This is an additive and non-authorative resource that grants groups to a role in addition to current groups configured in Looker.
 ---
 
 # looker_role_groups (Resource)

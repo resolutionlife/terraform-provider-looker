@@ -3,24 +3,33 @@
 page_title: "looker_user_attribute Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages Looker User Attributes
+  This resource creates a user attributes in a Looker instance.
 ---
 
 # looker_user_attribute (Resource)
 
-Manages Looker User Attributes
+This resource creates a user attributes in a Looker instance.
 
 ## Example Usage
 
 ```terraform
 resource "looker_user_attribute" "secret_id" {
   name             = "id"
-  label            = "secret_id"
+  label            = "Secret ID"
   data_type        = "number"
   hidden           = true
   default_value    = 24
   user_access      = "View"
   domain_whitelist = ["my_domain/route/sub/*"]
+}
+
+resource "looker_user_attribute" "employee_number" {
+  name          = "employee_number"
+  label         = "Employee Number"
+  data_type     = "number"
+  hidden        = false
+  default_value = "24"
+  user_access   = "View"
 }
 ```
 
@@ -44,4 +53,12 @@ resource "looker_user_attribute" "secret_id" {
 
 - `id` (String) The unique id of the user attribute
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_user_attribute` resource can be imported by using the below syntax
+
+terraform import looker_user_attribute.employee_number {{user_attribute_id}}
+```

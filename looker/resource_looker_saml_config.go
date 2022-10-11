@@ -17,7 +17,7 @@ import (
 
 func resourceSamlConfig() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource updates the SAML config in a looker instance.",
+		Description: "This resource updates the SAML config in a Looker instance.",
 
 		CreateContext: resourceSamlConfigCreateOrUpdate,
 		ReadContext:   resourceSamlConfigRead,

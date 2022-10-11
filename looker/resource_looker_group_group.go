@@ -17,7 +17,7 @@ import (
 
 func resourceGroupGroup() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource adds a single looker group to a parent group. If this resource is modified, it will be destroyed and recreated.",
+		Description: "This resource adds a single Looker group to a parent group. If this resource is modified, it will be destroyed and recreated.",
 
 		// no update method needed as resource is destroyed and recreated if any fields are modified
 		CreateContext: resourceGroupGroupCreate,

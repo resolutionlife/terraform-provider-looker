@@ -13,7 +13,7 @@ import (
 
 func dataSourceRole() *schema.Resource {
 	return &schema.Resource{
-		Description: "This data source reads a looker role from a Looker instance.",
+		Description: "This data source reads a Looker role from a Looker instance.",
 
 		ReadContext: dataSourceRoleRead,
 		Schema: map[string]*schema.Schema{

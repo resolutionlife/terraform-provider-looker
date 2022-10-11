@@ -1,3 +1,3 @@
-resource "looker_group" "test" {
-  name = "Test"
+resource "looker_group" "interns" {
+  name = "Interns"
 }
