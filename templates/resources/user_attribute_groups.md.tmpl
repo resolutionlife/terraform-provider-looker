@@ -1,0 +1,33 @@
+---
+page_title: "{{.Name}} {{.Type}} - {{.ProviderName}}"
+subcategory: ""
+description: |-
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
+---
+
+# {{.Name}} ({{.Type}})
+
+This resource assigns a user attribute to a list of groups in a Looker instance. There can only be one `looker_user_attribute_group` resource type per user attribute.
+
+
+{{ if .HasExample -}}
+
+## Example Usage
+
+{{ tffile .ExampleFile }}
+
+{{- end }}
+
+{{ .SchemaMarkdown | trimspace }}
+
+{{ if .HasImport -}}
+
+## Import
+
+Import is supported using the following syntax:
+
+~> Imports are not supported for `user_attributes` with `hidden = true` as the API does not have the permissions to read the hidden values. One method to import would be to reapply the changes after the import is successful. 
+
+{{ codefile  "shell" .ImportFile }}
+
+{{- end }}

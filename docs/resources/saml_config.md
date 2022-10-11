@@ -2,7 +2,7 @@
 page_title: "looker_saml_config Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource updates the SAML config in a looker instance.
+  This resource updates the SAML config in a Looker instance.
 ---
 
 # looker_saml_config (Resource)
@@ -99,4 +99,13 @@ Required:
 - `required` (Boolean) Required to be in Saml assertion for login to be allowed to succeed
 - `user_attribute_ids` (Set of String) Looker User Attribute Ids
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_saml_config` has only one configuration for a Looker instance. Therefore the config has no specific `id` and argument passed to import the config can be anything. 
+# See the below example:
+
+terraform import looker_saml_config.tina test
+```

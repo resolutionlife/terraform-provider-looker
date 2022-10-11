@@ -3,12 +3,12 @@
 page_title: "looker_group Data Source - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This data source reads a looker group from a Looker instance.
+  This data source reads a Looker group from a Looker instance.
 ---
 
 # looker_group (Data Source)
 
-This data source reads a looker group from a Looker instance.
+This data source reads a Looker group from a Looker instance.
 
 ## Example Usage
 

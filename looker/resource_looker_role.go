@@ -14,7 +14,7 @@ import (
 
 func resourceRole() *schema.Resource {
 	return &schema.Resource{
-		Description: "Manages roles of a Looker instance",
+		Description: "This resource creates a role in a Looker instance.",
 
 		CreateContext: resourceRoleCreate,
 		ReadContext:   resourceRoleRead,

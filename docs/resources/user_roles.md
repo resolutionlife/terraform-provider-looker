@@ -2,7 +2,7 @@
 page_title: "looker_user_roles Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  This resource binds a set of roles to a looker user. This is an additive and non-authorative resource that grants roles in addition to current roles configured in Looker.
+  This resource binds a set of roles to a Looker user. This is an additive and non-authorative resource that grants roles in addition to current roles configured in Looker.
 ---
 
 # looker_user_roles (Resource)
@@ -52,5 +52,6 @@ Import is supported using the following syntax:
 
 ```shell
 # A `looker_user_roles` binding resource can be imported using the following syntax:
+
 terraform import looker_user_roles.tina_roles {{user_id}}
 ```

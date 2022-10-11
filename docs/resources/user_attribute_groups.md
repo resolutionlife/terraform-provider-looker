@@ -2,42 +2,43 @@
 page_title: "looker_user_attribute_groups Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages Looker User Attribute Groups
+  This resource assigns a user attribute to a list of groups in a Looker instance. There can only be one looker_user_attribute_group resource type per user attribute.
 ---
 
 # looker_user_attribute_groups (Resource)
 
-Manages Looker User Attribute Groups.
+This resource assigns a user attribute to a list of groups in a Looker instance. There can only be one `looker_user_attribute_group` resource type per user attribute.
+
 
 ## Example Usage
 
 ```terraform
-resource "looker_group" "test_group_1" {
-  name = "Test_1"
+resource "looker_group" "writers" {
+  name = "Writers"
 }
 
-resource "looker_group" "test_group_2" {
-  name = "Test_2"
+resource "looker_group" "interns" {
+  name = "Interns"
 }
 
-resource "looker_user_attribute" "test_attr" {
-  name          = "test_name"
-  label         = "test_label"
+resource "looker_user_attribute" "employee_number" {
+  name          = "employee_number"
+  label         = "Employee Number"
   data_type     = "number"
   hidden        = false
-  default_value = 123
+  default_value = "0"
   user_access   = "View"
 }
 
-resource "looker_user_attribute_groups" "test_group_1" {
-  user_attribute_id = looker_user_attribute.test_attr.id
+resource "looker_user_attribute_groups" "employee_number" {
+  user_attribute_id = looker_user_attribute.employee_number.id
   group_values {
-    group_id = looker_group.test_group_1.id
-    value    = "0"
+    group_id = looker_group.writers.id
+    value    = "1"
   }
   group_values {
-    group_id = looker_group.test_group_2.id
-    value    = "1"
+    group_id = looker_group.interns.id
+    value    = "2"
   }
 }
 ```
@@ -71,5 +72,5 @@ Import is supported using the following syntax:
 ```shell
 # A `looker_user_attribute_groups` resource can be imported using the following syntax:
 
-terraform import looker_user_attribute_groups.test_group {{user_attribute_id}}
+terraform import looker_user_attribute_groups.employee_number {{user_attribute_id}}
 ```

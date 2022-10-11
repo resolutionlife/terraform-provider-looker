@@ -3,18 +3,18 @@
 page_title: "looker_model_set Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages a set of Looker models
+  This resource creates a model set given a list of Looker models.
 ---
 
 # looker_model_set (Resource)
 
-Manages a set of Looker models
+This resource creates a model set given a list of Looker models.
 
 ## Example Usage
 
 ```terraform
-resource "looker_model_set" "test" {
-  name   = "test_model_set"
+resource "looker_model_set" "writer" {
+  name   = "Writer"
   models = ["test_dataset_1", "test_both_datasets"]
 }
 ```
@@ -35,4 +35,12 @@ resource "looker_model_set" "test" {
 
 - `id` (String) The unique id of the model set
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_model_set` resource can be imported using the following syntax:
+
+terraform import looker_model_set.writer {{model_set_id}}
+```

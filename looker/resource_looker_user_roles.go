@@ -16,7 +16,7 @@ import (
 
 func resourceUserRoles() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource binds a set of roles to a looker user. This is an additive and non-authorative resource that grants roles in addition to current roles configured in Looker.",
+		Description: "This resource binds a set of roles to a Looker user. This is an additive and non-authorative resource that grants roles in addition to current roles configured in Looker.",
 
 		CreateContext: resourceUserRolesCreate,
 		ReadContext:   resourceUserRolesRead,

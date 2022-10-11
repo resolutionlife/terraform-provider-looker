@@ -3,18 +3,18 @@
 page_title: "looker_permission_set Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages a set of Looker permissions
+  This resource creates a permission set in a Looker instance.
 ---
 
 # looker_permission_set (Resource)
 
-Manages a set of Looker permissions
+This resource creates a permission set in a Looker instance.
 
 ## Example Usage
 
 ```terraform
-resource "looker_permission_set" "developer" {
-  name        = "Developer"
+resource "looker_permission_set" "writer" {
+  name        = "Writer"
   permissions = ["access_data", "see_lookml", "see_lookml_dashboards"]
 }
 ```
@@ -35,4 +35,12 @@ resource "looker_permission_set" "developer" {
 
 - `id` (String) The unique id of the permission set
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_permission_set` resource can be imported using the following syntax:
+
+terraform import looker_permission_set.writer {{permission_set_id}}
+```

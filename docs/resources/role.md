@@ -3,28 +3,28 @@
 page_title: "looker_role Resource - terraform-provider-looker"
 subcategory: ""
 description: |-
-  Manages roles of a Looker instance
+  This resource creates a role in a Looker instance.
 ---
 
 # looker_role (Resource)
 
-Manages roles of a Looker instance
+This resource creates a role in a Looker instance.
 
 ## Example Usage
 
 ```terraform
-resource "looker_permission_set" "test" {
-  name        = "test_permission_set"
+resource "looker_permission_set" "writer" {
+  name        = "Writer"
   permissions = ["see_lookml", "see_lookml_dashboards"]
 }
 
-resource "looker_model_set" "test" {
-  name   = "test_model_set"
+resource "looker_model_set" "writer" {
+  name   = "Writer"
   models = ["test_dataset_1", "test_both_datasets"]
 }
 
-resource "looker_roles" "test" {
-  name              = "Test Role"
+resource "looker_roles" "writer" {
+  name              = "Writer"
   model_set_id      = looker_model_set.test.id
   permission_set_id = looker_permission_set.test.id
 }
@@ -43,4 +43,12 @@ resource "looker_roles" "test" {
 
 - `id` (String) The ID of this resource.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+# A `looker_role` resource can be imported using the following syntax:
+
+terraform import looker_role.writer {{role_id}}
+```

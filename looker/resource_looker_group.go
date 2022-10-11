@@ -13,7 +13,7 @@ import (
 
 func resourceGroup() *schema.Resource {
 	return &schema.Resource{
-		Description: "This resource creates a user group in a looker instance. To add users to this group, use the [looker_group_user](https://github.com/resolutionlife/terraform-provider-looker/blob/main/docs/resources/group_user.md) resource.",
+		Description: "This resource creates a user group in a Looker instance.",
 
 		CreateContext: resourceGroupCreate,
 		ReadContext:   resourceGroupRead,
