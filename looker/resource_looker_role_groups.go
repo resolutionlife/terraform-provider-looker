@@ -67,9 +67,14 @@ func resourceRoleGroupsCreate(ctx context.Context, d *schema.ResourceData, c int
 		return diag.FromErr(gErr)
 	}
 
+	diff := slice.Diff(lookerGroupIDs, groupIDs)
+	if len(diff) <= 0 {
+		return resourceRoleGroupsRead(ctx, d, c)
+	}
+
 	// set all groups on the role
 	_, setErr := api.SetRoleGroups(roleID,
-		append(lookerGroupIDs, slice.Diff(lookerGroupIDs, groupIDs)...), // append diff to the list of groups already set in looker
+		append(lookerGroupIDs, diff...), // append diff to the list of groups already set in looker
 		nil,
 	)
 	if errors.Is(setErr, sdk.ErrNotFound) {
