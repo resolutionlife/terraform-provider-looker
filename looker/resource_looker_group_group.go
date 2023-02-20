@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -102,9 +101,7 @@ func resourceGroupGroupDelete(ctx context.Context, d *schema.ResourceData, c int
 		d.Get("group_id").(string),
 		nil,
 	)
-	// if the api call is successful the SDK returns an io.EOF error - this is not an error from looker and can be ignored
-	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
-	if !errors.Is(delErr, io.EOF) && !errors.Is(delErr, sdk.ErrNotFound) {
+	if !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 

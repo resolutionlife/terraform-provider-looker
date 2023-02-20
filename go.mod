@@ -78,4 +78,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/looker-open-source/sdk-codegen/go => github.com/resolutionlife/looker-sdk-codegen/go v0.0.0-20220930133853-1df0d14550ba
+replace github.com/looker-open-source/sdk-codegen/go => github.com/resolutionlife/looker-sdk-codegen/go v0.0.0-20230220144741-f9050910d834

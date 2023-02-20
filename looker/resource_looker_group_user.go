@@ -2,9 +2,7 @@ package looker
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -104,9 +102,7 @@ func resourceGroupUserUpdate(ctx context.Context, d *schema.ResourceData, c inte
 	oldGr, newGr := d.GetChange("group_id")
 
 	// delete old user from old group
-	delErr := api.DeleteGroupUser(oldGr.(string), oldUsr.(string), nil)
-	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
-	if delErr != nil && !errors.Is(delErr, io.EOF) {
+	if delErr := api.DeleteGroupUser(oldGr.(string), oldUsr.(string), nil); delErr != nil {
 		return diag.FromErr(delErr)
 	}
 
@@ -128,14 +124,7 @@ func resourceGroupUserUpdate(ctx context.Context, d *schema.ResourceData, c inte
 func resourceGroupUserDelete(ctx context.Context, d *schema.ResourceData, c interface{}) diag.Diagnostics {
 	api := c.(*sdk.LookerSDK)
 
-	delErr := api.DeleteGroupUser(d.Get("group_id").(string), d.Get("user_id").(string), nil)
-	// the sdk attempts to decode the api response body into a nil struct - this is not an error from looker and can be ignored
-	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
-	if !errors.Is(delErr, io.EOF) {
-		return diag.FromErr(delErr)
-	}
-
-	return nil
+	return diag.FromErr(api.DeleteGroupUser(d.Get("group_id").(string), d.Get("user_id").(string), nil))
 }
 
 func resourceGroupUserImport(ctx context.Context, d *schema.ResourceData, c interface{}) ([]*schema.ResourceData, error) {
