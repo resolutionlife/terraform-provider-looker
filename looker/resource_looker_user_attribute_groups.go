@@ -3,7 +3,6 @@ package looker
 import (
 	"context"
 	"errors"
-	"io"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -164,8 +163,7 @@ func resourceUserAttributeGroupsDelete(ctx context.Context, d *schema.ResourceDa
 			d.Get(userAttrIdKey).(string),
 			nil,
 		)
-		// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
-		if err != nil && !errors.Is(err, io.EOF) && !errors.Is(err, sdk.ErrNotFound) {
+		if err != nil && !errors.Is(err, sdk.ErrNotFound) {
 			return diag.FromErr(err)
 		}
 	}

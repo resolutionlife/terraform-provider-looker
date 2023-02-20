@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
@@ -130,8 +129,7 @@ func resourceUserAttributeUserDelete(ctx context.Context, d *schema.ResourceData
 
 	// this delete removes the custom value and reverts back to the default value of the attribute, if set.
 	delErr := api.DeleteUserAttributeUserValue(userID, userAttrID, nil)
-	// TODO: amend this when the looker SDK has merged this PR https://github.com/looker-open-source/sdk-codegen/pull/1074
-	if !errors.Is(delErr, io.EOF) && !errors.Is(delErr, sdk.ErrNotFound) {
+	if !errors.Is(delErr, sdk.ErrNotFound) {
 		return diag.FromErr(delErr)
 	}
 
