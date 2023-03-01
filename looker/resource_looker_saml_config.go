@@ -305,6 +305,9 @@ func resourceSamlConfigCreateOrUpdate(ctx context.Context, d *schema.ResourceDat
 			// check for existing ID to ensure we update existing relationship
 			if _, ok := sgw["id"]; ok && sgw["id"].(string) != "" {
 				write.Id = conv.P(sgw["id"].(string))
+			} else {
+				id := fmt.Sprintf("%d", rand.Int())
+				write.Id = &id
 			}
 
 			groupsWithRoleIDs = append(groupsWithRoleIDs, write)
