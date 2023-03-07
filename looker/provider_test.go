@@ -77,7 +77,7 @@ func TestMain(m *testing.M) {
 	resource.TestMain(m)
 }
 
-func redactJson(body *string, filterKeys []string) error {
+func redactJSON(body *string, filterKeys []string) error {
 	var responseBody map[string]interface{}
 	err := json.Unmarshal([]byte(*body), &responseBody)
 	if err != nil {
@@ -103,11 +103,11 @@ func redactJson(body *string, filterKeys []string) error {
 
 func filterCredentials(i *cassette.Interaction) error {
 	if strings.Contains(i.Request.Headers.Get("Content-Type"), "application/json") {
-		redactJson(&i.Request.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
+		redactJSON(&i.Request.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
 	}
 
 	if strings.Contains(i.Response.Headers.Get("Content-Type"), "application/json") {
-		redactJson(&i.Response.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
+		redactJSON(&i.Response.Body, []string{"access_token", "client_id", "client_secret"}) //nolint:errcheck
 	}
 
 	_, ok := i.Request.Form["client_id"]
@@ -119,12 +119,12 @@ func filterCredentials(i *cassette.Interaction) error {
 		i.Request.Form.Set("client_secret", "[REDACTED]")
 	}
 
-	requestUrl, err := url.Parse(i.Request.URL)
+	requestURL, err := url.Parse(i.Request.URL)
 	if err != nil {
 		return err
 	}
 
-	if path.Base(requestUrl.Path) == "login" {
+	if path.Base(requestURL.Path) == "login" {
 		i.Request.Body = "[REDACTED]"
 	}
 
@@ -149,10 +149,8 @@ func customMatcher(r *http.Request, i cassette.Request) bool {
 		return true
 	}
 
-	var reqBody []byte
-	var err error
-	reqBody, err = io.ReadAll(r.Body)
-	if err != nil {
+	reqBody, readErr := io.ReadAll(r.Body)
+	if readErr != nil {
 		log.Fatal("failed to read request body")
 	}
 
@@ -161,7 +159,7 @@ func customMatcher(r *http.Request, i cassette.Request) bool {
 
 	if strings.Contains(r.Header.Get("Content-Type"), "application/json") {
 		var req, cassette interface{}
-		err := json.Unmarshal([]byte(reqBody), &req)
+		err := json.Unmarshal(reqBody, &req)
 		if err != nil {
 			return false
 		}
