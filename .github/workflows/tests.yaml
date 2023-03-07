@@ -66,6 +66,6 @@ jobs:
       - name: Run tests
         run: make testacc
         env:
-          LOOKERSDK_BASE_URL: ${{ secrets.LOOKERSDK_BASE_URL }}
-          LOOKERSDK_CLIENT_ID: ${{ secrets.LOOKERSDK_CLIENT_ID }}
-          LOOKERSDK_CLIENT_SECRET: ${{ secrets.LOOKERSDK_CLIENT_SECRET }}
+          LOOKERSDK_BASE_URL: https://example.cloud.looker.com
+          LOOKERSDK_CLIENT_ID: dummy
+          LOOKERSDK_CLIENT_SECRET: dummy

@@ -9,7 +9,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -25,7 +25,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -35,12 +35,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:56 GMT
+                - Tue, 07 Mar 2023 12:28:08 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -49,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 181.012041ms
+        duration: 199.774984ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -58,7 +58,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -70,7 +70,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?name=All
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?name=All
         method: GET
       response:
         proto: HTTP/1.1
@@ -80,12 +80,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:57 GMT
+                - Tue, 07 Mar 2023 12:28:08 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 196.278834ms
+        duration: 177.999439ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -103,7 +103,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -119,7 +119,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -129,12 +129,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:57 GMT
+                - Tue, 07 Mar 2023 12:28:08 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -143,7 +143,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 167.517292ms
+        duration: 202.576703ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -152,7 +152,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -164,7 +164,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?name=All
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?name=All
         method: GET
       response:
         proto: HTTP/1.1
@@ -174,12 +174,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:57 GMT
+                - Tue, 07 Mar 2023 12:28:08 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 166.485083ms
+        duration: 174.711354ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -197,7 +197,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -213,7 +213,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -223,12 +223,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:57 GMT
+                - Tue, 07 Mar 2023 12:28:09 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -237,7 +237,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 178.266667ms
+        duration: 196.25939ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -246,7 +246,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -258,7 +258,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?name=All
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?name=All
         method: GET
       response:
         proto: HTTP/1.1
@@ -268,12 +268,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:58 GMT
+                - Tue, 07 Mar 2023 12:28:09 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -282,7 +282,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 154.535459ms
+        duration: 157.478143ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -291,7 +291,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -307,7 +307,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -317,12 +317,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:58 GMT
+                - Tue, 07 Mar 2023 12:28:09 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -331,7 +331,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 183.495ms
+        duration: 194.040219ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -340,7 +340,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -352,7 +352,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?name=All
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?name=All
         method: GET
       response:
         proto: HTTP/1.1
@@ -362,12 +362,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:58 GMT
+                - Tue, 07 Mar 2023 12:28:10 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -376,7 +376,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 158.591875ms
+        duration: 159.271247ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -385,7 +385,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -401,7 +401,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -411,12 +411,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:58 GMT
+                - Tue, 07 Mar 2023 12:28:10 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -425,7 +425,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 179.518375ms
+        duration: 180.361032ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -434,7 +434,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -446,7 +446,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?name=All
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?name=All
         method: GET
       response:
         proto: HTTP/1.1
@@ -456,12 +456,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:58 GMT
+                - Tue, 07 Mar 2023 12:28:10 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -470,7 +470,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 179.297959ms
+        duration: 149.114029ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -479,7 +479,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -495,7 +495,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -505,12 +505,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:59 GMT
+                - Tue, 07 Mar 2023 12:28:10 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -519,7 +519,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 191.400583ms
+        duration: 214.052559ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -528,7 +528,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -540,7 +540,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?id=1
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?id=1
         method: GET
       response:
         proto: HTTP/1.1
@@ -550,12 +550,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:59 GMT
+                - Tue, 07 Mar 2023 12:28:11 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -564,7 +564,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 167.346291ms
+        duration: 141.391891ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -573,7 +573,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -589,7 +589,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -604,7 +604,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:59 GMT
+                - Tue, 07 Mar 2023 12:28:11 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -613,7 +613,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 193.523875ms
+        duration: 330.812594ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -622,7 +622,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -634,7 +634,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?id=1
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?id=1
         method: GET
       response:
         proto: HTTP/1.1
@@ -644,12 +644,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:32:59 GMT
+                - Tue, 07 Mar 2023 12:28:11 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -658,7 +658,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 161.146125ms
+        duration: 158.94492ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -667,7 +667,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -683,7 +683,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -698,7 +698,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:00 GMT
+                - Tue, 07 Mar 2023 12:28:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -707,7 +707,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 169.784209ms
+        duration: 201.483563ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -716,7 +716,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -728,7 +728,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?id=1
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?id=1
         method: GET
       response:
         proto: HTTP/1.1
@@ -738,12 +738,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:00 GMT
+                - Tue, 07 Mar 2023 12:28:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -752,7 +752,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 165.858166ms
+        duration: 160.133046ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -761,7 +761,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -777,7 +777,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -792,7 +792,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:00 GMT
+                - Tue, 07 Mar 2023 12:28:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -801,7 +801,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 187.805625ms
+        duration: 191.948192ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -810,7 +810,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -822,7 +822,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?id=1
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?id=1
         method: GET
       response:
         proto: HTTP/1.1
@@ -832,12 +832,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:00 GMT
+                - Tue, 07 Mar 2023 12:28:12 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -846,7 +846,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 151.970458ms
+        duration: 169.271991ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -855,7 +855,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -871,7 +871,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -881,12 +881,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:00 GMT
+                - Tue, 07 Mar 2023 12:28:13 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -895,7 +895,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 184.179084ms
+        duration: 200.856541ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -904,7 +904,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -916,7 +916,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/model_sets/search?id=1
+        url: https://example.cloud.looker.com/api/4.0/model_sets/search?id=1
         method: GET
       response:
         proto: HTTP/1.1
@@ -926,12 +926,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:01 GMT
+                - Tue, 07 Mar 2023 12:28:13 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -940,4 +940,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 164.014459ms
+        duration: 158.673587ms

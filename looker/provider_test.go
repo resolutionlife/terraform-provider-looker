@@ -22,6 +22,8 @@ import (
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
 
+const dummyAPIHostname = "example.cloud.looker.com"
+
 var (
 	testAccProviders map[string]func() (*schema.Provider, error)
 	testAccProvider  *schema.Provider
@@ -46,10 +48,13 @@ func NewTestProvider(cassettePath string) func() error {
 	}
 
 	// ensures creds do not leak
-	r.AddHook(filterAuthHeaders, recorder.AfterCaptureHook)
+	r.AddHook(func(i *cassette.Interaction) error {
+		delete(i.Request.Headers, "Authorization")
+		return nil
+	}, recorder.AfterCaptureHook)
 	r.AddHook(filterCredentials, recorder.BeforeSaveHook)
 
-	r.SetMatcher(customBodyMatcher)
+	r.SetMatcher(customMatcher)
 
 	testAccProvider = NewProvider(WithRecorder(r))
 	testAccProviders = map[string]func() (*schema.Provider, error){
@@ -123,16 +128,20 @@ func filterCredentials(i *cassette.Interaction) error {
 		i.Request.Body = "[REDACTED]"
 	}
 
+	i.Request.Host = dummyAPIHostname
+	requestURL.Host = dummyAPIHostname
+	i.Request.URL = requestURL.String()
+
 	return nil
 }
 
-func filterAuthHeaders(i *cassette.Interaction) error {
-	delete(i.Request.Headers, "Authorization")
-	return nil
-}
+func customMatcher(r *http.Request, i cassette.Request) bool {
+	u, parseErr := url.Parse(i.URL)
+	if parseErr != nil {
+		log.Fatal("failed to parse request url")
+	}
 
-func customBodyMatcher(r *http.Request, i cassette.Request) bool {
-	if !cassette.DefaultMatcher(r, i) {
+	if r.Method != i.Method || r.URL.Path != u.Path || !reflect.DeepEqual(r.URL.Query(), u.Query()) {
 		return false
 	}
 

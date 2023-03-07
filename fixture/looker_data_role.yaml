@@ -9,7 +9,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -25,7 +25,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -35,12 +35,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:06 GMT
+                - Tue, 07 Mar 2023 12:28:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -49,7 +49,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 168.929666ms
+        duration: 194.241935ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -58,7 +58,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -70,7 +70,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?name=Admin
+        url: https://example.cloud.looker.com/api/4.0/roles/search?name=Admin
         method: GET
       response:
         proto: HTTP/1.1
@@ -80,12 +80,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:06 GMT
+                - Tue, 07 Mar 2023 12:28:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -94,7 +94,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 151.032875ms
+        duration: 199.369896ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -103,7 +103,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -119,7 +119,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -129,12 +129,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:06 GMT
+                - Tue, 07 Mar 2023 12:28:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -143,7 +143,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 165.211875ms
+        duration: 167.457112ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -152,7 +152,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -164,7 +164,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?name=Admin
+        url: https://example.cloud.looker.com/api/4.0/roles/search?name=Admin
         method: GET
       response:
         proto: HTTP/1.1
@@ -174,12 +174,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:06 GMT
+                - Tue, 07 Mar 2023 12:28:20 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -188,7 +188,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 157.927625ms
+        duration: 164.313071ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -197,7 +197,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -213,7 +213,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -223,12 +223,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:06 GMT
+                - Tue, 07 Mar 2023 12:28:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -237,7 +237,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 180.702583ms
+        duration: 185.403335ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -246,7 +246,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -258,7 +258,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?name=Admin
+        url: https://example.cloud.looker.com/api/4.0/roles/search?name=Admin
         method: GET
       response:
         proto: HTTP/1.1
@@ -268,12 +268,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:07 GMT
+                - Tue, 07 Mar 2023 12:28:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -282,7 +282,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 163.270834ms
+        duration: 169.161631ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -291,7 +291,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -307,7 +307,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -317,12 +317,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:07 GMT
+                - Tue, 07 Mar 2023 12:28:21 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -331,7 +331,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 193.464541ms
+        duration: 182.025615ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -340,7 +340,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -352,7 +352,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?name=Admin
+        url: https://example.cloud.looker.com/api/4.0/roles/search?name=Admin
         method: GET
       response:
         proto: HTTP/1.1
@@ -362,12 +362,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:07 GMT
+                - Tue, 07 Mar 2023 12:28:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -376,7 +376,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 147.223ms
+        duration: 199.433616ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -385,7 +385,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -401,7 +401,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -411,12 +411,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:07 GMT
+                - Tue, 07 Mar 2023 12:28:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -425,7 +425,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 187.454583ms
+        duration: 181.86827ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -434,7 +434,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -446,7 +446,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?name=Admin
+        url: https://example.cloud.looker.com/api/4.0/roles/search?name=Admin
         method: GET
       response:
         proto: HTTP/1.1
@@ -456,12 +456,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:07 GMT
+                - Tue, 07 Mar 2023 12:28:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -470,7 +470,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 156.767584ms
+        duration: 159.509775ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -479,7 +479,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -495,7 +495,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -505,12 +505,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:08 GMT
+                - Tue, 07 Mar 2023 12:28:22 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -519,7 +519,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 198.637292ms
+        duration: 192.954202ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -528,7 +528,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -540,7 +540,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?id=2
+        url: https://example.cloud.looker.com/api/4.0/roles/search?id=2
         method: GET
       response:
         proto: HTTP/1.1
@@ -550,12 +550,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:08 GMT
+                - Tue, 07 Mar 2023 12:28:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -564,7 +564,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 156.221875ms
+        duration: 168.820727ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -573,7 +573,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -589,7 +589,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -599,12 +599,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"access_token":"[REDACTED]","expires_in":3599,"refresh_token":null,"token_type":"Bearer"}'
+        body: '{"access_token":"[REDACTED]","expires_in":3600,"refresh_token":null,"token_type":"Bearer"}'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:08 GMT
+                - Tue, 07 Mar 2023 12:28:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -613,7 +613,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 184.438125ms
+        duration: 194.891027ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -622,7 +622,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -634,7 +634,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?id=2
+        url: https://example.cloud.looker.com/api/4.0/roles/search?id=2
         method: GET
       response:
         proto: HTTP/1.1
@@ -644,12 +644,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:08 GMT
+                - Tue, 07 Mar 2023 12:28:23 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -658,7 +658,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 174.149875ms
+        duration: 159.454509ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -667,7 +667,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -683,7 +683,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -698,7 +698,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:09 GMT
+                - Tue, 07 Mar 2023 12:28:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -707,7 +707,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 184.360792ms
+        duration: 197.667717ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -716,7 +716,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -728,7 +728,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?id=2
+        url: https://example.cloud.looker.com/api/4.0/roles/search?id=2
         method: GET
       response:
         proto: HTTP/1.1
@@ -738,12 +738,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:09 GMT
+                - Tue, 07 Mar 2023 12:28:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -752,7 +752,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 176.136ms
+        duration: 173.997647ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -761,7 +761,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -777,7 +777,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -792,7 +792,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:09 GMT
+                - Tue, 07 Mar 2023 12:28:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -801,7 +801,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 181.939833ms
+        duration: 181.04005ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -810,7 +810,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -822,7 +822,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?id=2
+        url: https://example.cloud.looker.com/api/4.0/roles/search?id=2
         method: GET
       response:
         proto: HTTP/1.1
@@ -832,12 +832,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:09 GMT
+                - Tue, 07 Mar 2023 12:28:24 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -846,7 +846,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 166.298167ms
+        duration: 160.187413ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -855,7 +855,7 @@ interactions:
         content_length: 99
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: '[REDACTED]'
@@ -871,7 +871,7 @@ interactions:
                 - application/x-www-form-urlencoded
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/login
+        url: https://example.cloud.looker.com/api/4.0/login
         method: POST
       response:
         proto: HTTP/1.1
@@ -886,7 +886,7 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:10 GMT
+                - Tue, 07 Mar 2023 12:28:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -895,7 +895,7 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 189.336041ms
+        duration: 215.981559ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -904,7 +904,7 @@ interactions:
         content_length: 0
         transfer_encoding: []
         trailer: {}
-        host: atoscerebro.cloud.looker.com:443
+        host: example.cloud.looker.com
         remote_addr: ""
         request_uri: ""
         body: ""
@@ -916,7 +916,7 @@ interactions:
                 - application/json
             X-Looker-Appid:
                 - go-sdk
-        url: https://atoscerebro.cloud.looker.com:443/api/4.0/roles/search?id=2
+        url: https://example.cloud.looker.com/api/4.0/roles/search?id=2
         method: GET
       response:
         proto: HTTP/1.1
@@ -926,12 +926,12 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook","cw_axis","asset_man_qtr_report"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
+        body: '[{"id":"2","name":"Admin","permission_set":{"built_in":true,"id":"1","all_access":true,"name":"Admin","permissions":["access_data","see_lookml_dashboards","see_looks","see_user_dashboards","explore","create_table_calculations","create_custom_fields","can_create_forecast","can_override_vis_config","save_content","create_public_looks","download_with_limit","download_without_limit","schedule_look_emails","schedule_external_look_emails","create_alerts","follow_alerts","send_to_s3","send_to_sftp","send_outgoing_webhook","send_to_integration","see_sql","see_lookml","develop","deploy","support_access_toggle","use_sql_runner","clear_cache_refresh","can_copy_print","see_drill_overlay","manage_spaces","manage_homepage","manage_models","manage_stereo","create_prefetches","login_special_email","embed_browse_spaces","embed_save_shared_space","see_alerts","see_queries","see_logs","see_users","sudo","see_schedules","see_pdts","see_datagroups","update_datagroups","see_system_activity","administer","mobile_app_access"],"url":"https://localhost:19999/api/4.0/permission_sets/1","can":{"show":true,"index":true,"update":true}},"model_set":{"built_in":true,"id":"1","all_access":true,"models":["extension-api-explorer","austin_bikeshare","thelook"],"name":"All","url":"https://localhost:19999/api/4.0/model_sets/1","can":{"show":true,"index":true,"update":true}},"url":"https://localhost:19999/api/4.0/roles/2","users_url":"https://localhost:19999/api/4.0/roles/2/users","can":{"show":true,"index":true,"update":true}}]'
         headers:
             Content-Type:
                 - application/json
             Date:
-                - Wed, 05 Oct 2022 11:33:10 GMT
+                - Tue, 07 Mar 2023 12:28:25 GMT
             Strict-Transport-Security:
                 - max-age=15724800; includeSubDomains
             Vary:
@@ -940,4 +940,4 @@ interactions:
                 - nosniff
         status: 200 OK
         code: 200
-        duration: 173.357834ms
+        duration: 158.628683ms
