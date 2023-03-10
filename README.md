@@ -1,14 +1,15 @@
 # Terraform Provider for Looker
 
-This terraform provider interacts with the Looker API to configure Looker resources.
+A terraform provider to provision Looker resources.
 
-## Documentation 
+## Documentation
 
 Documentation for each resource and data source supported can be found [here](https://registry.terraform.io/providers/resolutionlife/looker/latest/docs).
 
 ## Installation
 
-Terraform uses the Terraform Registry to download and install providers. To install this provider, copy and paste the following code into your Terraform configuration. Then, run terraform init.
+Terraform uses the Terraform Registry to download and install providers. To install this provider,
+copy and paste the following code into your Terraform configuration. Then, run terraform init.
 
 ```terraform
 terraform {
@@ -27,11 +28,15 @@ provider "looker" {}
 ```sh
 $ terraform init
 ```
+
 ### Running the provider locally
 
-To run the terraform provider locally, run `make install`. This command builds a binary of the provider and store it locally. Then, run `terraform init` using the below configuration.
+To run the terraform provider locally, run `make install`. This command builds a binary of the provider
+and stores it locally. Then, run `terraform init` using the below configuration.
 
-_Note: To configure the provider, an API key and secret is required for your looker instance. [See documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys). You must be an admin to create an API key._
+_Note: To configure the provider, an API key and secret are required for your looker instance.
+[See the documentation on creating an API key](https://cloud.google.com/looker/docs/admin-panel-users-users#edit_api3_keys).
+You must be an admin to create an API key._
 
 ```terraform
 terraform {
@@ -53,24 +58,27 @@ provider "looker" {
 ```sh
 $ make install
 ```
+
 ```sh
 $ terraform init
 ```
-## Environment Variables
+
+## Environment variables
 
 You can configure the provider with the `LOOKERSDK_BASE_URL`,
 `LOOKERSDK_CLIENT_ID`, `LOOKERSDK_CLIENT_SECRET` environment variables. You can
 also skip SSL verification with `LOOKERSDK_VERIFY_SSL` and define the timeout
-duration with `LOOKERSDK_TIMEOUT`.  For example 
+duration with `LOOKERSDK_TIMEOUT`. For example
 
 ```shell
 LOOKERSDK_BASE_URL="<my-instance-url>" \
 LOOKERSDK_CLIENT_ID="<my-client-id>" \
 LOOKERSDK_CLIENT_SECRET="<my-client-secret>" \
 ```
-## Logging and Debugging 
 
-This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` enviroment variable to the desired log level. For example: 
+## Logging and Debugging
+
+This provider supports logging and debugging to provide insights and aid debugging. To view the log outputs, set the `TF_LOG_PROVIDER` environment variable to the desired log level. For example:
 
 ```
 export TF_LOG_PROVIDER=INFO
@@ -78,12 +86,14 @@ export TF_LOG_PROVIDER=INFO
 
 See the [official documentation](https://www.terraform.io/plugin/log/managing#log-levels) for details on each log level.
 
-## Acceptance testing 
+## Acceptance testing
 
-Acceptance tests are run against a test looker instance as part of the developer workflow. To run acceptance testing locally, run the following:
- ```
- make testacc
+Acceptance tests run against a test looker instance as part of the developer workflow. To run acceptance testing locally, run the following:
+
 ```
+make testacc
+```
+
 Sweepers are available to clean up dangling resources that can occur when acceptance tests fail. To run the sweeper, run the following:
 
 ```
